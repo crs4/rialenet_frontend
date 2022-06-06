@@ -1,8 +1,13 @@
 import React, { PureComponent, useState, useEffect } from 'react'
 import { CommentSection } from 'react-comments-section'
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useParams, Link } from 'react-router-dom'
 import moment from 'moment'
+import { selectors as userTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 
+import { Header } from '../components/Header'
+import { SideBar } from '../components/SideBar'
+import { Content } from '../components/Content';
 import {
   Card, CardImg, CardText, CardBody, CardHeader,
   CardTitle, CardSubtitle, Button
@@ -50,8 +55,13 @@ const data = [
   }
 ]
 
+const md5 = require('md5');
+
+
 const RialeDiscussionBoard = (props) => {
   const [comment, setComment] = useState([])
+  const dispatch = useDispatch();
+
   const userId = "01a"
   const avatarUrl = "https://ui-avatars.com/api/name=Riya&background=random"
   const name = "xyz"
@@ -60,11 +70,15 @@ const RialeDiscussionBoard = (props) => {
   let count = 0
 
   const query = new URLSearchParams(window.location.search);
-  const passcode = query.get("passcode");
+  const passcode = localStorage.getItem("passcode");
+  const passcodeMD5 = query.get("passcode");
   console.log("params:", passcode);
+  const isAuthenticated = passcodeMD5!=null && md5(passcode)==passcodeMD5;
+
+  
 
   comment.map(i => { count += 1; i.replies && i.replies.map(i => count += 1) })
-  
+ 
   const loadAllTasks = async () => {
     console.log("WENET loading tasks")
     try {
@@ -80,7 +94,7 @@ const RialeDiscussionBoard = (props) => {
       const result = await response.json();
       console.log("WENET authentication result:", result)
 
-      const tasks = (result==null) ? [] : result["tasks"]
+      const tasks =  useSelector(userTasksSelectors.getTasks);  //(result == null) ? [] : result["tasks"]
 
       setComment(tasks.map((task) => {
         return (
@@ -106,29 +120,37 @@ const RialeDiscussionBoard = (props) => {
 
     } catch (e) { console.log("WENET response error:", e) }
   }
-
+  
   useEffect(() => {
-    loadAllTasks()
+    dispatch(UserTasksActions.willLoadTasks());
+    //loadAllTasks()
   }, [])
 
 
   return (
-    <Card className="mb-4" style={{ padding:"10px", borderColor: "#007bff" }}>
-    <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
-        <CardTitle>RIALENET - Forum degli studenti (n.{count} Commenti)
-        {passcode && <div className="pull-right">{passcode}
-          
-          </div>}
-        </CardTitle>
-      
-        </CardHeader>
-        <CardBody>
-          <CommentSection currentUser={userId && { userId: userId, avatarUrl: avatarUrl, name: name }}
-            commentsArray={comment || []}
-            setComment={setComment} signinUrl={signinUrl} signupUrl={signupUrl} />
-        </CardBody>
+    <>
+    <Header className="mb-0 text-white" section="Forum" showMenu={true} />
+      <SideBar active="dashboard" />
+      <Content>
+        <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
+          <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
+            <CardTitle>RIALENET - Forum degli studenti (n.{count} Commenti) {isAuthenticated ? "OK" : "FORBIDDEN"}
+              {passcode && <div className="pull-right">{passcode}
 
-      </Card>)
+              </div>}
+            </CardTitle>
+
+          </CardHeader>
+          <CardBody>
+            <CommentSection currentUser={userId && { userId: userId, avatarUrl: avatarUrl, name: name }}
+              commentsArray={comment || []}
+              setComment={setComment} signinUrl={signinUrl} signupUrl={signupUrl} />
+          </CardBody>
+
+        </Card>
+      </Content>
+    </>
+  )
 
 }
 

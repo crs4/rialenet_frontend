@@ -11,6 +11,11 @@ const WenetConnector = () => {
 
 
     const [passcode, setPasscode] = useState(null);
+
+    useEffect(()=>{
+         localStorage.setItem("passcode", passcode);
+      }, [passcode])
+
     const checkPassCode = (passCodeOrig) => {
 
         //WQBLLIZQ

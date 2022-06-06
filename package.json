@@ -74,6 +74,7 @@
     "lodash.isnumber": "^3.0.3",
     "lodash.isstring": "^4.0.1",
     "material-ui": "^0.20.2",
+    "md5": "^2.3.0",
     "minisearch": "^3.0.2",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",

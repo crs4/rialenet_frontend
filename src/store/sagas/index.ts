@@ -1,10 +1,10 @@
 import { all } from 'redux-saga/effects'
-//import { sagas as passCodeUsersSagas } from './passCodeUsers'
+import { sagas as userTasksSagas } from './userTasks'
 
 function* runAllSagas() {
     console.log('in root saga')
     yield all([
-     // passCodeUsersSagas()
+       userTasksSagas()
     ])
   }
 

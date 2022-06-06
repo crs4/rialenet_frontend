@@ -1,0 +1,39 @@
+import { createSlice, PayloadAction} from "@reduxjs/toolkit";
+
+export const userTasksSlice = createSlice({
+    name: 'userTasks',
+    initialState: {
+      user:null,
+      tasks: []
+    }
+  ,
+    reducers: {
+     willLogin: (state, action:PayloadAction<any>) => state,
+     willLogout: (state, action:PayloadAction<any>) => state,
+     willLoadTasks: (state, action:PayloadAction<any>) => state,
+
+      didLogin: (state, action:PayloadAction<any>) => { 
+        state.user = action.payload;
+      },
+      didLogout:(state) => { 
+        state.user = null;
+        localStorage.removeItem("passcode");
+      },
+      didLoadTasks: (state, action:PayloadAction<any>) =>{
+        state.tasks = action.payload;
+      },
+ 
+    
+    }
+});
+
+export const { actions, reducer } = userTasksSlice
+
+export const selectors = {
+  isLogged: (state:any) => {
+    return state.user!=null && localStorage.getItem("passcode")==state.user["passcode"];
+  },
+  getTasks: (state:any) => {
+    return state.tasks;
+  }
+}
