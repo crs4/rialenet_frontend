@@ -61,6 +61,7 @@ const md5 = require('md5');
 const RialeDiscussionBoard = (props) => {
   const [comment, setComment] = useState([])
   const dispatch = useDispatch();
+  const tasks =  useSelector(userTasksSelectors.getTasks);  //(result == null) ? [] : result["tasks"]
 
   const userId = "01a"
   const avatarUrl = "https://ui-avatars.com/api/name=Riya&background=random"
@@ -94,8 +95,7 @@ const RialeDiscussionBoard = (props) => {
       const result = await response.json();
       console.log("WENET authentication result:", result)
 
-      const tasks =  useSelector(userTasksSelectors.getTasks);  //(result == null) ? [] : result["tasks"]
-
+     
       setComment(tasks.map((task) => {
         return (
           {
