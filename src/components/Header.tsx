@@ -13,11 +13,10 @@ export const Header = ({ className, section, showMenu = false }: any) => {
     const toggle = () => setIsOpen(!isOpen);
     const dispatch = useDispatch();
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    const userAttributes = { "name": "Rana", "surname": "Volante" };
-
+    console.log("UserProfile:", userProfile);
     return (
         <Navbar className={className} color="primary" light expand="md">
-            <NavbarBrand className="text-white font-weight-bold" href="/">RIALE - {_section}</NavbarBrand>
+            <NavbarBrand className="text-white font-weight-bold" href="/">RIALENET - {_section}</NavbarBrand>
             {showMenu && (<>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
@@ -26,7 +25,7 @@ export const Header = ({ className, section, showMenu = false }: any) => {
                         </Nav>
                     )}
                     <Nav navbar>
-                        { userProfile && 
+                        { userProfile!=null && 
                         <>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle className="text-white" nav caret>{userProfile.name.first}{` `}{userProfile.name.last}</DropdownToggle>

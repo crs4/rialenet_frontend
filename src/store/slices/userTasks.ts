@@ -34,12 +34,12 @@ export const { actions, reducer } = userTasksSlice;
 
 export const selectors = {
   isLogged: (state:any) => {
-    return state.user!=null && localStorage.getItem("passcode")==state.user["passcode"];
+    return state.userTasks.user!=null && localStorage.getItem("passcode")==state.userTasks.user["passcode"];
   },
   getTasks: (state:any) => {
-    return state.tasks;
+    return state.userTasks.tasks;
   },
   getUserProfile: (state:any) => {
-    return state.user;
+    return state.userTasks.user;
   }
 }
