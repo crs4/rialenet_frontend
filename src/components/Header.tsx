@@ -3,14 +3,16 @@ import {
     Container, Button, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav,
     NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap'
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { actions as UserTasksActions, selectors as UserTasksSelectors } from '../store/slices/userTasks'
 
 export const Header = ({ className, section, showMenu = false }: any) => {
 
     const _section = section != undefined ? section : "Forum"
     const [isOpen, setIsOpen] = React.useState(false);
     const toggle = () => setIsOpen(!isOpen);
-    const isAuthenticated = true;
+    const dispatch = useDispatch();
+    const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const userAttributes = { "name": "Rana", "surname": "Volante" };
 
     return (
@@ -24,20 +26,18 @@ export const Header = ({ className, section, showMenu = false }: any) => {
                         </Nav>
                     )}
                     <Nav navbar>
+                        { userProfile && 
                         <>
                             <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle className="text-white" nav caret>{userAttributes.name}{` `}{userAttributes.surname}</DropdownToggle>
+                                <DropdownToggle className="text-white" nav caret>{userProfile.name.first}{` `}{userProfile.name.last}</DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem>
-                                        <NavLink className={"text-primary"}
-                                            style={{ color: 'white', textDecoration: 'none' }}
-                                            tag={Link} to={"/logout"}>
-                                            Logout
-                                        </NavLink>
-                                    </DropdownItem>
+                                <DropdownItem onClick={() => {
+                                            dispatch(UserTasksActions.willLogout(""));
+                                        }}>Logout</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </>
+                        }
                     </Nav>
                 </Collapse>
             </>)}

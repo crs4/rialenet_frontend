@@ -10,13 +10,16 @@ export const userTasksSlice = createSlice({
     reducers: {
      willLogin: (state, action:PayloadAction<any>) => state,
      willLogout: (state, action:PayloadAction<any>) => state,
+     willGetUserProfile: (state, action:PayloadAction<any>) => state,
      willLoadTasks: (state, action:PayloadAction<any>) => state,
 
-      didLogin: (state, action:PayloadAction<any>) => { 
+      didGetUserProfile: (state, action:PayloadAction<any>) => { 
         state.user = action.payload;
       },
+
       didLogout:(state) => { 
         state.user = null;
+        state.tasks = [];
         localStorage.removeItem("passcode");
       },
       didLoadTasks: (state, action:PayloadAction<any>) =>{
@@ -27,7 +30,7 @@ export const userTasksSlice = createSlice({
     }
 });
 
-export const { actions, reducer } = userTasksSlice
+export const { actions, reducer } = userTasksSlice;
 
 export const selectors = {
   isLogged: (state:any) => {
@@ -35,5 +38,8 @@ export const selectors = {
   },
   getTasks: (state:any) => {
     return state.tasks;
+  },
+  getUserProfile: (state:any) => {
+    return state.user;
   }
 }

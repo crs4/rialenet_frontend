@@ -40,7 +40,7 @@ const WenetConnector = () => {
 
     }
 
-    const onEnterPassocode = (ev) => {
+    const onEnterPasscode = (ev) => {
         console.log("entered:", ev.target.value)
         checkPassCode(ev.target.value);
     }
@@ -65,7 +65,7 @@ const WenetConnector = () => {
                 <CardBody>
 
 
-                    <Input onChange={(ev) => onEnterPassocode(ev)} type="text" name="passcode" 
+                    <Input onChange={(ev) => onEnterPasscode(ev)} type="text" name="passcode" 
                     id="passcode" placeholder="enter a passcode" />
 
                 </CardBody>

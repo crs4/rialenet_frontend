@@ -122,9 +122,29 @@ const RialeDiscussionBoard = (props) => {
   }
   
   useEffect(() => {
+    dispatch(UserTasksActions.willGetUserProfile());
     dispatch(UserTasksActions.willLoadTasks());
-    //loadAllTasks()
   }, [])
+
+
+  useEffect(() => {
+    if (tasks!=null)
+    {
+
+      setComment(tasks.map((task) => {
+        return (
+          {
+            "userId": "01a",
+            "comId": "012",
+            "fullName": "Riya Negi",
+            "avatarUrl": "https://ui-avatars.com/api/name=Riya&background=random",
+            "text": task["goal"]["name"],
+            "replies": []
+          })}));
+    }
+    else setComment([]);
+   
+  }, [tasks])
 
 
   return (
