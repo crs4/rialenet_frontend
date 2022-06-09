@@ -1,0 +1,10 @@
+{   "platform_title" : "Piattaforma RialeNet",
+    "passcode_enter" : "Inserisci il tuo codice utente",
+    "comments" : "commenti",
+    "public_area" : "Area pubblica",
+    "teacher_area" : "Chat con i miei studenti",
+    "student_area" : "Chat con i miei docenti",
+    "connect_to_wenet" : "Clicca qui per accedere",
+    "login": "Login",
+    "logout": "Logout"
+  }

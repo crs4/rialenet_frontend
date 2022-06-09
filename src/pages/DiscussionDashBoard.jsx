@@ -153,7 +153,7 @@ const RialeDiscussionBoard = (props) => {
   return (
     <>
     <Header className="mb-0 text-white" section="public_area" showMenu={true} />
-      <SideBar active="public_area" />
+      <SideBar active="public_area" role={userProfile!=null? userProfile.role_id : null} />
       <Content>
         <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
           <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
