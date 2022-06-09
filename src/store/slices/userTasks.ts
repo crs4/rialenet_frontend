@@ -40,6 +40,7 @@ export const selectors = {
     return state.userTasks.tasks;
   },
   getUserProfile: (state:any) => {
+    //return {"role_id" : 1, "name" : {"first" : "test", "last" : "test"}}
     return state.userTasks.user;
   }
 }

@@ -16,9 +16,9 @@ import { useTranslation } from 'react-i18next';
 import { Role } from "../constants";
 
 export const SideBar = ({ active, role }: any) => {
-
+  
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-
+    console.log("Role in sidebar:", role, Role.teacher);
     return (
         <div style={{
             border: '0px solid #000',
@@ -38,7 +38,7 @@ export const SideBar = ({ active, role }: any) => {
                     </NavLink>
                 </NavItem>
                 {
-                    role == Role.student &&
+                    role in [Role.student,Role.admin] &&
                     (
                         <NavItem active={active === "public_area" ? true : false} className="mb-1">
                             <NavLink className={active === "public_area" ? "text-primary" : "text-secondary"}
@@ -51,7 +51,7 @@ export const SideBar = ({ active, role }: any) => {
                     )
                 }
                 {
-                    role == Role.teacher &&
+                    role in [Role.teacher, Role.admin] &&
                     (
                         <NavItem active={active === "public_area" ? true : false} className="mb-1">
                             <NavLink className={active === "public_area" ? "text-primary" : "text-secondary"}
