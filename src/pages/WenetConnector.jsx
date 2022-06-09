@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 import {
     Button, Form, FormGroup, Label, Input, FormText, Card, CardHeader, CardBody,
     CardText, CardTitle, CardFooter
@@ -8,7 +9,8 @@ import {
 
 //https://www.npmjs.com/package/compress-json
 const WenetConnector = () => {
-
+    
+    const { t, i18n } = useTranslation('frontend', { useSuspense: false });
 
     const [passcode, setPasscode] = useState(null);
 
@@ -60,13 +62,13 @@ const WenetConnector = () => {
                     color: 'white'
 
                 }}>
-                    <CardTitle style={{ textAlign: "center" }}>Riale Wenet Platform</CardTitle>
+                    <CardTitle style={{ textAlign: "center" }}>{t("platform_title")}</CardTitle>
                 </CardHeader>
                 <CardBody>
 
 
                     <Input onChange={(ev) => onEnterPasscode(ev)} type="text" name="passcode" 
-                    id="passcode" placeholder="enter a passcode" />
+                    id="passcode" placeholder={t("passcode_enter")} />
 
                 </CardBody>
                     <CardFooter style={{
@@ -76,7 +78,7 @@ const WenetConnector = () => {
                                     }}>
                     {
                         passcode && (
-                            <a href={`/connect?passcode=${passcode}`}>Connect to WeNet</a>
+                            <a href={`/connect?passcode=${passcode}`}>{t("connect_to_wenet")}</a>
                         )
                     }
                         

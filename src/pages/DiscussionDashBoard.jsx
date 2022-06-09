@@ -3,8 +3,8 @@ import { CommentSection } from 'react-comments-section'
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useParams, Link } from 'react-router-dom'
 import moment from 'moment'
-import { selectors as userTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
-
+import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
+import { useTranslation } from 'react-i18next';
 import { Header } from '../components/Header'
 import { SideBar } from '../components/SideBar'
 import { Content } from '../components/Content';
@@ -61,8 +61,11 @@ const md5 = require('md5');
 const RialeDiscussionBoard = (props) => {
   const [comment, setComment] = useState([])
   const dispatch = useDispatch();
-  const tasks =  useSelector(userTasksSelectors.getTasks);  //(result == null) ? [] : result["tasks"]
-
+  
+  const tasks =  useSelector(UserTasksSelectors.getTasks);  //(result == null) ? [] : result["tasks"]
+  const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+  const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+  
   const userId = "01a"
   const avatarUrl = "https://ui-avatars.com/api/name=Riya&background=random"
   const name = "xyz"
@@ -149,15 +152,13 @@ const RialeDiscussionBoard = (props) => {
 
   return (
     <>
-    <Header className="mb-0 text-white" section="Forum" showMenu={true} />
-      <SideBar active="dashboard" />
+    <Header className="mb-0 text-white" section="public_area" showMenu={true} />
+      <SideBar active="public_area" />
       <Content>
         <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
           <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
-            <CardTitle>RIALENET - Forum degli studenti (n.{count} Commenti) {isAuthenticated ? "OK" : "FORBIDDEN"}
-              {passcode && <div className="pull-right">{passcode}
-
-              </div>}
+            <CardTitle>{t("public_area")} (n.{count} {t("comments")}) 
+              {/*passcode && <div className="pull-right">{passcode}</div>*/}
             </CardTitle>
 
           </CardHeader>

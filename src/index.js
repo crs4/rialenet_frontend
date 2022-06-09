@@ -7,6 +7,15 @@ import reportWebVitals from './reportWebVitals';
 import 'react-comments-section/dist/index.css'
 import App from './App';
 
+// seutp i18n ---------------
+import i18n from './i18n';
+
+var lng = window.navigator['userLanguage']|| window.navigator.language;
+if(lng !== 'it-IT'){
+    i18n.changeLanguage('en-US');
+}else{
+    i18n.changeLanguage('it-IT');
+}
    
 ReactDOM.render(
   <React.Fragment>

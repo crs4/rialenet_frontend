@@ -1,0 +1,11 @@
+{
+  "platform_title" : "Riale Wenet Platform",
+  "passcode_enter" : "Enter your passcode",
+  "comments" : "comments",
+  "public_area" : "Public Area",
+  "teacher_area" : "Chat with my students",
+  "student_area" : "Chat with my teachers",
+  "connect_to_wenet": "Connect to WeNet",
+  "login": "Login",
+  "logout": "Logout"
+}

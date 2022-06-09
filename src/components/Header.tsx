@@ -5,10 +5,12 @@ import {
 } from 'reactstrap'
 import { useDispatch, useSelector } from "react-redux";
 import { actions as UserTasksActions, selectors as UserTasksSelectors } from '../store/slices/userTasks'
+import { useTranslation } from 'react-i18next';
 
 export const Header = ({ className, section, showMenu = false }: any) => {
 
-    const _section = section != undefined ? section : "Forum"
+    const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+    const _section = t(section) != undefined ? t(section) : "Forum"
     const [isOpen, setIsOpen] = React.useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const dispatch = useDispatch();
