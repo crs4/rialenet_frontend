@@ -3,8 +3,8 @@
   "passcode_enter" : "Enter your passcode",
   "comments" : "comments",
   "public_area" : "Public Area",
-  "teacher_area" : "Chat with my students",
-  "student_area" : "Chat with my teachers",
+  "teacher_area" : "Teacher Dashboard",
+  "student_area" : "Student Dashboard",
   "connect_to_wenet": "Connect to WeNet",
   "login": "Login",
   "logout": "Logout"

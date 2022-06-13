@@ -14,6 +14,7 @@ import {
   
   import RialeDiscussionBoard from './pages/DiscussionDashBoard'
   import { StudentDashboard } from "./pages/StudentDashboard";
+  import { TeacherDashboard } from "./pages/TeacherDashboard";
   import WenetConnector from "./pages/WenetConnector";
 export const AppRouter = () => { 
   return (<ConnectedRouter history={history}>
@@ -24,6 +25,10 @@ export const AppRouter = () => {
 
     <Route path="/student_dashboard">
           <StudentDashboard />
+    </Route>
+
+    <Route path="/teacher_dashboard">
+          <TeacherDashboard />
     </Route>
 
     <Route path="/">

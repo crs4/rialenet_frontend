@@ -2,30 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Button, Collapse, Form, FormText, Card, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label } from 'reactstrap'
 import {AiOutlineCaretDown,AiOutlineCaretUp } from "react-icons/ai";
 
-const fakeQuestionForm = {
-    "taskId": 2131,
-    "question": "Che cosa è la tagmentazione?",
-    "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
-    "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
-    "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
-    "closed": true
-};
-
-const fakeQuestionForm2 = {
-    "taskId": 2131,
-    "question": "Che cosa è la tagmentazione?",
-    "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
-    "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
-    "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
-    "closed": true
-};
 
 
 const StudentTransaction = (props) => {
 
     const getAnswerOption = (group, message) => {
-        return <FormGroup check>
-            <Input
+        return <FormGroup check disabled={props.transaction.readonly}>
+            <Input disabled={props.transaction.readonly}
                 name={group}
                 type="radio"
             />
@@ -42,11 +25,12 @@ const StudentTransaction = (props) => {
                 <Label for="answerText">
                     <b>Inserisci qui la tua risposta e/o i tuoi commenti</b>
                 </Label>
-                <Input
+                <Input disabled={props.transaction.readonly}
                     id="answerText"
                     name="text"
                     type="textarea"
-                />
+                    value="CIAO!!"
+                /> 
             </div>
         </FormGroup>
     }
@@ -59,7 +43,7 @@ const StudentTransaction = (props) => {
 
     return (
         <Form>
-            {renderAnswerOptions(fakeQuestionForm)}
+            {renderAnswerOptions(props.transaction)}
             {renderAnswerText()}
         </Form>)
 }
@@ -69,15 +53,23 @@ export const StudentTask = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
-    const renderTopicContents = (questionContent) => {
+    const renderTransactions = () => {
+
+        return props.task.transactions && props.task.transactions.map((transaction) => {
+            return <StudentTransaction transaction={transaction}/>
+        })
+    }
+    const renderTopicContents = () => {
+        const question = props.task.goal.name;
         return (
+        
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
 
                 <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
 
                     <CardTitle>
                         <div style={{display:"flex",  justifyContent:"space-between", alignContent:"space-between"}}>
-                        {questionContent["question"]}
+                        {question}
                         { isOpen ?
                         <AiOutlineCaretUp cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretUp> :
                         <AiOutlineCaretDown cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretDown>
@@ -90,8 +82,7 @@ export const StudentTask = (props) => {
                 <Collapse isOpen={isOpen}>
                     <CardBody>
                         <Form>
-                            <StudentTransaction />
-                            <StudentTransaction />
+                          {renderTransactions()}
                         </Form>
                     </CardBody>
                     <CardFooter>
@@ -102,7 +93,7 @@ export const StudentTask = (props) => {
     }
 
     return (
-        renderTopicContents(fakeQuestionForm)
+        renderTopicContents()
     )
 
 }
