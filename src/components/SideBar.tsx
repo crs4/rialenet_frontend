@@ -40,10 +40,10 @@ export const SideBar = ({ active, role }: any) => {
                 {
                     role in [Role.student,Role.admin] &&
                     (
-                        <NavItem active={active === "public_area" ? true : false} className="mb-1">
-                            <NavLink className={active === "public_area" ? "text-primary" : "text-secondary"}
+                        <NavItem active={active === "student_dashboard" ? true : false} className="mb-1">
+                            <NavLink className={active === "student_dashboard" ? "text-primary" : "text-secondary"}
                                 style={{ textDecoration: 'none', fontWeight: 'bolder' }} tag={Link}
-                                to={"/public_area"}>
+                                to={"/student_dashboard"}>
                                 <FontAwesomeIcon icon={faBriefcase} className="mr-2" /> {t("student_area")}
                             </NavLink>
                         </NavItem>

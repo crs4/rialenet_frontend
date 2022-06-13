@@ -13,12 +13,17 @@ import {
   import { history } from './store'
   
   import RialeDiscussionBoard from './pages/DiscussionDashBoard'
+  import { StudentDashboard } from "./pages/StudentDashboard";
   import WenetConnector from "./pages/WenetConnector";
 export const AppRouter = () => { 
   return (<ConnectedRouter history={history}>
   <Switch>
   <Route path="/forum">
           <RialeDiscussionBoard />
+    </Route>
+
+    <Route path="/student_dashboard">
+          <StudentDashboard />
     </Route>
 
     <Route path="/">
