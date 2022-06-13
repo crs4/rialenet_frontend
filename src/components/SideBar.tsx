@@ -33,7 +33,7 @@ export const SideBar = ({ active, role }: any) => {
                 <NavItem active={active === "public_area" ? true : false} className="mb-1">
                     <NavLink className={active === "public_area" ? "text-primary" : "text-secondary"}
                         style={{ textDecoration: 'none', fontWeight: 'bolder' }} tag={Link}
-                        to={"/public_area"}>
+                        to={"/forum"}>
                         <FontAwesomeIcon icon={faBriefcase} className="mr-2" /> {t("public_area")}
                     </NavLink>
                 </NavItem>

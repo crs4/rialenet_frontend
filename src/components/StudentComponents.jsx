@@ -6,10 +6,28 @@ import {AiOutlineCaretDown,AiOutlineCaretUp } from "react-icons/ai";
 
 const StudentTransaction = (props) => {
 
-    const getAnswerOption = (group, message) => {
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(props.transaction.selectedChoiceIndex)
+    const [currentSelectedStudentText, setCurrentStudentText] = useState("")
+
+    const onChangeSelectedChoice = (ev) =>
+    {
+        console.log("selected choice:",ev.target.value);
+        setCurrentSelectedChoice(ev.target.value);
+    }
+
+    const onChangeStudentText= (ev) =>
+    {
+        console.log("current text:",ev.target.value);
+        setCurrentStudentText(ev.target.value);
+    }
+
+    const getAnswerOption = (group, message, index) => {
         return <FormGroup check disabled={props.transaction.readonly}>
             <Input disabled={props.transaction.readonly}
                 name={group}
+                value={index}
+                onChange = { (ev) => onChangeSelectedChoice(ev)}
+                checked={currentSelectedChoice==index}
                 type="radio"
             />
             {' '}
@@ -19,32 +37,53 @@ const StudentTransaction = (props) => {
         </FormGroup>
     }
 
-    const renderAnswerText = () => {
+    const renderStudentAnswerText = () => {
         return <FormGroup>
             <div style={{ marginTop: "20px" }}>
-                <Label for="answerText">
-                    <b>Inserisci qui la tua risposta e/o i tuoi commenti</b>
+                <Label for="studentAnswerText">
+                    <b>Inserisci un tuo commento</b>
                 </Label>
                 <Input disabled={props.transaction.readonly}
-                    id="answerText"
+                    id="studentAnswerText"
                     name="text"
                     type="textarea"
-                    value="CIAO!!"
+                    onChange={ (ev) => onChangeStudentText(ev)}
+                    value={currentSelectedStudentText}
+                /> 
+            </div>
+        </FormGroup>
+    }
+
+    const renderTeacherAnswerText = () => {
+        return <FormGroup>
+            <div style={{ marginTop: "20px" }}>
+                <Label for="teacherAnswerText">
+                    <b>Feedback del docente</b>
+                </Label>
+                <Input disabled={props.transaction.readonly}
+                    id="teacherAnswerText"
+                    name="text"
+                    type="textarea"
+                    value={"RISPOSTA"}
                 /> 
             </div>
         </FormGroup>
     }
 
     const renderAnswerOptions = (request) => {
-        return request && request.answers.map((message) => {
-            return getAnswerOption("studentChoice", message);
+        return request && request.answers.map((message, index) => {
+            return getAnswerOption("studentChoice", message, index);
         })
     }
 
     return (
-        <Form>
+        <Form style={{border: "1px solid #007bff", padding:"10px",margin:"10px"}}>
+            <Label>
+                    <b>Seleziona la risposta:</b>
+                </Label>
             {renderAnswerOptions(props.transaction)}
-            {renderAnswerText()}
+            {renderStudentAnswerText()}
+            {renderTeacherAnswerText()}
         </Form>)
 }
 
@@ -63,16 +102,16 @@ export const StudentTask = (props) => {
         const question = props.task.goal.name;
         return (
         
-            <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
+            <Card className="mb-4" style={{ padding: "10px",  borderColor: "#007bff"}}>
 
-                <CardHeader style={{ backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
+                <CardHeader onClick={() => {toggle()}} style={{ cursor:"pointer", backgroundColor: "#007bff", borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
 
                     <CardTitle>
                         <div style={{display:"flex",  justifyContent:"space-between", alignContent:"space-between"}}>
                         {question}
                         { isOpen ?
-                        <AiOutlineCaretUp cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretUp> :
-                        <AiOutlineCaretDown cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretDown>
+                        <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretUp> :
+                        <AiOutlineCaretDown size={"1.6em"}  cursor="pointer" color='white' onClick={() => {toggle()}}></AiOutlineCaretDown>
                         }
                         
                         </div>

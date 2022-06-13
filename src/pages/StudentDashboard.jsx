@@ -9,6 +9,7 @@ import { selectors as UserTasksSelectors, actions as UserTasksActions } from '..
 const fakeTransaction1 = {
     "taskId": 2131,
     "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
+    "selectedChoiceIndex" : 1,
     "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
     "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
     "readonly" : true
@@ -17,6 +18,7 @@ const fakeTransaction1 = {
 const fakeTransaction2 = {
     "taskId": 2131,
     "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
+    "selectedChoiceIndex" : 0,
     "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
     "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
     "readonly": false
@@ -26,7 +28,7 @@ const fakeTask = {
     "id": 2131, "goal": {
         "name": "Quesito iniziale sulla timeline",
         "description": "Descrizione del questito iniziale della timeline",
-        "keywords": ["social interaction", "lab"]
+        "keywords": ["social interaction", "lab"],
     }, "transactions": [fakeTransaction1, fakeTransaction2]
 }
 
