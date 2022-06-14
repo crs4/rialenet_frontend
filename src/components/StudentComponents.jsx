@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Collapse, Form, FormText, Card, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label } from 'reactstrap'
 import {AiOutlineCaretDown,AiOutlineCaretUp } from "react-icons/ai";
-
+import { useTranslation } from 'react-i18next';
 
 
 const StudentTransaction = (props) => {
+
+    const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+    const transactionOptions = ["cannotAnswer","needClarification","notSure","myAnswer"];
 
     const [currentSelectedChoice, setCurrentSelectedChoice] = useState(props.transaction.selectedChoiceIndex)
     const [currentSelectedStudentText, setCurrentStudentText] = useState("")
@@ -41,7 +44,7 @@ const StudentTransaction = (props) => {
         return <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
-                    <b>Inserisci un tuo commento</b>
+                    <b>{t("enterComment")}</b>
                 </Label>
                 <Input disabled={props.transaction.readonly}
                     id="studentAnswerText"
@@ -58,7 +61,7 @@ const StudentTransaction = (props) => {
         return <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="teacherAnswerText">
-                    <b>Feedback del docente</b>
+                    <b>{t("teacherFeedback")}</b>
                 </Label>
                 <Input disabled={props.transaction.readonly}
                     id="teacherAnswerText"
@@ -70,18 +73,18 @@ const StudentTransaction = (props) => {
         </FormGroup>
     }
 
-    const renderAnswerOptions = (request) => {
-        return request && request.answers.map((message, index) => {
-            return getAnswerOption("studentChoice", message, index);
+    const renderAnswerOptions = () => {
+        return transactionOptions.map((message, index) => {
+            return getAnswerOption("studentChoice", t(message), index);
         })
     }
 
     return (
         <Form style={{border: "1px solid #007bff", padding:"10px",margin:"10px"}}>
             <Label>
-                    <b>Seleziona la risposta:</b>
+                    <b>{t("selectAnswer")}</b>
                 </Label>
-            {renderAnswerOptions(props.transaction)}
+            {renderAnswerOptions()}
             {renderStudentAnswerText()}
             {renderTeacherAnswerText()}
         </Form>)

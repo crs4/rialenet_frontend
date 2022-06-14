@@ -6,5 +6,18 @@
     "student_area" : "Area dello studente",
     "connect_to_wenet" : "Clicca qui per accedere",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+
+    "selectAnswer" : "Seleziona la risposta:",
+    "enterComment" : "Inserisci un tuo commento",
+
+    "cannotAnswer" : "Non so rispondere",
+    "needClarification" : "Ho bisogno di chiarimenti",
+    "notSure" : "Non sono sicuro della risposta" ,
+    "myAnswer" : "Sono in grado di rispondere",
+
+    "teacherFeedback" : "Feedback del docente",
+    "goToAttachment" : "Vai all'allegato della timeline...",
+    "goToTimelinePosition" : "Vai alla timeline alla posizione...",
+    "goToTag" : "Vai al tag..."
   }
