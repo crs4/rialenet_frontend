@@ -33,17 +33,23 @@ const fakeTask = {
 }
 
 
-const tasks = [fakeTask];
+//const tasks = [fakeTask];
 
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    const tasks =  useSelector(UserTasksSelectors.getTasks);
+
+    const renderTasks = () =>
+    {
+        return tasks && tasks.map((task,index) => <StudentTask task={task} />)
+    }
 
     return (
         <>
             <Header className="mb-0 text-white" section="student_area" showMenu={true} />
             <SideBar active="student_dashboard" role={userProfile != null ? userProfile.role_id : null} />
             <Content>
-                <StudentTask task={fakeTask} />
+                {renderTasks()}
             </Content>
         </>
     )
