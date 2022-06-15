@@ -9,6 +9,7 @@ export function* sagas() {
   yield takeLatest(UserTasksActions.willGetUserProfile.type, willGetUserProfile)
   yield takeLatest(UserTasksActions.willLogout.type, willLogout)
   yield takeLatest(UserTasksActions.willLoadTasks.type, willLoadTasks) 
+  yield takeLatest(UserTasksActions.willCreateTask.type, willCreateTask) 
 }
 
 
@@ -33,6 +34,31 @@ function* willLogout(action) {
     } catch (error) {
       yield put(UserTasksActions.didGetUserProfile(null));
     }
+}
+
+
+
+function* willCreateTask(action) {
+
+  const url = `/newtask`;
+  const content = action.payload; // {"name" : "domanda 1" , "description" ; "Cosa sono i ...?"}
+   
+    try{
+    const response = yield call(() => fetch(url,
+      {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ "content": content })  // {"name" : "nome" , "description" : "..."}
+      })
+    .then(response => response.json())
+    .then(myJson => myJson)
+    );
+      console.log("SAGA NEW TASK response:", response);
+  } catch (error) {
+      console.log("SAGA NEW TASK error:".error);
+     // yield put(UserTasksActions.didLoadTasks([]));
+    }
+      
 }
 
 function* willLoadTasks(action) {

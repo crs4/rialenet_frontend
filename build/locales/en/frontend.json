@@ -7,5 +7,23 @@
   "student_area" : "Student Dashboard",
   "connect_to_wenet": "Connect to WeNet",
   "login": "Login",
-  "logout": "Logout"
+  "logout": "Logout",
+
+  "selectAnswer" : "Select the answer:",
+  "enterComment" : "Enter your comment",
+
+  "cannotAnswer" : "I cannot answer",
+  "needClarification" : "I need clarification",
+  "notSure" : "I'm not sure about the answer" ,
+  "myAnswer" : "I can answer",
+  "send" : "Send",
+
+  "teacherFeedback" : "Teacher Feedback",
+  
+  "teacherCreateNewTask"   : "Create new question",
+  "teacherTaskTitle" : "Title",
+  "teacherTaskDescription" : "Description",
+  "goToAttachment" : "Go to attachnent...",
+  "goToTimelinePosition" : "Go to timeline at the position...",
+  "goToTag" : "Go to tag..."
 }

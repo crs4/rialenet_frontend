@@ -27,7 +27,7 @@ export const Header = ({ className, section, showMenu = false }: any) => {
                         </Nav>
                     )}
                     <Nav navbar>
-                        { userProfile!=null && 
+                        { userProfile!=null && userProfile.name!=null &&
                         <>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle className="text-white" nav caret>{userProfile.name.first}{` `}{userProfile.name.last}</DropdownToggle>

@@ -12,6 +12,7 @@ export const userTasksSlice = createSlice({
      willLogout: (state, action:PayloadAction<any>) => state,
      willGetUserProfile: (state, action:PayloadAction<any>) => state,
      willLoadTasks: (state, action:PayloadAction<any>) => state,
+     willCreateTask: (state, action:PayloadAction<any>) => state,
 
       didGetUserProfile: (state, action:PayloadAction<any>) => { 
         state.user = action.payload;

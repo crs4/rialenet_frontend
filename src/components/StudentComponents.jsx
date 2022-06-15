@@ -94,7 +94,8 @@ export const StudentTask = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
-
+    const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+    
     const renderTransactions = () => {
 
         return props.task.transactions && props.task.transactions.map((transaction) => {
@@ -128,7 +129,7 @@ export const StudentTask = (props) => {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary" onClick={(ev) => { }}>Invia</Button>
+                        <Button color="primary" onClick={(ev) => { }}>{t("send")}</Button>
                     </CardFooter>
                 </Collapse>
             </Card>)

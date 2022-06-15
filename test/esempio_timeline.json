@@ -1,0 +1,179 @@
+{
+    "owner": "ducadegliabruzzi",
+    "experiment": "accbe99d-97a8-4f3b-8cf9-8b1f35ef5b87",
+    "origin": null,
+    "parent": "aaeca2c6-ba3e-41dd-a431-fced2b4c846e",
+    "sections": [
+        {
+            "description": "",
+            "title": "Opere famose",
+            "items": [
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2021-11-08T00:14:38.000Z",
+                    "description": "",
+                    "end_offset": 3600,
+                    "source": "",
+                    "type": "Tag",
+                    "title": "Storia di J.S. Bach",
+                    "canResize": "right",
+                    "duration": 3600,
+                    "start_time": "2021-11-07T23:14:38.000Z",
+                    "bgColor": "rgb(0,0,0)",
+                    "id": "d95a43fb-0b37-4223-a003-12f3603070a5",
+                    "start_offset": 0,
+                    "track": 0
+                },
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2021-11-08T01:06:12.000Z",
+                    "description": "",
+                    "end_offset": 6681,
+                    "source": "https://youtu.be/6JQm5aSjX6g",
+                    "type": "Video",
+                    "title": "Opere famose",
+                    "canResize": false,
+                    "duration": 6681,
+                    "start_time": "2021-11-07T23:14:51.000Z",
+                    "bgColor": "rgb(0,0,200)",
+                    "id": "0a5fc76c-9db0-485b-a5d0-e01b605fa77c",
+                    "start_offset": 0,
+                    "track": 10
+                },
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": true,
+                    "end_time": "2021-11-07T23:20:30.000Z",
+                    "description": "",
+                    "end_offset": 300,
+                    "source": "https://it.wikipedia.org/wiki/Johann_Sebastian_Bach",
+                    "type": "Documento",
+                    "title": "Vita di J.S Bach",
+                    "canResize": "right",
+                    "duration": 309,
+                    "start_time": "2021-11-07T23:15:21.000Z",
+                    "bgColor": "rgb(160,147,243)",
+                    "id": "c6ee0521-5095-4b44-89fc-6de34fa7524c",
+                    "start_offset": 0,
+                    "track": 20
+                },
+                {
+                    "start_time": "2021-11-07T23:23:55.000Z",
+                    "test": "ciao",
+                    "end_time": "2021-11-07T23:23:54.999Z",
+                    "id": "c0ecb9a4-8f94-4fa5-91f7-1a398e71ade4"
+                },
+                {
+                    "start_time": "2021-11-07T23:31:34.000Z",
+                    "test": "ciao",
+                    "end_time": "2021-11-07T23:31:34.000Z",
+                    "id": "57f56575-6d8d-4fe8-9150-462d385519ed"
+                },
+                {
+                    "start_time": "2021-11-07T23:33:06.449Z",
+                    "test": "ciao",
+                    "end_time": "2021-11-07T23:33:06.449Z",
+                    "id": "35a8720b-0997-428b-ab3e-3a91ecfe97b3"
+                }
+            ]
+        },
+        {
+            "description": "",
+            "title": "Canzoni su Parigi",
+            "items": [
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2021-12-16T22:38:48.195Z",
+                    "description": "Canzone francese....",
+                    "end_offset": 80.195,
+                    "source": "https://beta.riale.ideab3.it/resources/536d9e69-72af-4965-81c4-50f0f002e24f/surLesQuais.mp3",
+                    "type": "Video",
+                    "title": "Sur le quais",
+                    "canResize": false,
+                    "duration": 80.195918,
+                    "start_time": "2021-12-16T22:37:28.000Z",
+                    "bgColor": "rgb(0,0,200)",
+                    "id": "4bba1575-3b58-4798-b2d5-9c5a4f82595f",
+                    "start_offset": 0,
+                    "track": 10
+                },
+                {
+                    "canMove": false,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2021-12-17T00:26:57.000Z",
+                    "description": "",
+                    "end_offset": 6681,
+                    "source": "https://youtu.be/6JQm5aSjX6g",
+                    "type": "Video",
+                    "title": "Opere famose",
+                    "canResize": false,
+                    "duration": 6681,
+                    "start_time": "2021-12-16T22:35:36.000Z",
+                    "bgColor": "rgb(0,0,200)",
+                    "id": "18f6dc50-9004-43b7-a166-5914eba0b0fb",
+                    "start_offset": 0,
+                    "track": 10
+                }
+            ]
+        },
+        {
+            "description": "",
+            "title": "provaUndo",
+            "items": [
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2022-02-23T23:54:22.000Z",
+                    "description": "",
+                    "end_offset": 3600,
+                    "source": "",
+                    "type": "Tag",
+                    "title": "prova",
+                    "canResize": "right",
+                    "duration": 3600,
+                    "start_time": "2022-02-23T22:54:22.000Z",
+                    "bgColor": "rgb(0,0,0)",
+                    "id": "980bd44a-2bb8-4ea2-8683-e6f74f287621",
+                    "start_offset": 0,
+                    "track": 0
+                },
+                {
+                    "canMove": true,
+                    "color": "rgb(255,255,255)",
+                    "canChangeGroup": false,
+                    "end_time": "2022-02-23T23:59:03.000Z",
+                    "description": "",
+                    "end_offset": 3600,
+                    "source": "",
+                    "type": "Tag",
+                    "title": "test2",
+                    "canResize": "right",
+                    "duration": 3600,
+                    "start_time": "2022-02-23T22:59:03.000Z",
+                    "bgColor": "rgb(0,0,0)",
+                    "id": "ac6c98fc-46d1-4204-b34d-dbd01d09cb33",
+                    "start_offset": 0,
+                    "track": 0
+                }
+            ]
+        }
+    ],
+    "title": "Bach e la musica barocca",
+    "description": "Percorso musicale",
+    "experimentStartTime": "2021-10-19",
+    "experimentStopTime": "2021-10-19",
+    "creationDate": "2022-04-07T15:10:05.491Z",
+    "createdBy": "87edd2cc-b49c-46a5-a7f4-ced59c7eeb1d",
+    "clonable": false,
+    "status": "ACTIVE",
+    "__typename": "PublicExperiment"
+}
