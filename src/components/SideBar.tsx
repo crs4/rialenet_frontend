@@ -18,7 +18,7 @@ import { Role } from "../constants";
 export const SideBar = ({ active, role }: any) => {
   
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    console.log("Role in sidebar:", role, Role.teacher);
+    console.log("Role in sidebar?", role, Role.teacher, role in [Role.teacher,Role.admin]);
     return (
         <div style={{
             border: '0px solid #000',
