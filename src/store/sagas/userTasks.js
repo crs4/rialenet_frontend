@@ -78,3 +78,16 @@ function* willLoadTasks(action) {
       yield put(UserTasksActions.didLoadTasks([]));
     }
 }
+
+
+/*
+const newTransaction = {
+        "taskId": "62a0b984925841535833b690",
+        "label": "cannotAnswer",
+        "attributes": {
+            "reason": "...."
+        },
+        "actioneerId": "studente",
+        "messages": []
+     }
+     */

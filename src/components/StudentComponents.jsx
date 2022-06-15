@@ -104,6 +104,17 @@ export const StudentTask = (props) => {
             return <StudentTransaction transaction={transaction} />
         })
     }
+
+    const renderNewTransaction = () => {
+
+        const newTransaction = {
+            "readOnly" : false,
+            "selectedChoiceIndex" : -1
+         }
+
+         return <StudentTransaction transaction={newTransaction} />
+    }
+
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
@@ -136,6 +147,7 @@ export const StudentTask = (props) => {
                     <CardBody>
                         <Form>
                             {renderTransactions()}
+                            {renderNewTransaction()}
                         </Form>
                     </CardBody>
                     <CardFooter>
