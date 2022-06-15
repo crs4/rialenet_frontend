@@ -62,9 +62,9 @@ function* willCreateTask(action) {
 }
 
 function* willLoadTasks(action) {
-    const data = action.payload;
-    const passcode = localStorage.getItem("passcode")
-    const url = `/tasks?passcode=${passcode}`;
+    //const data = action.payload;
+    //const passcode = localStorage.getItem("passcode")
+    const url = `/tasks`;
    
     try{
     const response = yield call(() => fetch(url)
