@@ -18,7 +18,7 @@ import { Role } from "../constants";
 export const SideBar = ({ active, role }: any) => {
   
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    console.log("Role in sidebar?", role, Role.teacher, role in [Role.teacher,Role.admin]);
+    console.log("Role in sidebar ->", role, Role.teacher, (role==Role.teacher || role==Role.admin));
     return (
         <div style={{
             border: '0px solid #000',
@@ -38,7 +38,7 @@ export const SideBar = ({ active, role }: any) => {
                     </NavLink>
                 </NavItem>
                 {
-                    role in [Role.student,Role.admin] &&
+                    (role==Role.student || role==Role.admin) &&
                     (
                         <NavItem active={active === "student_dashboard" ? true : false} className="mb-1">
                             <NavLink className={active === "student_dashboard" ? "text-primary" : "text-secondary"}
@@ -51,7 +51,7 @@ export const SideBar = ({ active, role }: any) => {
                     )
                 }
                 {
-                    role in [Role.teacher, Role.admin] &&
+                    (role==Role.teacher || role==Role.admin) &&
                     (
                         <NavItem active={active === "teacher_dashboard" ? true : false} className="mb-1">
                             <NavLink className={active === "teacher_dashboard" ? "text-primary" : "text-secondary"}
