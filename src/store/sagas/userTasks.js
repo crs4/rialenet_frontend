@@ -10,6 +10,7 @@ export function* sagas() {
   yield takeLatest(UserTasksActions.willLogout.type, willLogout)
   yield takeLatest(UserTasksActions.willLoadTasks.type, willLoadTasks) 
   yield takeLatest(UserTasksActions.willCreateTask.type, willCreateTask) 
+  yield takeLatest(UserTasksActions.willCreateTransaction.type, willCreateTransaction) 
 }
 
 
@@ -56,6 +57,29 @@ function* willCreateTask(action) {
       console.log("SAGA NEW TASK response:", response);
   } catch (error) {
       console.log("SAGA NEW TASK error:".error);
+     // yield put(UserTasksActions.didLoadTasks([]));
+    }
+}
+
+function* willCreateTransaction(action) {
+
+  const url = `/newtransaction`;
+  const content = action.payload; // {"taskId" : "xxxx" , "content" : {} }
+   
+    try{
+    const response = yield call(() => fetch(url,
+      {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ "content": content })  // {"taskId" : "xxxx" , 
+        //"content" : {"label" :"label", "message" :"myMessage"}}
+      })
+    .then(response => response.json())
+    .then(myJson => myJson)
+    );
+      console.log("SAGA NEW TRANSACTION response:", response);
+  } catch (error) {
+      console.log("SAGA NEW TRANSACTION error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
     }
       

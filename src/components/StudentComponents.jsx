@@ -6,6 +6,9 @@ import {
 } from 'reactstrap'
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from "react-redux";
+import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
+import { createNewTransaction } from '../api/wenet_api';
 
 
 const StudentTransaction = (props) => {
@@ -13,22 +16,26 @@ const StudentTransaction = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const transactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
 
-    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(props.transaction.selectedChoiceIndex)
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(props.transaction.selectedChoiceIndex || -1)
     const [currentSelectedStudentText, setCurrentStudentText] = useState("")
 
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
+        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(transactionOptions[currentSelectedChoice],
+            currentSelectedStudentText)
     }
 
     const onChangeStudentText = (ev) => {
         console.log("current text:", ev.target.value);
         setCurrentStudentText(ev.target.value);
+        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(transactionOptions[currentSelectedChoice],
+            ev.target.value)
     }
 
     const getAnswerOption = (group, message, index) => {
-        return <FormGroup check disabled={props.transaction.readonly}>
-            <Input disabled={props.transaction.readonly}
+        return <FormGroup check disabled={props.readonly}>
+            <Input disabled={props.readonly}
                 name={group}
                 value={index}
                 onChange={(ev) => onChangeSelectedChoice(ev)}
@@ -48,7 +55,7 @@ const StudentTransaction = (props) => {
                 <Label for="studentAnswerText">
                     <b>{t("enterComment")}</b>
                 </Label>
-                <Input disabled={props.transaction.readonly}
+                <Input disabled={props.readonly}
                     id="studentAnswerText"
                     name="text"
                     type="textarea"
@@ -65,7 +72,7 @@ const StudentTransaction = (props) => {
                 <Label for="teacherAnswerText">
                     <b>{t("teacherFeedback")}</b>
                 </Label>
-                <Input disabled={props.transaction.readonly}
+                <Input disabled={props.readonly}
                     id="teacherAnswerText"
                     name="text"
                     type="textarea"
@@ -97,11 +104,22 @@ export const StudentTask = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+    const dispatch = useDispatch();
+    const [transactionData, setTransactionData] = useState(null);
 
+    const createNewTransaction = () =>
+    {
+        if (transactionData==null) return;
+        const taskId = props.task["id"];
+        const payload = { "taskId" : taskId, "content" : {"label" :transactionData["label"], 
+        "message" : transactionData["message"]}}
+        dispatch(UserTasksActions.willCreateTransaction(payload));
+       }
+    
     const renderTransactions = () => {
 
         return props.task.transactions && props.task.transactions.map((transaction) => {
-            return <StudentTransaction transaction={transaction} />
+            return <StudentTransaction readonly transaction={transaction} />
         })
     }
 
@@ -112,7 +130,9 @@ export const StudentTask = (props) => {
             "selectedChoiceIndex" : -1
          }
 
-         return <StudentTransaction transaction={newTransaction} />
+         return <StudentTransaction onUpdate = { (label,message) => setTransactionData({label,message})} 
+         
+         transaction={newTransaction} />
     }
 
     const renderTopicContents = () => {
@@ -151,7 +171,7 @@ export const StudentTask = (props) => {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary" onClick={(ev) => { }}>{t("send")}</Button>
+                        <Button color="primary" onClick={(ev) => {createNewTransaction() }}>{t("send")}</Button>
                     </CardFooter>
                 </Collapse>
             </Card>)
