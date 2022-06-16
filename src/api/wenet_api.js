@@ -12,7 +12,7 @@ export const createNewTask = async (content) => {
       const result = await response.text();
       console.log("WENET newtask result:", result)
       // ricarico tutti i task dopo che ne ho aggiunto
-      await loadAllTasks();
+      //await loadAllTasks();
 
     } catch (e) { console.log("WENET newtask response error:", e) }
   }
@@ -32,7 +32,7 @@ export const createNewTask = async (content) => {
       const result = await response.text();
       console.log("WENET newtransaction result:", result)
       // ricarico tutti i task dopo che ne ho aggiunto
-      await loadAllTasks();
+      //await loadAllTasks();
 
     } catch (e) { console.log("WENET newtransaction response error:", e) }
   }
