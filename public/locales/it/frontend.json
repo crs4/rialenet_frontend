@@ -24,5 +24,13 @@
 
   "goToAttachment": "Vai all'allegato della timeline...",
   "goToTimelinePosition": "Vai alla timeline alla posizione...",
-  "goToTag": "Vai al tag..."
+  "goToTag": "Vai al tag...",
+
+  "comment_on_cannotAnswer" : "inserisci un commento",
+  "comment_on_needClarification" : "Inserisci un commento",
+  "comment_on_notSure" : "Inserisci un commento",
+  "comment_on_myAnswer" : "Inserisci qui la risposta",
+  "comment_on_goToAttachment" : "Inserisci qui il nome dell'allegato",
+  "comment_on_goToTimelinePosition" : "Inserisci il link alla timeline",
+  "comment_on_goToTag" : "Inserisci qui il nome del Tag"
 }

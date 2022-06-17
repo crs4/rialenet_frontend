@@ -50,10 +50,10 @@ const StudentTransaction = (props) => {
     }
 
     const renderStudentAnswerText = () => {
-        return <FormGroup>
+        return currentSelectedChoice>=0 && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
-                    <b>{t("enterComment")}</b>
+                    <b>{t(`comment_on_${transactionOptions[currentSelectedChoice]}`)}</b>
                 </Label>
                 <Input disabled={props.readonly}
                     id="studentAnswerText"
