@@ -17,7 +17,7 @@ export const Header = ({ className, section, showMenu = false }: any) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     console.log("UserProfile:", userProfile);
     return (
-        <Navbar className={className} color="primary" light expand="md">
+        <Navbar style={{marginBottom:"10px"}} className={className} color="primary" light expand="md">
             <NavbarBrand className="text-white font-weight-bold" href="/">RIALENET - {_section}</NavbarBrand>
             {showMenu && (<>
                 <NavbarToggler onClick={toggle} />
