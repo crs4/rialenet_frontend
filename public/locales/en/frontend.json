@@ -36,5 +36,12 @@
   "comment_on_goToTag" : "Enter the Tag name",
 
   "students_answers" : "Students answers",
-  "students_profile" : "Students profile"
+  "students_profile" : "Students profile",
+
+  "name" : "Name",
+  "surname" : "Surname",
+  "passcode" : "Passcode",
+  "description" : "Description",
+  "profile" : "Profile",
+  "details" : "Details"
 }

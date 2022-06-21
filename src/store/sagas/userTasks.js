@@ -9,6 +9,8 @@ export function* sagas() {
   yield takeLatest(UserTasksActions.willGetUserProfile.type, willGetUserProfile)
   yield takeLatest(UserTasksActions.willLogout.type, willLogout)
   yield takeLatest(UserTasksActions.willLoadTasks.type, willLoadTasks) 
+  yield takeLatest(UserTasksActions.willLoadStudentsProfile.type, willLoadStudentsProfile) 
+  
   yield takeLatest(UserTasksActions.willCreateTask.type, willCreateTask) 
   yield takeLatest(UserTasksActions.willCreateTransaction.type, willCreateTransaction) 
 }
@@ -102,6 +104,22 @@ function* willLoadTasks(action) {
       yield put(UserTasksActions.didLoadTasks([]));
     }
 }
+
+function* willLoadStudentsProfile(action) {
+  const url = `/students`;
+  try{
+  const response = yield call(() => fetch(url)
+  .then(response => response.json())
+  .then(myJson => myJson)
+  );
+  const studentsProfile = (response == null) ? [] : response;
+  yield put(UserTasksActions.didLoadStudentsProfile(studentsProfile));
+  } catch (error) {
+    yield put(UserTasksActions.didLoadStudentsProfile([]));
+  }
+}
+
+
 
 
 /*

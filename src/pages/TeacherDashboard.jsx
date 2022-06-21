@@ -5,6 +5,8 @@ import { Content } from '../components/Content';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { useSelector, useDispatch } from "react-redux";
 import { TaskCreator } from '../components/TeacherComponents';
+import { StudentsProfileViewer } from '../components/StudentsProfileViewer';
+
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -41,7 +43,7 @@ export const TeacherDashboard = (props) => {
                         <TaskCreator />
                     </TabPane>
                     <TabPane tabId="1">
-                        <p>Profilo degli studenti</p>
+                        <StudentsProfileViewer/>
                     </TabPane>
                 </TabContent>
 

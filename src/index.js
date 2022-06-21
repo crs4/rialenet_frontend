@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import RialeDiscussionBoard from './pages/DiscussionDashBoard';
 import reportWebVitals from './reportWebVitals';
 import 'react-comments-section/dist/index.css'

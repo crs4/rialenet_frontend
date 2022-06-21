@@ -32,5 +32,8 @@
   "comment_on_myAnswer" : "Inserisci qui la risposta",
   "comment_on_goToAttachment" : "Inserisci qui il nome dell'allegato",
   "comment_on_goToTimelinePosition" : "Inserisci il link alla timeline",
-  "comment_on_goToTag" : "Inserisci qui il nome del Tag"
+  "comment_on_goToTag" : "Inserisci qui il nome del Tag",
+
+  "students_answers" : "Risposte degli studenti",
+  "students_profile" : "Profilo degli studenti"
 }

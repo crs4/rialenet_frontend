@@ -4,7 +4,8 @@ export const userTasksSlice = createSlice({
     name: 'userTasks',
     initialState: {
       user:null,
-      tasks: []
+      tasks: [],
+      studentsProfile: []
     }
   ,
     reducers: {
@@ -14,6 +15,7 @@ export const userTasksSlice = createSlice({
      willLoadTasks: (state, action:PayloadAction<any>) => state,
      willCreateTask: (state, action:PayloadAction<any>) => state,
      willCreateTransaction: (state, action:PayloadAction<any>) => state,
+     willLoadStudentsProfile: (state, action:PayloadAction<any>) => state,
       
      didGetUserProfile: (state, action:PayloadAction<any>) => { 
         state.user = action.payload;
@@ -24,9 +26,15 @@ export const userTasksSlice = createSlice({
         state.tasks = [];
         localStorage.removeItem("passcode");
       },
+
       didLoadTasks: (state, action:PayloadAction<any>) =>{
         state.tasks = action.payload;
       },
+
+      didLoadStudentsProfile: (state, action:PayloadAction<any>) =>{
+        state.studentsProfile = action.payload;
+      },
+ 
  
     
     }
@@ -44,5 +52,8 @@ export const selectors = {
   getUserProfile: (state:any) => {
     //return {"role_id" : 1, "name" : {"first" : "test", "last" : "test"}}
     return state.userTasks.user;
+  },
+  getStudentsProfile: (state:any) => {
+    return state.userTasks.studentsProfile;
   }
 }
