@@ -62,11 +62,11 @@ const fakeTask = {
 }
 
 
-const tasks = [fakeTask];
+//const tasks = [fakeTask];
 
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    //const tasks = [fakeTask]; // useSelector(UserTasksSelectors.getTasks);
+    const tasks =  useSelector(UserTasksSelectors.getTasks);
 
    
      
