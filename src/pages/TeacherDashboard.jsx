@@ -4,11 +4,13 @@ import { SideBar } from '../components/SideBar'
 import { Content } from '../components/Content';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { useSelector, useDispatch } from "react-redux";
-import { TaskCreator } from '../components/TeacherComponents';
+import { TaskCreator, TeacherTasksViewer } from '../components/TeacherComponents';
 import { StudentsProfileViewer } from '../components/StudentsProfileViewer';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import { fakeTask } from '../components/common';
+
 
 export const TeacherDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
@@ -40,7 +42,7 @@ export const TeacherDashboard = (props) => {
                 </Nav>
                 <TabContent activeTab={activeTab}>
                     <TabPane tabId="0">
-                        <TaskCreator />
+                        <TeacherTasksViewer/>
                     </TabPane>
                     <TabPane tabId="1">
                         <StudentsProfileViewer/>

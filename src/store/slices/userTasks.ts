@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { profile } from "console";
 
 export const userTasksSlice = createSlice({
     name: 'userTasks',
@@ -55,5 +56,15 @@ export const selectors = {
   },
   getStudentsProfile: (state:any) => {
     return state.userTasks.studentsProfile;
+  },
+
+  getStudentDetailsByWenetID: (wenet_id:any) => (state:any) => {
+     const profiles = state.userTasks.studentsProfile;
+     for (let i=0;i<profiles.length;i++)
+     {
+       if (profiles[i]["wenet_id"]==wenet_id)
+       return profiles[i];
+     }
+     return null;
   }
 }

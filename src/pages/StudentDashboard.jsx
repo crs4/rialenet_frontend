@@ -5,6 +5,7 @@ import { Content } from '../components/Content';
 import { StudentTask } from '../components/StudentComponents';
 import { useSelector, useDispatch } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
+import { fakeTask } from '../components/common';
 
 const fakeTransaction1 = {
     "taskId": 2131,
@@ -24,42 +25,7 @@ const fakeTransaction2 = {
     "readonly": false
 };
 
-const fakeStudentTransactions = [
-    {
-       "taskId":"62a9ff27925841535833b6a1",
-       "label":"needClarification",
-       "attributes":{
-          "note":"Avrei bisogno di aiuto perchè non ho capito la domanda"
-       },
-       "actioneerId":"928",
-       "messages":[
-          
-       ],
-       "id":"0",
-       "_creationTs":1655835879,
-       "_lastUpdateTs":1655835879
-    },
-    {
-       "taskId":"62a9ff27925841535833b6a1",
-       "label":"notSure",
-       "attributes":{
-          "note":"Non saprei rispondere"
-       },
-       "actioneerId":"928",
-       "messages":[
-          
-       ]
-    }
-]
 
-const fakeTask = {
-    "id": 2131, "_creationTs":1655308072,"_lastUpdateTs":1655308072, 
-    "goal": {
-        "name": "Quesito iniziale sulla timeline",
-        "description": "Descrizione del questito iniziale della timeline",
-        "keywords": ["social interaction", "lab"],
-    }, "transactions": fakeStudentTransactions
-}
 
 
 //const tasks = [fakeTask];

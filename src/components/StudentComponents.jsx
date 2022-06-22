@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { createNewTransaction } from '../api/wenet_api';
 import moment from 'moment';
-
+import {transactionFieldMapper, studentsTransactionOptions} from './common';
 
 const fakeStudentTransactions = [
     {
@@ -40,37 +40,28 @@ const fakeStudentTransactions = [
     }
 ]
 
-const transactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
-const transactionFieldMapper = {
-    "cannotAnswer": "note",
-    "needClarification": "note",
-    "notSure": "note",
-    "myAnswer": "answer",
-    "goToAttachment": "attachment",
-    "goToTimelinePosition": "timelineLink",
-    "goToTag": "tag"
-}
+
 
 const StudentTransaction = (props) => {
     
     const {transaction} = props;
     console.log("Transaction: (props) ", transaction);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction==null? -1 : transactionOptions.indexOf(transaction["label"]))
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction==null? -1 : studentsTransactionOptions.indexOf(transaction["label"]))
     const [currentSelectedStudentText, setCurrentStudentText] = 
     useState(transaction==null? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
 
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(transactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             currentSelectedStudentText)
     }
 
     const onChangeStudentText = (ev) => {
         console.log("current text:", ev.target.value);
         setCurrentStudentText(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(transactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             ev.target.value)
     }
 
@@ -94,7 +85,7 @@ const StudentTransaction = (props) => {
         return currentSelectedChoice>=0 && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
-                    <b>{t(`comment_on_${transactionOptions[currentSelectedChoice]}`)}</b>
+                    <b>{t(`comment_on_${studentsTransactionOptions[currentSelectedChoice]}`)}</b>
                 </Label>
                 <Input disabled={props.readonly}
                     id="studentAnswerText"
@@ -124,7 +115,7 @@ const StudentTransaction = (props) => {
     }
 
     const renderAnswerOptions = () => {
-        return transactionOptions.map((message, index) => {
+        return studentsTransactionOptions.map((message, index) => {
             return getAnswerOption("studentChoice", t(message), index);
         })
     }
@@ -179,7 +170,7 @@ export const StudentTask = (props) => {
             console.log("Transaction: (Filter):", transaction);
             // mostro solo le transactions create dallo studente compatilmente con le
             // label definite dalla app logic
-            return transactionOptions.includes(transaction["label"]) 
+            return studentsTransactionOptions.includes(transaction["label"]) 
             && userProfile!=null && userProfile["id"]== transaction["actioneerId"]
             
         })
