@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Collapse, Form, FormText, Card, CardSubtitle,CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label } from 'reactstrap'
+import { Button, Collapse, Form, FormText, Card, CardSubtitle, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label } from 'reactstrap'
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
-import {transactionFieldMapper, studentsTransactionOptions} from './common';
+import { transactionFieldMapper, studentsTransactionOptions } from './common';
 import { fakeTask } from '../components/common';
 import moment from 'moment';
-import { selectors as StudentsProfileSelector, actions as StudentsProfileAction} from '../store/slices/userTasks'
+import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 
 // link timeline drosophila
 //https://beta.riale.ideab3.it/public/a6563273-863b-4e60-8b05-c6b41b332b42
 
 const TeacherTransaction = (props) => {
-    
-    const {transaction} = props;
-    const transactionActioneer = useSelector(StudentsProfileSelector.getStudentDetailsByWenetID(transaction && transaction["actioneerId"]));
 
+    const { transaction } = props;
     console.log("Transaction: (props) ", transaction);
+    const transactionActioneer = useSelector(StudentsProfileSelector.getStudentDetailsByWenetID(transaction && transaction["actioneerId"]));   
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction==null? -1 : studentsTransactionOptions.indexOf(transaction["label"]))
-    const [currentSelectedStudentText, setCurrentStudentText] = 
-    useState(transaction==null? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction == null ? -1 : studentsTransactionOptions.indexOf(transaction["label"]))
+    const [currentSelectedStudentText, setCurrentStudentText] =
+        useState(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
 
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             currentSelectedStudentText)
     }
 
     const onChangeStudentText = (ev) => {
         console.log("current text:", ev.target.value);
         setCurrentStudentText(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             ev.target.value)
     }
 
@@ -54,10 +53,10 @@ const TeacherTransaction = (props) => {
     }
 
     const renderStudentAnswerText = () => {
-        return currentSelectedChoice>=0 && <FormGroup>
+        return currentSelectedChoice >= 0 && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
-                    <b>{t(`comment_on_${studentsTransactionOptions[currentSelectedChoice]}`)}</b>
+                    <b>{t(`teacher_comment_on_${studentsTransactionOptions[currentSelectedChoice]}`)}</b>
                 </Label>
                 <Input disabled={props.readonly}
                     id="studentAnswerText"
@@ -94,92 +93,96 @@ const TeacherTransaction = (props) => {
 
     return (
         <>
-         { props.transaction &&
-               <div style={{display:"flex",  justifyContent: "flex-end"}}>
-               <Label>
-                   <b>{ transactionActioneer && transactionActioneer["name"]} {transactionActioneer && ` - `} {transactionActioneer && transactionActioneer["surname"]} 
-                     {moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
-               </Label>
+            {props.transaction &&
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    {transactionActioneer ?
+                        <Label>
+                            <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
+                                {' - '} {moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+                        </Label>
+                        :
+                        <Label>
+                            <b>{moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+                        </Label>}
+
                </div>
             }
-        <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
-           
-           
-            <Label>
-                <b>{t("selectAnswer")}</b>
-            </Label>
-            {renderAnswerOptions()}
-            {renderStudentAnswerText()}
-            {renderTeacherAnswerText()}
-        </Form>
+            <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
+
+
+                <Label>
+                    <b>{t("teacher_selectAnswer")}</b>
+                </Label>
+                {renderAnswerOptions()}
+                {renderStudentAnswerText()}
+                {renderTeacherAnswerText()}
+            </Form>
         </>)
 }
 
-export const TaskCreator = (props) => 
-{
+export const TaskCreator = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
 
-    const [currentTaskTitle,setCurrentTaskTitle] = useState("");
-    const [currentTaskDescription,setCurrentTaskDescription] = useState("");
+    const [currentTaskTitle, setCurrentTaskTitle] = useState("");
+    const [currentTaskDescription, setCurrentTaskDescription] = useState("");
     const dispatch = useDispatch();
 
-    const createNewTask = (ev) => 
-    {
-        dispatch(UserTasksActions.willCreateTask({"name" : currentTaskTitle,    
-                                          "description" : currentTaskDescription}))
+    const createNewTask = (ev) => {
+        dispatch(UserTasksActions.willCreateTask({
+            "name": currentTaskTitle,
+            "description": currentTaskDescription
+        }))
     }
 
-    const onChangeTaskTitle = (ev) =>
-    {
+    const onChangeTaskTitle = (ev) => {
         setCurrentTaskTitle(ev.target.value)
     }
 
-    const onChangeTaskDescription = (ev) =>
-    {
+    const onChangeTaskDescription = (ev) => {
         setCurrentTaskDescription(ev.target.value)
     }
 
     return (
-    <Card className="mb-4" style={{ padding: "10px",  borderColor: "#007bff"}}>
-        <CardTitle>
-            {t("teacherCreateNewTask")}
-        </CardTitle>
-        <CardBody>
-        <Form>
-        <FormGroup>
-            <div style={{ marginTop: "20px" }}>
-                <Label for="teacherTaskTitle">
-                    <b>{t("teacherTaskTitle")}</b>
-                </Label>
-                <Input
-                    id="teacherTaskTitle"
-                    name="text"
-                    type="text"
-                    onChange = {(ev) => onChangeTaskTitle(ev)}
-                    value={currentTaskTitle}
-                />
-            </div>
-        </FormGroup>
-        <FormGroup>
-            <div style={{ marginTop: "20px" }}>
-                <Label for="teacherTaskDescription">
-                    <b>{t("teacherTaskDescription")}</b>
-                </Label>
-                <Input
-                    id="teacherTaskDescription"
-                    name="text"
-                    type="textarea"
-                    onChange = {(ev) => onChangeTaskDescription(ev)}
-                    value={currentTaskDescription}
-                />
-            </div>
-        </FormGroup>
-    </Form>
-        </CardBody>
-        <CardFooter>
-        <Button color="primary" onClick={(ev) => { createNewTask(ev) }}>{t("send")}</Button>
-        </CardFooter>
-    </Card>)
+        <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
+            <CardTitle>
+                {t("teacherCreateNewTask")}
+            </CardTitle>
+            <CardBody>
+                <Form>
+                    <FormGroup>
+                        <div style={{ marginTop: "20px" }}>
+                            <Label for="teacherTaskTitle">
+                                <b>{t("teacherTaskTitle")}</b>
+                            </Label>
+                            <Input
+                                id="teacherTaskTitle"
+                                name="text"
+                                type="text"
+                                onChange={(ev) => onChangeTaskTitle(ev)}
+                                value={currentTaskTitle}
+                            />
+                        </div>
+                    </FormGroup>
+                    <FormGroup>
+                        <div style={{ marginTop: "20px" }}>
+                            <Label for="teacherTaskDescription">
+                                <b>{t("teacherTaskDescription")}</b>
+                            </Label>
+                            <Input
+                                id="teacherTaskDescription"
+                                name="text"
+                                type="textarea"
+                                onChange={(ev) => onChangeTaskDescription(ev)}
+                                value={currentTaskDescription}
+                            />
+                        </div>
+                    </FormGroup>
+                </Form>
+            </CardBody>
+            <CardFooter>
+                <Button color="primary" onClick={(ev) => { createNewTask(ev) }}>{t("send")}</Button>
+            </CardFooter>
+        </Card>)
 }
 
 
@@ -190,14 +193,13 @@ export const TeacherTasksViewer = (props) => {
     //const tasks =  useSelector(UserTasksSelectors.getTasks);
 
 
-    const renderTasks = () =>
-    {
-        return tasks && tasks.map((task,index) => <TeacherTaskViewer task={task} />)
+    const renderTasks = () => {
+        return tasks && tasks.map((task, index) => <TeacherTaskViewer task={task} />)
     }
 
     return (
         <>
-        {renderTasks()} 
+            {renderTasks()}
         </>
     )
 }
@@ -211,34 +213,35 @@ export const TeacherTaskViewer = (props) => {
     const [transactionData, setTransactionData] = useState(null);
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
 
-    const createNewTransaction = () =>
-    {
-        if (transactionData==null) return;
+    const createNewTransaction = () => {
+        if (transactionData == null) return;
         const taskId = props.task["id"];
-        const payload = { "taskId" : taskId, "content" : {"label" :transactionData["label"], 
-        "message" : transactionData["message"]}}
+        const payload = {
+            "taskId": taskId, "content": {
+                "label": transactionData["label"],
+                "message": transactionData["message"]
+            }
+        }
         dispatch(UserTasksActions.willCreateTransaction(payload));
-       }
-    
-    const getFilteredTransactions = () =>
-    {  
-        console.log("Transaction: (Task):", props.task.transactions);
-        if (props.task.transactions==null) return [];
+    }
 
-        const ft = props.task.transactions.filter((transaction) =>
-        {
+    const getFilteredTransactions = () => {
+        console.log("Transaction: (Task):", props.task.transactions);
+        if (props.task.transactions == null) return [];
+
+        const ft = props.task.transactions.filter((transaction) => {
             console.log("Transaction: (Filter):", transaction);
             // mostro tutte le transactions create dagli compatilmente con le
             // label definite dalla app logic
-            return studentsTransactionOptions.includes(transaction["label"]) 
+            return studentsTransactionOptions.includes(transaction["label"])
         })
         // ordinate cronologicamente dalla più recente alla meno recente
-        ft.sort((t1,t2) => (t1["_creationTs"]- t2["_creationTs"]))
+        ft.sort((t1, t2) => (t1["_creationTs"] - t2["_creationTs"]))
         return ft
     }
 
     const renderTransactions = () => {
-        const filteredTransactions =  getFilteredTransactions()
+        const filteredTransactions = getFilteredTransactions()
         console.log("Transaction: (filter):", filteredTransactions);
         return filteredTransactions.map((transaction) => {
             return <TeacherTransaction readonly transaction={transaction} />
@@ -246,7 +249,7 @@ export const TeacherTaskViewer = (props) => {
     }
 
     const renderNewTransaction = () => {
-         return <TeacherTransaction onUpdate = { (label,message) => setTransactionData({label,message})} />
+        return <TeacherTransaction onUpdate={(label, message) => setTransactionData({ label, message })} />
     }
 
     const renderTopicContents = () => {
@@ -286,7 +289,7 @@ export const TeacherTaskViewer = (props) => {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary" onClick={(ev) => {createNewTransaction() }}>{t("send")}</Button>
+                        <Button color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</Button>
                     </CardFooter>
                 </Collapse>
             </Card>)
