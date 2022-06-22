@@ -10,6 +10,7 @@
   "logout": "Logout",
 
   "selectAnswer" : "Select the answer:",
+  "teacher_selectAnswer":"Selected answer",
   "enterComment" : "Enter your comment",
 
   "cannotAnswer" : "I cannot answer",
@@ -34,6 +35,11 @@
   "comment_on_goToAttachment" : "Enter the attachment title",
   "comment_on_goToTimelinePosition" : "Enter the link to the timeline",
   "comment_on_goToTag" : "Enter the Tag name",
+
+  "teacher_comment_on_cannotAnswer" : "Student comment",
+  "teacher_comment_on_needClarification" : "Student commen",
+  "teacher_comment_on_notSure" : "Student commen",
+  "teacher_comment_on_myAnswer" : "Student answer",
 
   "students_answers" : "Students answers",
   "students_profile" : "Students profile",
