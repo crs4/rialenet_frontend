@@ -9,15 +9,56 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { createNewTransaction } from '../api/wenet_api';
+import moment from 'moment';
 
+
+const fakeStudentTransactions = [
+    {
+       "taskId":"62a9ff27925841535833b6a1",
+       "label":"needClarification",
+       "attributes":{
+          "note":"Avrei bisogno di aiuto perchè non ho capito la domanda"
+       },
+       "actioneerId":"928",
+       "messages":[
+          
+       ],
+       "id":"0",
+       "_creationTs":1655835879,
+       "_lastUpdateTs":1655835879
+    },
+    {
+       "taskId":"62a9ff27925841535833b6a1",
+       "label":"notSure",
+       "attributes":{
+          "note":"Non saprei rispondere"
+       },
+       "actioneerId":"928",
+       "messages":[
+          
+       ]
+    }
+]
+
+const transactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
+const transactionFieldMapper = {
+    "cannotAnswer": "note",
+    "needClarification": "note",
+    "notSure": "note",
+    "myAnswer": "answer",
+    "goToAttachment": "attachment",
+    "goToTimelinePosition": "timelineLink",
+    "goToTag": "tag"
+}
 
 const StudentTransaction = (props) => {
-
+    
+    const {transaction} = props;
+    console.log("Transaction: (props) ", transaction);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const transactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
-
-    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(props.transaction.selectedChoiceIndex || -1)
-    const [currentSelectedStudentText, setCurrentStudentText] = useState("")
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction==null? -1 : transactionOptions.indexOf(transaction["label"]))
+    const [currentSelectedStudentText, setCurrentStudentText] = 
+    useState(transaction==null? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
 
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
@@ -89,14 +130,25 @@ const StudentTransaction = (props) => {
     }
 
     return (
+        <>
+         { props.transaction &&
+               <div style={{display:"flex",  justifyContent: "flex-end"}}>
+               <Label>
+                   <b>{moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+               </Label>
+               </div>
+            }
         <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
+           
+           
             <Label>
                 <b>{t("selectAnswer")}</b>
             </Label>
             {renderAnswerOptions()}
             {renderStudentAnswerText()}
             {renderTeacherAnswerText()}
-        </Form>)
+        </Form>
+        </>)
 }
 
 export const StudentTask = (props) => {
@@ -106,6 +158,7 @@ export const StudentTask = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const dispatch = useDispatch();
     const [transactionData, setTransactionData] = useState(null);
+    const userProfile = useSelector(UserTasksSelectors.getUserProfile);
 
     const createNewTransaction = () =>
     {
@@ -116,28 +169,41 @@ export const StudentTask = (props) => {
         dispatch(UserTasksActions.willCreateTransaction(payload));
        }
     
-    const renderTransactions = () => {
+    const getFilteredTransactions = () =>
+    {  
+        console.log("Transaction: (Task):", props.task.transactions);
+        if (props.task.transactions==null) return [];
 
-        return props.task.transactions && props.task.transactions.map((transaction) => {
+        const ft = props.task.transactions.filter((transaction) =>
+        {
+            console.log("Transaction: (Filter):", transaction);
+            // mostro solo le transactions create dallo studente compatilmente con le
+            // label definite dalla app logic
+            return transactionOptions.includes(transaction["label"]) 
+            && userProfile!=null && userProfile["id"]== transaction["actioneerId"]
+            
+        })
+        // ordibate cronologicamente dalla più recente alla meno recente
+        ft.sort((t1,t2) => (t1["_creationTs"]- t2["_creationTs"]))
+        return ft
+    }
+
+    const renderTransactions = () => {
+        const filteredTransactions =  getFilteredTransactions()
+        console.log("Transaction: (filter):", filteredTransactions);
+        return filteredTransactions.map((transaction) => {
             return <StudentTransaction readonly transaction={transaction} />
         })
     }
 
     const renderNewTransaction = () => {
-
-        const newTransaction = {
-            "readOnly" : false,
-            "selectedChoiceIndex" : -1
-         }
-
-         return <StudentTransaction onUpdate = { (label,message) => setTransactionData({label,message})} 
-         
-         transaction={newTransaction} />
+         return <StudentTransaction onUpdate = { (label,message) => setTransactionData({label,message})} />
     }
 
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
+        const taskCreationDate = moment(props.task._creationTs).format("DD/MM/YYYY - hh:mm")
         return (
 
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
@@ -146,7 +212,7 @@ export const StudentTask = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                            {taskTitle}
+                            ({taskCreationDate}) {taskTitle}
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
                                 <AiOutlineCaretDown size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretDown>
