@@ -1,6 +1,7 @@
 {
   "platform_title": "Piattaforma RialeNet",
   "passcode_enter": "Inserisci il tuo codice utente",
+  "new_question" : " Nuova domanda",
   "comments": "commenti",
   "public_area": "Area pubblica",
   "teacher_area": "Area del docente",
@@ -56,5 +57,6 @@
   "passcode" : "Codice studente",
   "description" : "Descrizione",
   "profile" : "Profilo",
-  "details" : "Dettagli"
+  "details" : "Dettagli",
+  "answers_and_questions" : "Domande e risposte"
 }

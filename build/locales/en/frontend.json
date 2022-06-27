@@ -2,6 +2,7 @@
   "platform_title" : "Riale Wenet Platform",
   "passcode_enter" : "Enter your passcode",
   "comments" : "comments",
+  "new_question" : " New question",
   "public_area" : "Public Area",
   "teacher_area" : "Teacher Dashboard",
   "student_area" : "Student Dashboard",
@@ -54,5 +55,6 @@
   "passcode" : "Passcode",
   "description" : "Description",
   "profile" : "Profile",
-  "details" : "Details"
+  "details" : "Details",
+  "answers_and_questions" : "Answers & Questions"
 }
