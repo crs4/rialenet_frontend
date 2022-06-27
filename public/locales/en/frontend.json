@@ -56,5 +56,6 @@
   "description" : "Description",
   "profile" : "Profile",
   "details" : "Details",
-  "answers_and_questions" : "Answers & Questions"
+  "answers_and_questions" : "Answers & Questions",
+  "send_feedback_to_student" : "Send a feedback to student"
 }

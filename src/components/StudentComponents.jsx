@@ -108,6 +108,7 @@ const StudentTransaction = (props) => {
         const teacherText = teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
         return teacherText;
     }
+
     const renderTeacherAnswerText = () => {
         const teacherFeedbackContent = getTeacherFeedbackContent()
 
@@ -217,7 +218,8 @@ export const StudentTask = (props) => {
         const filteredTransactions =  getFilteredTransactions()
         console.log("Transaction: (filtered):", filteredTransactions);
         return filteredTransactions.map((transaction) => {
-            return <StudentTransaction readonly transaction={transaction} teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} />
+            return <StudentTransaction readonly transaction={transaction} 
+                    teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} />
         })
     }
 

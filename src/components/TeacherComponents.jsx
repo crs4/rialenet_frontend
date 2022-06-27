@@ -98,6 +98,9 @@ const TeacherFeedback = (props) => {
     }
 
     return <>
+    <div style={{ marginTop: "20px" }}>
+        <Label><b>{t("send_feedback_to_student")}</b></Label>
+    </div>
         {renderTeacherFeedbackOptions()}
         {renderTeacherAnswerText()}
     </>
@@ -161,6 +164,15 @@ const TeacherTransaction = (props) => {
         </FormGroup>
     }
 
+    const getTeacherFeedbackContent = () => {
+        const { teacherFeedback, transaction } = props;
+        if (teacherFeedback == null) return null;
+        console.log("TF FeedbackTransaction ID:", teacherFeedback);
+
+        const teacherText = teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
+        return teacherText;
+    }
+
     const renderTeacherAnswerText = () => {
         return <FormGroup>
             <div style={{ marginTop: "20px" }}>
@@ -171,7 +183,7 @@ const TeacherTransaction = (props) => {
                     id="teacherAnswerText"
                     name="text"
                     type="textarea"
-                    value={"RISPOSTA"}
+                    value={getTeacherFeedbackContent()}
                 />
             </div>
         </FormGroup>
@@ -207,8 +219,10 @@ const TeacherTransaction = (props) => {
                 </Label>
                 {renderStudentAnswerOptions()}
                 {renderStudentAnswerText()}
-                {renderTeacherAnswerText()}
-                <TeacherFeedback transaction={props.transaction} />
+                {props.teacherFeedback != null ? renderTeacherAnswerText() :
+                    <TeacherFeedback transaction={props.transaction} />
+                }
+
             </Form>
         </>)
 }
@@ -269,7 +283,7 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ display: "flex", "justifyContent": "space-between" }}>
                     <Button onClick={(ev) => { props.onClose() }}>Annulla</Button>
-                    <Button color="primary" onClick={(ev) => { createNewTask(ev);props.onClose()}}>{t("send")}</Button>
+                    <Button color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</Button>
                 </div>
             </FormGroup>
         </Form>
@@ -277,13 +291,13 @@ export const TaskCreator = (props) => {
 }
 
 
-//const tasks = [fakeTask];
+const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const [isOpen, setIsOpen] = useState(false)
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    //const tasks =  useSelector(UserTasksSelectors.getTasks);
 
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>
@@ -323,7 +337,23 @@ export const TeacherTaskViewer = (props) => {
     const toggle = () => setIsOpen(!isOpen);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
 
+    useEffect(() => {
+        const { task } = props;
+        console.log("Student task:", task);
+        let ftd = {}
+        for (let i = 0; i < task.transactions.length; i++) {
+            const transactionID = task.transactions[i]["attributes"]["transactionID"];
+            if (transactionID != null) {
+                ftd[transactionID] = task.transactions[i]
+            }
+
+            console.log("setFeedbackTeacherTransactions to->: ", ftd)
+            setFeedbackTeacherTransactions(ftd);
+        }
+
+    }, [props.task])
 
     const getFilteredTransactions = () => {
         console.log("Transaction: (Task):", props.task.transactions);
@@ -344,7 +374,8 @@ export const TeacherTaskViewer = (props) => {
         const filteredTransactions = getFilteredTransactions()
         console.log("Transaction: (filter):", filteredTransactions);
         return filteredTransactions.map((transaction, index) => {
-            return <TeacherTransaction readonly transaction={transaction} key={index} />
+            return <TeacherTransaction readonly transaction={transaction}
+                teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} key={index} />
         })
     }
 

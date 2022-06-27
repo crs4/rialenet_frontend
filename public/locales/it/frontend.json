@@ -58,5 +58,6 @@
   "description" : "Descrizione",
   "profile" : "Profilo",
   "details" : "Dettagli",
-  "answers_and_questions" : "Domande e risposte"
+  "answers_and_questions" : "Domande e risposte",
+  "send_feedback_to_student" : "Invia un feedback allo studente"
 }
