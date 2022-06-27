@@ -296,8 +296,6 @@ export const TeacherTaskViewer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const dispatch = useDispatch();
-    const [transactionData, setTransactionData] = useState(null);
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
 
    
@@ -324,9 +322,6 @@ export const TeacherTaskViewer = (props) => {
         })
     }
 
-    const renderNewTransaction = () => {
-        return <TeacherTransaction onUpdate={(label, message) => setTransactionData({ label, message })} />
-    }
 
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
@@ -361,7 +356,6 @@ export const TeacherTaskViewer = (props) => {
                     <CardBody>
                         <Form>
                             {renderTransactions()}
-                            {renderNewTransaction()}
                         </Form>
                     </CardBody>
                 </Collapse>
