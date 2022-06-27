@@ -32,7 +32,7 @@ const TeacherFeedback = (props) =>
                 }
             }
             console.log("Feedback payload:", payload);
-            //dispatch(UserTasksActions.willCreateTransaction(payload));
+            dispatch(UserTasksActions.willCreateTransaction(payload));
         }
     
     const renderTeacherFeedbackOptions = () => {
