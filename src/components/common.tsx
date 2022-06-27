@@ -9,6 +9,7 @@ export const transactionFieldMapper = {
 }
 
 export const studentsTransactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
+export const teachersTransactionOptions = ["goToAttachment", "goToTimelinePosition", "goToTag"];
 
 
 const fakeStudentTransactions = [

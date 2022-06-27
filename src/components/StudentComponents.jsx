@@ -8,7 +8,6 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
-import { createNewTransaction } from '../api/wenet_api';
 import moment from 'moment';
 import {transactionFieldMapper, studentsTransactionOptions} from './common';
 

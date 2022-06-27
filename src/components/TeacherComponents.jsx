@@ -4,13 +4,99 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
-import { transactionFieldMapper, studentsTransactionOptions } from './common';
+import { transactionFieldMapper, studentsTransactionOptions, teachersTransactionOptions } from './common';
 import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 
 // link timeline drosophila
 //https://beta.riale.ideab3.it/public/a6563273-863b-4e60-8b05-c6b41b332b42
+
+const TeacherFeedback = (props) => 
+{
+    const { transaction } = props;
+    const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction == null ? -1 : teachersTransactionOptions.indexOf(transaction["label"]))
+    const [currentSelectedTeacherText, setCurrentTeacherText] =
+        useState("") //(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
+    const dispatch = useDispatch();
+
+        const createFeedbackTransaction = () => {
+            if (currentSelectedChoice <0) return;
+            const taskId = props.transaction["taskId"];
+            const payload = {
+                "taskId": taskId, "content": {
+                    "label": teachersTransactionOptions[currentSelectedChoice],
+                    "message": currentSelectedTeacherText,
+                    "transactionID" : props.transaction["id"]
+                }
+            }
+            console.log("Feedback payload:", payload);
+            //dispatch(UserTasksActions.willCreateTransaction(payload));
+        }
+    
+    const renderTeacherFeedbackOptions = () => {
+        return teachersTransactionOptions.map((message, index) => {
+            return getTeacherFeedbackOption("teacherChoice", t(message), index);
+        })
+    }
+
+    const renderTeacherAnswerText = () => {
+        return currentSelectedChoice >= 0 && <FormGroup>
+            <div style={{ marginTop: "20px" }}>
+                <Label for="teacherAnswerText">
+                    <b>{t(`teacher_comment_on_${teachersTransactionOptions[currentSelectedChoice]}`)}</b>
+                </Label>
+                <Input disabled={false}
+                    id="teacherAnswerText"
+                    name="text"
+                    type="textarea"
+                    onChange={(ev) => {onChangeTeacherText(ev)}}
+                    value={currentSelectedTeacherText}
+                />
+            </div>
+            <div style={{display:"flex" , marginTop:"10px", justifyContent:"flex-end"}}>
+                <Button onClick={() => createFeedbackTransaction()} color="primary">{t("send")}</Button>
+            </div>
+        </FormGroup>
+    }
+
+    const getTeacherFeedbackOption = (group, message, index) => {
+        return <FormGroup check disabled={props.readonly}>
+            <Input disabled={props.readonly}
+                name={group}
+                value={index}
+                onChange={(ev) => onChangeSelectedChoice(ev)}
+                checked={currentSelectedChoice == index}
+                type="radio"
+            />
+            {' '}
+            <Label check>
+                {message}
+            </Label>
+        </FormGroup>
+    }
+
+    const onChangeSelectedChoice = (ev) => {
+        console.log("selected feedback choice:", ev.target.value);
+        setCurrentSelectedChoice(ev.target.value);
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(teachersTransactionOptions[currentSelectedChoice],
+            currentSelectedTeacherText)
+    }
+
+    const onChangeTeacherText = (ev) => {
+        console.log("current text:", ev.target.value);
+        setCurrentTeacherText(ev.target.value);
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(teachersTransactionOptions[currentSelectedChoice],
+            ev.target.value)
+    }
+
+    return <>
+    {renderTeacherFeedbackOptions()}
+    {renderTeacherAnswerText()}
+    </>
+
+}
 
 const TeacherTransaction = (props) => {
 
@@ -36,7 +122,7 @@ const TeacherTransaction = (props) => {
             ev.target.value)
     }
 
-    const getAnswerOption = (group, message, index) => {
+    const getStudentAnswerOption = (group, message, index) => {
         return <FormGroup check disabled={props.readonly}>
             <Input disabled={props.readonly}
                 name={group}
@@ -58,11 +144,11 @@ const TeacherTransaction = (props) => {
                 <Label for="studentAnswerText">
                     <b>{t(`teacher_comment_on_${studentsTransactionOptions[currentSelectedChoice]}`)}</b>
                 </Label>
-                <Input disabled={props.readonly}
+                <Input disabled={true}
                     id="studentAnswerText"
                     name="text"
                     type="textarea"
-                    onChange={(ev) => onChangeStudentText(ev)}
+                    onChange={(ev) => {}}
                     value={currentSelectedStudentText}
                 />
             </div>
@@ -85,9 +171,9 @@ const TeacherTransaction = (props) => {
         </FormGroup>
     }
 
-    const renderAnswerOptions = () => {
+    const renderStudentAnswerOptions = () => {
         return studentsTransactionOptions.map((message, index) => {
-            return getAnswerOption("studentChoice", t(message), index);
+            return getStudentAnswerOption("studentChoice", t(message), index);
         })
     }
 
@@ -113,9 +199,10 @@ const TeacherTransaction = (props) => {
                 <Label>
                     <b>{t("teacher_selectAnswer")}</b>
                 </Label>
-                {renderAnswerOptions()}
+                {renderStudentAnswerOptions()}
                 {renderStudentAnswerText()}
                 {renderTeacherAnswerText()}
+                <TeacherFeedback transaction={props.transaction}/>
             </Form>
         </>)
 }
@@ -186,11 +273,11 @@ export const TaskCreator = (props) => {
 }
 
 
-//const tasks = [fakeTask];
+const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    //const tasks =  useSelector(UserTasksSelectors.getTasks);
 
 
     const renderTasks = () => {
@@ -213,18 +300,7 @@ export const TeacherTaskViewer = (props) => {
     const [transactionData, setTransactionData] = useState(null);
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
 
-    const createNewTransaction = () => {
-        if (transactionData == null) return;
-        const taskId = props.task["id"];
-        const payload = {
-            "taskId": taskId, "content": {
-                "label": transactionData["label"],
-                "message": transactionData["message"]
-            }
-        }
-        dispatch(UserTasksActions.willCreateTransaction(payload));
-    }
-
+   
     const getFilteredTransactions = () => {
         console.log("Transaction: (Task):", props.task.transactions);
         if (props.task.transactions == null) return [];
@@ -288,9 +364,6 @@ export const TeacherTaskViewer = (props) => {
                             {renderNewTransaction()}
                         </Form>
                     </CardBody>
-                    <CardFooter>
-                        <Button color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</Button>
-                    </CardFooter>
                 </Collapse>
             </Card>)
     }
