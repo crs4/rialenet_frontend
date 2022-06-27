@@ -269,7 +269,7 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ display: "flex", "justifyContent": "space-between" }}>
                     <Button onClick={(ev) => { props.onClose() }}>Annulla</Button>
-                    <Button color="primary" onClick={(ev) => { createNewTask(ev) }}>{t("send")}</Button>
+                    <Button color="primary" onClick={(ev) => { createNewTask(ev);props.onClose()}}>{t("send")}</Button>
                 </div>
             </FormGroup>
         </Form>
