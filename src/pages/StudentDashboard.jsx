@@ -7,39 +7,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { fakeTask } from '../components/common';
 
-const fakeTransaction1 = {
-    "taskId": 2131,
-    "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
-    "selectedChoiceIndex" : 1,
-    "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
-    "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
-    "readonly" : true
-};
-
-const fakeTransaction2 = {
-    "taskId": 2131,
-    "answers": ["Non lo so", "Ho capito", "Ho bisogno di aiuto"],
-    "selectedChoiceIndex" : 0,
-    "studentAnswer": { "choice": 1, "comments": "non ci capisco niente" },
-    "teacherFeedback": { "comments": "bravo! ma cerca qui..." },
-    "readonly": false
-};
-
-
-
-
-//const tasks = [fakeTask];
+const tasks = [fakeTask];
 
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    //const tasks =  useSelector(UserTasksSelectors.getTasks);
 
    
-     
-
     const renderTasks = () =>
     {
-        return tasks && tasks.map((task,index) => <StudentTask task={task} />)
+        return tasks && tasks.map((task,index) => <StudentTask task={task} key={index} />)
     }
 
     return (

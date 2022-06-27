@@ -10,6 +10,7 @@
   "logout": "Logout",
 
   "selectAnswer" : "Select the answer:",
+  "selectAnswer_done" : "Selected answer:",
   "teacher_selectAnswer":"Selected answer",
   "enterComment" : "Enter your comment",
 
@@ -29,9 +30,13 @@
   "goToTag" : "Go to tag...",
 
   "comment_on_cannotAnswer" : "Enter a comment",
+  "comment_on_cannotAnswer_done" : "Comment",
   "comment_on_needClarification" : "Enter a comment",
+  "comment_on_needClarification_done" : "Comment",
   "comment_on_notSure" : "Enter a comment",
+  "comment_on_notSure_done" : "Comment",
   "comment_on_myAnswer" : "Enter the answer",
+  "comment_on_myAnswer_done" : "Answer",
   "comment_on_goToAttachment" : "Enter the attachment title",
   "comment_on_goToTimelinePosition" : "Enter the link to the timeline",
   "comment_on_goToTag" : "Enter the Tag name",

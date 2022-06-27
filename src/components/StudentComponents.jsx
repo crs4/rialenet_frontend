@@ -65,7 +65,7 @@ const StudentTransaction = (props) => {
     }
 
     const getAnswerOption = (group, message, index) => {
-        return <FormGroup check disabled={props.readonly}>
+        return <FormGroup check disabled={props.readonly} key={index}>
             <Input disabled={props.readonly}
                 name={group}
                 value={index}
@@ -81,10 +81,12 @@ const StudentTransaction = (props) => {
     }
 
     const renderStudentAnswerText = () => {
+        const _done = props.readonly ? "_done" : ""
+        const choice = `${studentsTransactionOptions[currentSelectedChoice]}${_done}`
         return currentSelectedChoice>=0 && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
-                    <b>{t(`comment_on_${studentsTransactionOptions[currentSelectedChoice]}`)}</b>
+                    <b>{t(`comment_on_${choice}`)}</b>
                 </Label>
                 <Input disabled={props.readonly}
                     id="studentAnswerText"
@@ -97,8 +99,19 @@ const StudentTransaction = (props) => {
         </FormGroup>
     }
 
+    const getTeacherFeedbackContent = () =>
+    {
+        const {teacherFeedback, transaction} = props;
+        if (teacherFeedback==null) return null;
+        console.log("TF FeedbackTransaction ID:",teacherFeedback);
+        
+        const teacherText = teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
+        return teacherText;
+    }
     const renderTeacherAnswerText = () => {
-        return <FormGroup>
+        const teacherFeedbackContent = getTeacherFeedbackContent()
+
+        return teacherFeedbackContent &&  <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="teacherAnswerText">
                     <b>{t("teacherFeedback")}</b>
@@ -107,7 +120,7 @@ const StudentTransaction = (props) => {
                     id="teacherAnswerText"
                     name="text"
                     type="textarea"
-                    value={"RISPOSTA"}
+                    value={teacherFeedbackContent}
                 />
             </div>
         </FormGroup>
@@ -118,6 +131,9 @@ const StudentTransaction = (props) => {
             return getAnswerOption("studentChoice", t(message), index);
         })
     }
+
+    const _done = props.readonly ? "_done" : ""
+    const answerLabel = `selectAnswer${_done}`
 
     return (
         <>
@@ -132,7 +148,7 @@ const StudentTransaction = (props) => {
            
            
             <Label>
-                <b>{t("selectAnswer")}</b>
+                <b>{t(answerLabel)}</b>
             </Label>
             {renderAnswerOptions()}
             {renderStudentAnswerText()}
@@ -149,6 +165,25 @@ export const StudentTask = (props) => {
     const dispatch = useDispatch();
     const [transactionData, setTransactionData] = useState(null);
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
+
+    useEffect(() => {
+        const {task} = props;
+        console.log("Student task:", task);
+        let ftd = {}
+        for (let i=0;i<task.transactions.length;i++)
+        {
+          const transactionID = task.transactions[i]["attributes"]["transactionID"];
+          if (transactionID!=null)
+          {
+              ftd[transactionID] = task.transactions[i]
+          }
+
+          console.log("setFeedbackTeacherTransactions to->: ", ftd)
+          setFeedbackTeacherTransactions(ftd);
+        }
+
+      }, [props.task])
 
     const createNewTransaction = () =>
     {
@@ -170,19 +205,19 @@ export const StudentTask = (props) => {
             // mostro solo le transactions create dallo studente compatilmente con le
             // label definite dalla app logic
             return studentsTransactionOptions.includes(transaction["label"]) 
-            && userProfile!=null && userProfile["id"]== transaction["actioneerId"]
+            //&& userProfile!=null && userProfile["id"]== transaction["actioneerId"]
             
         })
-        // ordibate cronologicamente dalla più recente alla meno recente
+        // ordinate cronologicamente dalla più recente alla meno recente
         ft.sort((t1,t2) => (t1["_creationTs"]- t2["_creationTs"]))
         return ft
     }
 
     const renderTransactions = () => {
         const filteredTransactions =  getFilteredTransactions()
-        console.log("Transaction: (filter):", filteredTransactions);
+        console.log("Transaction: (filtered):", filteredTransactions);
         return filteredTransactions.map((transaction) => {
-            return <StudentTransaction readonly transaction={transaction} />
+            return <StudentTransaction readonly transaction={transaction} teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} />
         })
     }
 
