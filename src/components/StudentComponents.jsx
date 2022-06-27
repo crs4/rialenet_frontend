@@ -205,7 +205,7 @@ export const StudentTask = (props) => {
             // mostro solo le transactions create dallo studente compatilmente con le
             // label definite dalla app logic
             return studentsTransactionOptions.includes(transaction["label"]) 
-            //&& userProfile!=null && userProfile["id"]== transaction["actioneerId"]
+            && userProfile!=null && userProfile["id"]== transaction["actioneerId"]
             
         })
         // ordinate cronologicamente dalla più recente alla meno recente
