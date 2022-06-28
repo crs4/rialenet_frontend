@@ -67,7 +67,7 @@ function* willCreateTask(action) {
 
 function* willCreateTransaction(action) {
   const content = action.payload; 
-  yield result = yield call(createNewTransaction,content)
+  const result = yield call(createNewTransaction,content)
   if (result!=null)
   {
     console.log("SAGA2 willCreateTransaction result OK. Loading tasks...|",result);
