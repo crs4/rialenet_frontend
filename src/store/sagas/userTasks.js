@@ -57,7 +57,7 @@ function* willCreateTask(action) {
     .then(myJson => myJson)
     );
       console.log("SAGA NEW TASK response:", response);
-      yield willLoadTasks();
+      yield willLoadTasks(null);
   } catch (error) {
       console.log("SAGA NEW TASK error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
@@ -80,8 +80,9 @@ function* willCreateTransaction(action) {
     .then(response => response.json())
     .then(myJson => myJson)
     );
-      console.log("SAGA NEW TRANSACTION response:", response);
-      yield willLoadTasks();
+      console.log("SAGA2 NEW TRANSACTION response:", response);
+      console.log("SAGA2 calling willLoadTasks");
+      yield willLoadTasks(null);
   } catch (error) {
       console.log("SAGA NEW TRANSACTION error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
@@ -90,6 +91,7 @@ function* willCreateTransaction(action) {
 }
 
 function* willLoadTasks(action) {
+  console.log("SAGA2 called willLoadTasks");
     //const data = action.payload;
     //const passcode = localStorage.getItem("passcode")
     const url = `/tasks`;
