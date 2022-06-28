@@ -91,7 +91,7 @@ function* willCreateTransaction(action) {
 }
 
 function* willLoadTasks(action) {
-  console.log("SAGA2 called willLoadTasks");
+  console.log("SAGA2 called willLoadTasks NEW!");
     //const data = action.payload;
     //const passcode = localStorage.getItem("passcode")
     const url = `/tasks`;
