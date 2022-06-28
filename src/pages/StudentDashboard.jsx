@@ -12,6 +12,7 @@ import { fakeTask } from '../components/common';
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const tasks =  useSelector(UserTasksSelectors.getTasks);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());

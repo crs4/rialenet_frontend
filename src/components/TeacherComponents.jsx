@@ -298,7 +298,8 @@ export const TeacherTasksViewer = (props) => {
 
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const tasks =  useSelector(UserTasksSelectors.getTasks);
 
     useEffect(() => {

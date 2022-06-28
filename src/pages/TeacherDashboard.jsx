@@ -16,7 +16,8 @@ export const TeacherDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const [activeTab, setActiveTab] = useState("0");
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-
+    const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());
         //dispatch(UserTasksActions.willLoadTasks());
