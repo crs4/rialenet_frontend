@@ -181,14 +181,16 @@ export const StudentTask = (props) => {
           {
               ftd[transactionID] = task.transactions[i]
           }
-
-          console.log("setFeedbackTeacherTransactions to->: ", ftd)
+        }
+          console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
           setFeedbackTeacherTransactions(ftd);
           setFilteredTransactions(getFilteredTransactions());
           // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
           // da parte del docente oppure un feedback
           setNewTransactionFormVisible(true);
           const transactionsIDwithFeedback = Object.keys(ftd);
+          console.log(`SC: FilteredTransactionLen: task:${task["id"]}`,filteredTransactions.length);
+          console.log("SC: NewTransactionFormVisible", newTransactionFormVisibile);
           for (let i=0;i<filteredTransactions.length;i++)
           { // se manca anche solo un feedback allo studente 
             // non gli è consentito inoltrare nuove richieste
@@ -198,7 +200,7 @@ export const StudentTask = (props) => {
             }
           }
           setNewTransactionFormVisible(filteredTransactions.length== Object.keys(ftd).length);
-        }
+        
 
       }, [props.task])
 
@@ -214,12 +216,12 @@ export const StudentTask = (props) => {
     
     const getFilteredTransactions = () =>
     {  
-        console.log("Transaction: (Task):", props.task.transactions);
+        console.log(`SC Transaction: (Task ${props.task["id"]}):`, props.task.transactions);
         if (props.task.transactions==null) return [];
 
         const ft = props.task.transactions.filter((transaction) =>
         {
-            console.log("Transaction: (Filter):", transaction);
+            //console.log("Transaction: (Filter):", transaction);
             // mostro solo le transactions create dallo studente compatilmente con le
             // label definite dalla app logic
             return studentsTransactionOptions.includes(transaction["label"]) 
