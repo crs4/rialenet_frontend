@@ -65,7 +65,7 @@ function* willCreateTask(action) {
 }
 
 function* willCreateTransaction(action) {
-
+  console.log("SAGA2: willCreateTransaction");
   const url = `/newtransaction`;
   const content = action.payload; // {"taskId" : "xxxx" , "content" : {} }
    
@@ -84,7 +84,7 @@ function* willCreateTransaction(action) {
       console.log("SAGA2 calling willLoadTasks");
        yield put(UserTasksActions.willLoadTasks());
   } catch (error) {
-      console.log("SAGA NEW TRANSACTION error:".error);
+      console.log("SAGA2 NEW TRANSACTION error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
     }
       

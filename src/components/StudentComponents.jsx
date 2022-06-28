@@ -192,6 +192,7 @@ export const StudentTask = (props) => {
         const taskId = props.task["id"];
         const payload = { "taskId" : taskId, "content" : {"label" :transactionData["label"], 
         "message" : transactionData["message"]}}
+        console.log("SAGA2 request da StudentComponents di willCreateTransaction");
         dispatch(UserTasksActions.willCreateTransaction(payload));
        }
     
