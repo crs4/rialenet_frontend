@@ -78,14 +78,11 @@ function* willCreateTransaction(action) {
         //"content" : {"label" :"label", "message" :"myMessage"}}
       })
     .then(response => response.json())
-    .then(myJson => myJson)
-    .then(() => {
+    .then(myJson => myJson).then(() =>{console.log("SAGA2 in willCreateTransaction dopo response...")})
+    );
       console.log("SAGA2 NEW TRANSACTION response:", response);
       console.log("SAGA2 calling willLoadTasks");
        yield put(UserTasksActions.willLoadTasks());
-    })
-    );
-     
   } catch (error) {
       console.log("SAGA2 NEW TRANSACTION error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
