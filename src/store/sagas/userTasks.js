@@ -4,7 +4,7 @@ import {
     selectors as UserTasksSelector,
   } from "../slices/userTasks";
 import { push } from 'connected-react-router'
-import { createNewTransaction } from "../../api/wenet_api";
+import { createNewTask, createNewTransaction } from "../../api/wenet_api";
 
 export function* sagas() {
   yield takeLatest(UserTasksActions.willGetUserProfile.type, willGetUserProfile)
@@ -41,8 +41,20 @@ function* willLogout(action) {
 }
 
 
-
 function* willCreateTask(action) {
+  const content = action.payload; 
+  const result = yield call(createNewTask,content)
+  if (result!=null)
+  {
+    console.log("SAGA2 willCreateTask result OK. Loading tasks...|",result);
+    yield put(UserTasksActions.willLoadTasks()); 
+  }
+  else{
+    console.log("SAGA2 willCreateNewTask error");
+  }
+}
+
+function* willCreateTaskOld(action) {
 
   const url = `/newtask`;
   const content = action.payload; // {"name" : "domanda 1" , "description" ; "Cosa sono i ...?"}
@@ -78,31 +90,7 @@ function* willCreateTransaction(action) {
   }
 }
 
-function* willCreateTransactionOld(action) {
-  console.log("SAGA2: BIS willCreateTransaction");
-  const url = `/newtransaction`;
-  const content = action.payload; // {"taskId" : "xxxx" , "content" : {} }
-   
-    try{
-    const response = yield call(() => fetch(url,
-      {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify({ "content": content })  // {"taskId" : "xxxx" , 
-        //"content" : {"label" :"label", "message" :"myMessage"}}
-      })
-    .then(response => response.json())
-    .then(myJson => myJson)
-    );
-      console.log("SAGA2 NEW TRANSACTION response:", response);
-      console.log("SAGA2 calling willLoadTasks");
-       yield put(UserTasksActions.willLoadTasks());
-  } catch (error) {
-      console.log("SAGA2 NEW TRANSACTION error:".error);
-     // yield put(UserTasksActions.didLoadTasks([]));
-    }
-      
-}
+
 
 function* willLoadTasks(action) {
   console.log("SAGA2 called willLoadTasks NEW!");

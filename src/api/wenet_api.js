@@ -11,9 +11,6 @@ export const createNewTask = async (content) => {
       console.log("WENET newtask response:", response)
       const result = await response.text();
       console.log("WENET newtask result:", result)
-      // ricarico tutti i task dopo che ne ho aggiunto
-      //await loadAllTasks();
-
     } catch (e) { console.log("WENET newtask response error:", e) }
   }
 
