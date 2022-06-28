@@ -169,7 +169,8 @@ const TeacherTransaction = (props) => {
         if (teacherFeedback == null) return null;
         console.log("TF FeedbackTransaction ID:", teacherFeedback);
 
-        const teacherText = teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
+        const teacherText = t(`${teacherFeedback["label"]}`) + " " + 
+                            teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
         return teacherText;
     }
 
@@ -290,14 +291,14 @@ export const TaskCreator = (props) => {
     )
 }
 
-
-//const tasks = [fakeTask];
+//@audit Local Frontend DEV
+const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const [isOpen, setIsOpen] = useState(false)
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    //const tasks =  useSelector(UserTasksSelectors.getTasks);
 
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>

@@ -28,6 +28,7 @@
   "goToAttachment": "Vai all'allegato della timeline...",
   "goToTimelinePosition": "Vai alla timeline alla posizione...",
   "goToTag": "Vai al tag...",
+  "rightAnswer" : "Risposta esatta",
 
   "comment_on_cannotAnswer" : "inserisci un commento",
   "comment_on_cannotAnswer_done" : "Commento",
@@ -37,10 +38,7 @@
   "comment_on_notSure_done" : "Commento",
   "comment_on_myAnswer" : "Inserisci qui la risposta",
   "comment_on_myAnswer_done" : "Risposta",
-  "comment_on_goToAttachment" : "Inserisci qui il nome dell'allegato",
-  "comment_on_goToTimelinePosition" : "Inserisci il link alla timeline",
-  "comment_on_goToTag" : "Inserisci qui il nome del Tag",
-
+ 
   "teacher_comment_on_cannotAnswer" : "Commento dello studente",
   "teacher_comment_on_needClarification" : "Commento dello studente",
   "teacher_comment_on_notSure" : "Commento dello studente",
@@ -48,6 +46,7 @@
   "teacher_comment_on_goToAttachment" : "Inserisci qui il nome dell'allegato",
   "teacher_comment_on_goToTimelinePosition" : "Inserisci il link alla timeline",
   "teacher_comment_on_goToTag" : "Inserisci qui il nome del Tag",
+  "teacher_comment_on_rightAnswer" : "Inserisci un commento (opzionale)",
 
   "students_answers" : "Risposte degli studenti",
   "students_profile" : "Profilo degli studenti",
