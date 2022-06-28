@@ -7,11 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { fakeTask } from '../components/common';
 
-//const tasks = [fakeTask];
+
+//@audit LocalFrontend
+const tasks = [fakeTask];
 
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    //const tasks =  useSelector(UserTasksSelectors.getTasks);
     const dispatch = useDispatch();
 
     useEffect(() => {

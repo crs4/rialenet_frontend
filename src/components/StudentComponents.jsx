@@ -167,6 +167,8 @@ export const StudentTask = (props) => {
     const [transactionData, setTransactionData] = useState(null);
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
+    const [newTransactionFormVisibile, setNewTransactionFormVisible] = useState(false);
+    const [filteredTransactions, setFilteredTransactions] = useState([]);
 
     useEffect(() => {
         const {task} = props;
@@ -182,6 +184,20 @@ export const StudentTask = (props) => {
 
           console.log("setFeedbackTeacherTransactions to->: ", ftd)
           setFeedbackTeacherTransactions(ftd);
+          setFilteredTransactions(getFilteredTransactions());
+          // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
+          // da parte del docente oppure un feedback
+          setNewTransactionFormVisible(true);
+          const transactionsIDwithFeedback = Object.keys(ftd);
+          for (let i=0;i<filteredTransactions.length;i++)
+          { // se manca anche solo un feedback allo studente 
+            // non gli è consentito inoltrare nuove richieste
+            if (!transactionsIDwithFeedback.includes(filteredTransactions[i]["id"]))
+            {
+              setNewTransactionFormVisible(false)
+            }
+          }
+          setNewTransactionFormVisible(filteredTransactions.length== Object.keys(ftd).length);
         }
 
       }, [props.task])
@@ -216,7 +232,7 @@ export const StudentTask = (props) => {
     }
 
     const renderTransactions = () => {
-        const filteredTransactions =  getFilteredTransactions()
+        //const filteredTransactions =  getFilteredTransactions()
         console.log("Transaction: (filtered):", filteredTransactions);
         return filteredTransactions.map((transaction) => {
             return <StudentTransaction readonly transaction={transaction} 
@@ -261,7 +277,7 @@ export const StudentTask = (props) => {
                     <CardBody>
                         <Form>
                             {renderTransactions()}
-                            {renderNewTransaction()}
+                            {newTransactionFormVisibile && renderNewTransaction()}
                         </Form>
                     </CardBody>
                     <CardFooter>

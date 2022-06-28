@@ -8,10 +8,11 @@ export const createNewTask = async (content) => {
           body: JSON.stringify({ "content": content })  // JSON.stringify("PROVA 2 CONTENUTO")
         }
       )
-      console.log("WENET newtask response:", response)
+      console.log("SAGA2 API WENET newtask response:", response)
       const result = await response.text();
-      console.log("WENET newtask result:", result)
-    } catch (e) { console.log("WENET newtask response error:", e) }
+      console.log("SAGA2 API WENET newtask result:", result);
+      return result;
+    } catch (e) { console.log("WENET API newtask response error:", e); return null;}
   }
 
 
