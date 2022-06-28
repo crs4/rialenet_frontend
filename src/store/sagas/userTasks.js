@@ -57,7 +57,7 @@ function* willCreateTask(action) {
     .then(myJson => myJson)
     );
       console.log("SAGA NEW TASK response:", response);
-      yield willLoadTasks(null);
+      yield put(UserTasksActions.willLoadTasks());
   } catch (error) {
       console.log("SAGA NEW TASK error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
@@ -82,7 +82,7 @@ function* willCreateTransaction(action) {
     );
       console.log("SAGA2 NEW TRANSACTION response:", response);
       console.log("SAGA2 calling willLoadTasks");
-      yield willLoadTasks(null);
+       yield put(UserTasksActions.willLoadTasks());
   } catch (error) {
       console.log("SAGA NEW TRANSACTION error:".error);
      // yield put(UserTasksActions.didLoadTasks([]));
