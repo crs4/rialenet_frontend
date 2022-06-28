@@ -18,21 +18,23 @@ export const createNewTask = async (content) => {
   }
 
 
-  export const createNewTransaction = async (taskId, message) => {
-    const url = "http://localhost:3333/transaction"
+  export const createNewTransaction = async (content) => {
+    const url = `/newtransaction`;
     try {
       const response = await fetch(url,
         {
           headers: { "Content-Type": "application/json" },
           method: "POST",
-          body: JSON.stringify({ "taskId": taskId, "message": message })
+          body: JSON.stringify({ "content": content }) 
         }
       )
-      console.log("WENET newtransaction response:", response)
-      const result = await response.text();
-      console.log("WENET newtransaction result:", result)
+      console.log("SAGA2 (API) WENET newtransaction response:", response)
+      const result = await response.json();
+      console.log("SAGA2 (API) WENET newtransaction result:", result)
       // ricarico tutti i task dopo che ne ho aggiunto
       //await loadAllTasks();
-
-    } catch (e) { console.log("WENET newtransaction response error:", e) }
+      return result;
+    } catch (e) { console.log("WENET newtransaction response error:", e) 
+      return null;
+  }
   }

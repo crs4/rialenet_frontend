@@ -4,6 +4,7 @@ import {
     selectors as UserTasksSelector,
   } from "../slices/userTasks";
 import { push } from 'connected-react-router'
+import { createNewTransaction } from "../../api/wenet_api";
 
 export function* sagas() {
   yield takeLatest(UserTasksActions.willGetUserProfile.type, willGetUserProfile)
@@ -65,7 +66,20 @@ function* willCreateTask(action) {
 }
 
 function* willCreateTransaction(action) {
-  console.log("SAGA2: willCreateTransaction");
+  const content = action.payload; 
+  yield result = yield call(createNewTransaction,content)
+  if (result!=null)
+  {
+    console.log("SAGA2 willCreateTransaction result OK. Loading tasks...|",result);
+    yield put(UserTasksActions.willLoadTasks()); 
+  }
+  else{
+    console.log("SAGA2 willCreateTransaction error");
+  }
+}
+
+function* willCreateTransactionOld(action) {
+  console.log("SAGA2: BIS willCreateTransaction");
   const url = `/newtransaction`;
   const content = action.payload; // {"taskId" : "xxxx" , "content" : {} }
    
@@ -78,7 +92,7 @@ function* willCreateTransaction(action) {
         //"content" : {"label" :"label", "message" :"myMessage"}}
       })
     .then(response => response.json())
-    .then(myJson => myJson).then(() =>{console.log("SAGA2 in willCreateTransaction dopo response...")})
+    .then(myJson => myJson)
     );
       console.log("SAGA2 NEW TRANSACTION response:", response);
       console.log("SAGA2 calling willLoadTasks");
