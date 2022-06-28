@@ -292,7 +292,7 @@ export const TaskCreator = (props) => {
 }
 
 //@audit Local Frontend DEV
-const tasks = [fakeTask];
+//const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
 
@@ -300,7 +300,7 @@ export const TeacherTasksViewer = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
-    //const tasks =  useSelector(UserTasksSelectors.getTasks);
+    const tasks =  useSelector(UserTasksSelectors.getTasks);
 
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());

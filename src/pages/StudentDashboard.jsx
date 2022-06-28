@@ -9,11 +9,11 @@ import { fakeTask } from '../components/common';
 
 
 //@audit LocalFrontend
-const tasks = [fakeTask];
+//const tasks = [fakeTask];
 
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
-    //const tasks =  useSelector(UserTasksSelectors.getTasks);
+    const tasks =  useSelector(UserTasksSelectors.getTasks);
     const dispatch = useDispatch();
 
     useEffect(() => {
