@@ -295,10 +295,16 @@ export const TaskCreator = (props) => {
 //const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
+
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const [isOpen, setIsOpen] = useState(false)
     const tasks =  useSelector(UserTasksSelectors.getTasks);
+
+    useEffect(() => {
+        dispatch(UserTasksActions.willGetUserProfile());
+        dispatch(UserTasksActions.willLoadTasks());
+      }, [])
 
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>

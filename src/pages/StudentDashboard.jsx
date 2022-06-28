@@ -13,6 +13,11 @@ export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const tasks =  useSelector(UserTasksSelectors.getTasks);
 
+    useEffect(() => {
+        dispatch(UserTasksActions.willGetUserProfile());
+        dispatch(UserTasksActions.willLoadTasks());
+      }, [])
+
    
     const renderTasks = () =>
     {

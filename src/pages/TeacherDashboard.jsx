@@ -17,6 +17,11 @@ export const TeacherDashboard = (props) => {
     const [activeTab, setActiveTab] = useState("0");
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
 
+    useEffect(() => {
+        dispatch(UserTasksActions.willGetUserProfile());
+        //dispatch(UserTasksActions.willLoadTasks());
+      }, [])
+
     return (
         <>
             <Header className="mb-0 text-white" section="teacher_area" showMenu={true} />
