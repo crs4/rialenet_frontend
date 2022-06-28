@@ -175,7 +175,11 @@ export const StudentTask = (props) => {
         let ftd = {}
         for (let i = 0; i < task.transactions.length; i++) {
             const transactionID = task.transactions[i]["attributes"]["transactionID"];
-            if (transactionID != null) {
+            // mappo solamente le feedback transaction riferite alle transaction che hanno
+            // come actioneerId lo studente correntemente loggato
+            if (transactionID != null &&
+                userProfile != null && userProfile["id"] == task.transactions[transactionID]["actioneerId"]
+                ) {
                 ftd[transactionID] = task.transactions[i]
             }
         }
