@@ -183,23 +183,30 @@ export const StudentTask = (props) => {
                 ftd[transactionID] = task.transactions[i]
             }
         }
-        console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
-        setFeedbackTeacherTransactions(ftd);
-        setFilteredTransactions(getFilteredTransactions());
+       
+        const filteredT = getFilteredTransactions()
+        
         // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
         // da parte del docente oppure un feedback
-        setNewTransactionFormVisible(true);
+        let newTVisible = true;
         const transactionsIDwithFeedback = Object.keys(ftd);
-        console.log(`SC: FilteredTransactionLen: task:${task["id"]}`, filteredTransactions.length);
-        console.log("SC: NewTransactionFormVisible", newTransactionFormVisibile);
-        for (let i = 0; i < filteredTransactions.length; i++) { // se manca anche solo un feedback allo studente 
+        console.log(`SC: FilteredTransactionLen: task:${task["id"]}`, filteredT.length);
+        
+        for (let i = 0; i < filteredT.length; i++) { 
+            // se manca anche solo un feedback allo studente 
             // non gli è consentito inoltrare nuove richieste
-            if (!transactionsIDwithFeedback.includes(filteredTransactions[i]["id"])) {
-                setNewTransactionFormVisible(false)
+            if (!transactionsIDwithFeedback.includes(filteredT[i]["id"])) {
+                newTVisible=false;
+                break;
             }
         }
-        setNewTransactionFormVisible(filteredTransactions.length == Object.keys(ftd).length);
+        
+        setNewTransactionFormVisible(newTVisible);
+        setFilteredTransactions(filteredT);
+        setFeedbackTeacherTransactions(ftd);
 
+        console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
+        console.log("SC: NewTransactionFormVisible", newTVisible);
 
     }, [props.task])
 
