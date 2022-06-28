@@ -9,58 +9,58 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import moment from 'moment';
-import {transactionFieldMapper, studentsTransactionOptions} from './common';
+import { transactionFieldMapper, studentsTransactionOptions } from './common';
 
 const fakeStudentTransactions = [
     {
-       "taskId":"62a9ff27925841535833b6a1",
-       "label":"needClarification",
-       "attributes":{
-          "note":"Avrei bisogno di aiuto perchè non ho capito la domanda"
-       },
-       "actioneerId":"928",
-       "messages":[
-          
-       ],
-       "id":"0",
-       "_creationTs":1655835879,
-       "_lastUpdateTs":1655835879
+        "taskId": "62a9ff27925841535833b6a1",
+        "label": "needClarification",
+        "attributes": {
+            "note": "Avrei bisogno di aiuto perchè non ho capito la domanda"
+        },
+        "actioneerId": "928",
+        "messages": [
+
+        ],
+        "id": "0",
+        "_creationTs": 1655835879,
+        "_lastUpdateTs": 1655835879
     },
     {
-       "taskId":"62a9ff27925841535833b6a1",
-       "label":"notSure",
-       "attributes":{
-          "note":"Non saprei rispondere"
-       },
-       "actioneerId":"928",
-       "messages":[
-          
-       ]
+        "taskId": "62a9ff27925841535833b6a1",
+        "label": "notSure",
+        "attributes": {
+            "note": "Non saprei rispondere"
+        },
+        "actioneerId": "928",
+        "messages": [
+
+        ]
     }
 ]
 
 
 
 const StudentTransaction = (props) => {
-    
-    const {transaction} = props;
+
+    const { transaction } = props;
     console.log("Transaction: (props) ", transaction);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction==null? -1 : studentsTransactionOptions.indexOf(transaction["label"]))
-    const [currentSelectedStudentText, setCurrentStudentText] = 
-    useState(transaction==null? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
+    const [currentSelectedChoice, setCurrentSelectedChoice] = useState(transaction == null ? -1 : studentsTransactionOptions.indexOf(transaction["label"]))
+    const [currentSelectedStudentText, setCurrentStudentText] =
+        useState(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
 
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             currentSelectedStudentText)
     }
 
     const onChangeStudentText = (ev) => {
         console.log("current text:", ev.target.value);
         setCurrentStudentText(ev.target.value);
-        props.onUpdate && currentSelectedChoice>=0 &&  props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             ev.target.value)
     }
 
@@ -83,7 +83,7 @@ const StudentTransaction = (props) => {
     const renderStudentAnswerText = () => {
         const _done = props.readonly ? "_done" : ""
         const choice = `${studentsTransactionOptions[currentSelectedChoice]}${_done}`
-        return currentSelectedChoice>=0 && <FormGroup>
+        return currentSelectedChoice >= 0 && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="studentAnswerText">
                     <b>{t(`comment_on_${choice}`)}</b>
@@ -99,20 +99,19 @@ const StudentTransaction = (props) => {
         </FormGroup>
     }
 
-    const getTeacherFeedbackContent = () =>
-    {
-        const {teacherFeedback, transaction} = props;
-        if (teacherFeedback==null) return null;
-        console.log("TF FeedbackTransaction ID:",teacherFeedback);
-        
-        const teacherText = teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
+    const getTeacherFeedbackContent = () => {
+        const { teacherFeedback, transaction } = props;
+        if (teacherFeedback == null) return null;
+        console.log("TF FeedbackTransaction ID:", teacherFeedback);
+        const teacherText = t(`${teacherFeedback["label"]}`) + " " +
+            teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
         return teacherText;
     }
 
     const renderTeacherAnswerText = () => {
         const teacherFeedbackContent = getTeacherFeedbackContent()
 
-        return teacherFeedbackContent &&  <FormGroup>
+        return teacherFeedbackContent && <FormGroup>
             <div style={{ marginTop: "20px" }}>
                 <Label for="teacherAnswerText">
                     <b>{t("teacherFeedback")}</b>
@@ -138,23 +137,23 @@ const StudentTransaction = (props) => {
 
     return (
         <>
-         { props.transaction &&
-               <div style={{display:"flex",  justifyContent: "flex-end"}}>
-               <Label>
-                   <b>{moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
-               </Label>
-               </div>
+            {props.transaction &&
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Label>
+                        <b>{moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+                    </Label>
+                </div>
             }
-        <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
-           
-           
-            <Label>
-                <b>{t(answerLabel)}</b>
-            </Label>
-            {renderAnswerOptions()}
-            {renderStudentAnswerText()}
-            {renderTeacherAnswerText()}
-        </Form>
+            <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
+
+
+                <Label>
+                    <b>{t(answerLabel)}</b>
+                </Label>
+                {renderAnswerOptions()}
+                {renderStudentAnswerText()}
+                {renderTeacherAnswerText()}
+            </Form>
         </>)
 }
 
@@ -171,65 +170,62 @@ export const StudentTask = (props) => {
     const [filteredTransactions, setFilteredTransactions] = useState([]);
 
     useEffect(() => {
-        const {task} = props;
+        const { task } = props;
         console.log("Student task:", task);
         let ftd = {}
-        for (let i=0;i<task.transactions.length;i++)
-        {
-          const transactionID = task.transactions[i]["attributes"]["transactionID"];
-          if (transactionID!=null)
-          {
-              ftd[transactionID] = task.transactions[i]
-          }
-        }
-          console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
-          setFeedbackTeacherTransactions(ftd);
-          setFilteredTransactions(getFilteredTransactions());
-          // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
-          // da parte del docente oppure un feedback
-          setNewTransactionFormVisible(true);
-          const transactionsIDwithFeedback = Object.keys(ftd);
-          console.log(`SC: FilteredTransactionLen: task:${task["id"]}`,filteredTransactions.length);
-          console.log("SC: NewTransactionFormVisible", newTransactionFormVisibile);
-          for (let i=0;i<filteredTransactions.length;i++)
-          { // se manca anche solo un feedback allo studente 
-            // non gli è consentito inoltrare nuove richieste
-            if (!transactionsIDwithFeedback.includes(filteredTransactions[i]["id"]))
-            {
-              setNewTransactionFormVisible(false)
+        for (let i = 0; i < task.transactions.length; i++) {
+            const transactionID = task.transactions[i]["attributes"]["transactionID"];
+            if (transactionID != null) {
+                ftd[transactionID] = task.transactions[i]
             }
-          }
-          setNewTransactionFormVisible(filteredTransactions.length== Object.keys(ftd).length);
-        
+        }
+        console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
+        setFeedbackTeacherTransactions(ftd);
+        setFilteredTransactions(getFilteredTransactions());
+        // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
+        // da parte del docente oppure un feedback
+        setNewTransactionFormVisible(true);
+        const transactionsIDwithFeedback = Object.keys(ftd);
+        console.log(`SC: FilteredTransactionLen: task:${task["id"]}`, filteredTransactions.length);
+        console.log("SC: NewTransactionFormVisible", newTransactionFormVisibile);
+        for (let i = 0; i < filteredTransactions.length; i++) { // se manca anche solo un feedback allo studente 
+            // non gli è consentito inoltrare nuove richieste
+            if (!transactionsIDwithFeedback.includes(filteredTransactions[i]["id"])) {
+                setNewTransactionFormVisible(false)
+            }
+        }
+        setNewTransactionFormVisible(filteredTransactions.length == Object.keys(ftd).length);
 
-      }, [props.task])
 
-    const createNewTransaction = () =>
-    {
-        if (transactionData==null) return;
+    }, [props.task])
+
+    const createNewTransaction = () => {
+        if (transactionData == null) return;
         const taskId = props.task["id"];
-        const payload = { "taskId" : taskId, "content" : {"label" :transactionData["label"], 
-        "message" : transactionData["message"]}}
+        const payload = {
+            "taskId": taskId, "content": {
+                "label": transactionData["label"],
+                "message": transactionData["message"]
+            }
+        }
         console.log("SAGA2 request da StudentComponents di willCreateTransaction");
         dispatch(UserTasksActions.willCreateTransaction(payload));
-       }
-    
-    const getFilteredTransactions = () =>
-    {  
-        console.log(`SC Transaction: (Task ${props.task["id"]}):`, props.task.transactions);
-        if (props.task.transactions==null) return [];
+    }
 
-        const ft = props.task.transactions.filter((transaction) =>
-        {
+    const getFilteredTransactions = () => {
+        console.log(`SC Transaction: (Task ${props.task["id"]}):`, props.task.transactions);
+        if (props.task.transactions == null) return [];
+
+        const ft = props.task.transactions.filter((transaction) => {
             //console.log("Transaction: (Filter):", transaction);
             // mostro solo le transactions create dallo studente compatilmente con le
             // label definite dalla app logic
-            return studentsTransactionOptions.includes(transaction["label"]) 
-            && userProfile!=null && userProfile["id"]== transaction["actioneerId"]
-            
+            return studentsTransactionOptions.includes(transaction["label"])
+                && userProfile != null && userProfile["id"] == transaction["actioneerId"]
+
         })
         // ordinate cronologicamente dalla più recente alla meno recente
-        ft.sort((t1,t2) => (t1["_creationTs"]- t2["_creationTs"]))
+        ft.sort((t1, t2) => (t1["_creationTs"] - t2["_creationTs"]))
         return ft
     }
 
@@ -237,13 +233,13 @@ export const StudentTask = (props) => {
         //const filteredTransactions =  getFilteredTransactions()
         console.log("Transaction: (filtered):", filteredTransactions);
         return filteredTransactions.map((transaction) => {
-            return <StudentTransaction readonly transaction={transaction} 
-                    teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} />
+            return <StudentTransaction readonly transaction={transaction}
+                teacherFeedback={feedbackTeacherTransactions[transaction["id"]]} />
         })
     }
 
     const renderNewTransaction = () => {
-         return <StudentTransaction onUpdate = { (label,message) => setTransactionData({label,message})} />
+        return <StudentTransaction onUpdate={(label, message) => setTransactionData({ label, message })} />
     }
 
     const renderTopicContents = () => {
@@ -283,7 +279,13 @@ export const StudentTask = (props) => {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary" onClick={(ev) => {createNewTransaction() }}>{t("send")}</Button>
+                        {
+                            newTransactionFormVisibile &&
+                            <div style={{ display: "flex", marginTop: "10px", justifyContent: "flex-end" }}>
+                                <Button color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</Button>
+                            </div>
+                        }
+
                     </CardFooter>
                 </Collapse>
             </Card>)
