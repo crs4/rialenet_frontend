@@ -301,11 +301,24 @@ export const TeacherTasksViewer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const tasks = useSelector(UserTasksSelectors.getTasks);
+    
+    /*
+    useEffect(() => {
+        dispatch(UserTasksActions.willGetUserProfile());   
+    }, [])
+    */
 
     useEffect(() => {
-        dispatch(UserTasksActions.willGetUserProfile());
+
         dispatch(UserTasksActions.willLoadTasks());
-    }, [])
+        
+        const seconds = 10;
+        const interval = setInterval(() => {
+          console.log(`WillLoad task for teacher every ${seconds} seconds`);
+          dispatch(UserTasksActions.willLoadTasks());
+        }, seconds*1000);
+        return () => clearInterval(interval);
+      }, []);
 
     
     const renderTaskCreator = () => {

@@ -22,10 +22,25 @@ export const StudentDashboard = (props) => {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
 
+    /*
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());
         dispatch(UserTasksActions.willLoadTasks());
       }, [])
+
+      */
+
+      useEffect(() => {
+
+        dispatch(UserTasksActions.willLoadTasks());
+        
+        const seconds = 10;
+        const interval = setInterval(() => {
+          console.log(`WillLoad task for student every ${seconds} seconds`);
+          dispatch(UserTasksActions.willLoadTasks());
+        }, seconds*1000);
+        return () => clearInterval(interval);
+      }, []);
 
    
     const renderTasks = () =>
