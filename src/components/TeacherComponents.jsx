@@ -29,6 +29,7 @@ const TeacherFeedback = (props) => {
     const [currentSelectedTeacherText, setCurrentTeacherText] =
         useState("") //(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
     const dispatch = useDispatch();
+  
 
     const createFeedbackTransaction = () => {
         if (currentSelectedChoice < 0) return;
@@ -325,7 +326,7 @@ export const TeacherTasksViewer = (props) => {
     const renderHeader = () =>
     {
         return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-        <NavbarBrand className="text-white" href="/">{t("answers_and_questions")}</NavbarBrand>
+        <NavbarBrand className="text-white font-weight-bold" href="/">{t("answers_and_questions")}</NavbarBrand>
         <Nav className="mr-auto" navbar>
         </Nav>
         <Nav navbar>
@@ -338,12 +339,13 @@ export const TeacherTasksViewer = (props) => {
             >
                 <IconContext.Provider value={{ color: "white", className: "global-class-name" }}>
                     <HiOutlineRefresh color="white" data-place="top"
-                        data-for="teachercomponents"
+                        data-for="teacherdashboard"
                         data-tip={t("refresh")}
                     />
                 </IconContext.Provider>
             </IconButton>
         </Nav>
+        <ReactTooltip id="teacherdashboard"/>
     </Navbar>
     }
 
@@ -363,6 +365,7 @@ export const TeacherTaskViewer = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
+    const [filteredTransactions, setFilteredTransactions] = useState([]);
 
     useEffect(() => {
         const { task } = props;
@@ -377,7 +380,8 @@ export const TeacherTaskViewer = (props) => {
             console.log("setFeedbackTeacherTransactions to->: ", ftd)
             setFeedbackTeacherTransactions(ftd);
         }
-
+ 
+        setFilteredTransactions(getFilteredTransactions());
     }, [props.task])
 
     const getFilteredTransactions = () => {
@@ -396,7 +400,7 @@ export const TeacherTaskViewer = (props) => {
     }
 
     const renderTransactions = () => {
-        const filteredTransactions = getFilteredTransactions()
+        //const filteredTransactions = getFilteredTransactions()
         console.log("Transaction: (filter):", filteredTransactions);
         return filteredTransactions.map((transaction, index) => {
             return <TeacherTransaction readonly transaction={transaction}
