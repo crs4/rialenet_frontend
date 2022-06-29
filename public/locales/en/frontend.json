@@ -1,6 +1,7 @@
 {
   "platform_title" : "Riale Wenet Platform",
   "passcode_enter" : "Enter your passcode",
+  "refresh" : "Refresh",
   "comments" : "comments",
   "new_question" : " New question",
   "public_area" : "Public Area",

@@ -7,7 +7,9 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
+import { IconContext } from "react-icons";
+import IconButton from '@material-ui/core/IconButton';
+import { HiOutlineRefresh } from "react-icons/hi";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
@@ -15,8 +17,9 @@ import { transactionFieldMapper, studentsTransactionOptions, teachersTransaction
 import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
-
+import ReactTooltip from "react-tooltip";
 // link timeline drosophila
+
 //https://beta.riale.ideab3.it/public/a6563273-863b-4e60-8b05-c6b41b332b42
 
 const TeacherFeedback = (props) => {
@@ -98,9 +101,9 @@ const TeacherFeedback = (props) => {
     }
 
     return <>
-    <div style={{ marginTop: "20px" }}>
-        <Label><b>{t("send_feedback_to_student")}</b></Label>
-    </div>
+        <div style={{ marginTop: "20px" }}>
+            <Label><b>{t("send_feedback_to_student")}</b></Label>
+        </div>
         {renderTeacherFeedbackOptions()}
         {renderTeacherAnswerText()}
     </>
@@ -169,8 +172,8 @@ const TeacherTransaction = (props) => {
         if (teacherFeedback == null) return null;
         console.log("TF FeedbackTransaction ID:", teacherFeedback);
 
-        const teacherText = t(`${teacherFeedback["label"]}`) + " " + 
-                            teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
+        const teacherText = t(`${teacherFeedback["label"]}`) + " " +
+            teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
         return teacherText;
     }
 
@@ -300,12 +303,12 @@ export const TeacherTasksViewer = (props) => {
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
-    const tasks =  useSelector(UserTasksSelectors.getTasks);
+    const tasks = useSelector(UserTasksSelectors.getTasks);
 
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());
         dispatch(UserTasksActions.willLoadTasks());
-      }, [])
+    }, [])
 
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>
@@ -319,20 +322,34 @@ export const TeacherTasksViewer = (props) => {
         return tasks && tasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
     }
 
+    const renderHeader = () =>
+    {
+        return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
+        <NavbarBrand className="text-white" href="/">{t("answers_and_questions")}</NavbarBrand>
+        <Nav className="mr-auto" navbar>
+        </Nav>
+        <Nav navbar>
+            <Button onClick={(ev) => { console.log("Click new Question"); setIsOpen(true) }}
+                style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} color="primary">
+                <FontAwesomeIcon icon={faPlus} />{t("new_question")}</Button>
+            <IconButton
+                onClick={() => {dispatch(UserTasksActions.willLoadTasks()); }}
+                style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} 
+            >
+                <IconContext.Provider value={{ color: "white", className: "global-class-name" }}>
+                    <HiOutlineRefresh color="white" data-place="top"
+                        data-for="teachercomponents"
+                        data-tip={t("refresh")}
+                    />
+                </IconContext.Provider>
+            </IconButton>
+        </Nav>
+    </Navbar>
+    }
+
     return (
         <>
-            <Navbar style={{ marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-                <NavbarBrand className="text-white font-weight-bold" href="/">{t("answers_and_questions")}</NavbarBrand>
-                <Nav className="mr-auto" navbar>
-                </Nav>
-                <Nav navbar>
-                    <Button onClick={(ev) => { console.log("Click new Question"); setIsOpen(true) }}
-                        style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} color="primary">
-                        <FontAwesomeIcon icon={faPlus} />{t("new_question")}</Button>
-
-                </Nav>
-
-            </Navbar>
+            {renderHeader()}
             {isOpen && renderTaskCreator()}
             {renderTasks()}
         </>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
-    Button, Collapse, Form, FormText,
+    Button, Collapse, Form, FormText, Badge,
     Card, CardHeader, CardTitle, CardSubtitle, CardBody, CardFooter,
     FormGroup, Input, Label
 } from 'reactstrap'
@@ -179,28 +179,28 @@ export const StudentTask = (props) => {
             // come actioneerId lo studente correntemente loggato
             if (transactionID != null &&
                 userProfile != null && userProfile["id"] == task.transactions[transactionID]["actioneerId"]
-                ) {
+            ) {
                 ftd[transactionID] = task.transactions[i]
             }
         }
-       
+
         const filteredT = getFilteredTransactions()
-        
+
         // lo studente puo' rispondere solo dopo che è arrivata una nuova richiesta
         // da parte del docente oppure un feedback
         let newTVisible = true;
         const transactionsIDwithFeedback = Object.keys(ftd);
         console.log(`SC: FilteredTransactionLen: task:${task["id"]}`, filteredT.length);
-        
-        for (let i = 0; i < filteredT.length; i++) { 
+
+        for (let i = 0; i < filteredT.length; i++) {
             // se manca anche solo un feedback allo studente 
             // non gli è consentito inoltrare nuove richieste
             if (!transactionsIDwithFeedback.includes(filteredT[i]["id"])) {
-                newTVisible=false;
+                newTVisible = false;
                 break;
             }
         }
-        
+
         setNewTransactionFormVisible(newTVisible);
         setFilteredTransactions(filteredT);
         setFeedbackTeacherTransactions(ftd);
@@ -265,6 +265,11 @@ export const StudentTask = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
+                           { newTransactionFormVisibile &&
+                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
+                                {t("teacherFeedback")}
+                            </Badge>
+                            }
                             ({taskCreationDate}) {taskTitle}
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
