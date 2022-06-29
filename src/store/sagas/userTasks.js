@@ -19,9 +19,10 @@ export function* sagas() {
 
 function* willLogout(action) {
     yield put(UserTasksActions.didLogout());
-   // yield put(push("/logout"));
+   
     const result = yield call(logout)
     console.log("Logout result:", result);
+    yield put(push("/"));
   }
 
 
