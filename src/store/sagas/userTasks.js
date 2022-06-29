@@ -4,7 +4,7 @@ import {
     selectors as UserTasksSelector,
   } from "../slices/userTasks";
 import { push } from 'connected-react-router'
-import { createNewTask, createNewTransaction } from "../../api/wenet_api";
+import { createNewTask, createNewTransaction, logout } from "../../api/wenet_api";
 
 export function* sagas() {
   yield takeLatest(UserTasksActions.willGetUserProfile.type, willGetUserProfile)
@@ -20,7 +20,8 @@ export function* sagas() {
 function* willLogout(action) {
     yield put(UserTasksActions.didLogout());
    // yield put(push("/logout"));
-    yield window.location.href = "/"
+    const result = yield call(logout)
+    console.log("Logout result:", result);
   }
 
 

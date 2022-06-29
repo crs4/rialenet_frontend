@@ -36,3 +36,21 @@ export const createNewTask = async (content) => {
       return null;
   }
   }
+
+  export const logout = async () => {
+    const url = `/logout`;
+    try {
+      const response = await fetch(url,
+        {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        }
+      )
+      console.log("SAGA2 (API) logout response:", response)
+      const result = await response.text();
+      console.log("SAGA2 (API) logout result:", result)
+      return result;
+    } catch (e) { console.log("WENET logout response error:", e) 
+      return null;
+  }
+  }
