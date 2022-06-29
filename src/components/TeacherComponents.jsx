@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
-    Button, Collapse, Form, Nav, Navbar, NavbarBrand,
+    Button, Collapse, Form, Nav, Navbar, NavbarBrand, Badge,
     FormText, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardSubtitle, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label
 } from 'reactstrap'
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
@@ -128,13 +128,6 @@ const TeacherTransaction = (props) => {
             currentSelectedStudentText)
     }
 
-    const onChangeStudentText = (ev) => {
-        console.log("current text:", ev.target.value);
-        setCurrentStudentText(ev.target.value);
-        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
-            ev.target.value)
-    }
-
     const getStudentAnswerOption = (group, message, index) => {
         return <FormGroup check disabled={props.readonly} key={index}>
             <Input disabled={props.readonly}
@@ -205,7 +198,7 @@ const TeacherTransaction = (props) => {
             {props.transaction &&
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     {transactionActioneer ?
-                        <Label>
+                        <Label style={ props.teacherFeedback==null ? {"color":"#FF0000"} : {"color":"#000000"}}>
                             <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
                                 {' - '} {moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
                         </Label>
@@ -366,6 +359,7 @@ export const TeacherTaskViewer = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
     const [filteredTransactions, setFilteredTransactions] = useState([]);
+    const [amountOfFeedbackToSend, setAmountOfFeedbackToSend] = useState(0);
 
     useEffect(() => {
         const { task } = props;
@@ -379,10 +373,20 @@ export const TeacherTaskViewer = (props) => {
 
             console.log("setFeedbackTeacherTransactions to->: ", ftd)
             setFeedbackTeacherTransactions(ftd);
+            setAmountOfFeedbackToSend(getAmountOfFeedbackToSend());
         }
  
         setFilteredTransactions(getFilteredTransactions());
     }, [props.task])
+
+    const getAmountOfFeedbackToSend = () =>
+    {  
+        const {transactions} = props.task;
+        if (transactions==null || transactions.length<1) return 0;
+        const totTransactions = transactions.length;
+        const totFeedbackTransactions = Object.keys(feedbackTeacherTransactions).length;
+        return (totTransactions-totFeedbackTransactions);
+    }
 
     const getFilteredTransactions = () => {
         console.log("Transaction: (Task):", props.task.transactions);
@@ -421,6 +425,12 @@ export const TeacherTaskViewer = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
+                        { (amountOfFeedbackToSend>0) &&
+                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
+                                {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
+                            </Badge>
+                            }
+
                             ({taskCreationDate}) {taskTitle}
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
