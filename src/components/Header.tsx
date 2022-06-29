@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState, useEffect } from 'react'
 import {
     Container, Button, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav,
     NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
@@ -15,6 +16,14 @@ export const Header = ({ className, section, showMenu = false }: any) => {
     const toggle = () => setIsOpen(!isOpen);
     const dispatch = useDispatch();
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    
+/*
+    useEffect(() => {
+        dispatch(push("/"));
+       // dispatch(UserTasksActions.willLoadTasks());
+    }, [userProfile])
+*/
+
     console.log("UserProfile:", userProfile);
     return (
         <Navbar style={{marginBottom:"10px"}} className={className} color="primary" light expand="md">

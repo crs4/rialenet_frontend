@@ -18,6 +18,9 @@ import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 import ReactTooltip from "react-tooltip";
+import { push } from 'connected-react-router';
+
+
 // link timeline drosophila
 
 //https://beta.riale.ideab3.it/public/a6563273-863b-4e60-8b05-c6b41b332b42
@@ -304,6 +307,7 @@ export const TeacherTasksViewer = (props) => {
         dispatch(UserTasksActions.willLoadTasks());
     }, [])
 
+    
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>
             <ModalHeader>{t("new_question")}</ModalHeader>
@@ -377,7 +381,7 @@ export const TeacherTaskViewer = (props) => {
 
             console.log("setFeedbackTeacherTransactions to->: ", ftd)
             setFeedbackTeacherTransactions(ftd);
-            
+
             setAmountOfFeedbackToSend(getAmountOfFeedbackToSend(filteredT, ftd));
     
     }, [props.task])

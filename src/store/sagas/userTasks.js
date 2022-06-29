@@ -33,10 +33,14 @@ function* willLogout(action) {
     .then(myJson => myJson)
     );
 
-    const userProfile = (response == null) ? [] : response
+    const userProfile = (response == null) ? null : response
     yield put(UserTasksActions.didGetUserProfile(userProfile));
+    if (userProfile==null)
+    {yield put(push("/"));}
+
     } catch (error) {
       yield put(UserTasksActions.didGetUserProfile(null));
+      yield put(push("/"));
     }
 }
 
@@ -52,29 +56,6 @@ function* willCreateTask(action) {
   else{
     console.log("SAGA2 willCreateNewTask error");
   }
-}
-
-function* willCreateTaskOld(action) {
-
-  const url = `/newtask`;
-  const content = action.payload; // {"name" : "domanda 1" , "description" ; "Cosa sono i ...?"}
-   
-    try{
-    const response = yield call(() => fetch(url,
-      {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify({ "content": content })  // {"name" : "nome" , "description" : "..."}
-      })
-    .then(response => response.json())
-    .then(myJson => myJson)
-    );
-      console.log("SAGA NEW TASK response:", response);
-      yield put(UserTasksActions.willLoadTasks());
-  } catch (error) {
-      console.log("SAGA NEW TASK error:".error);
-     // yield put(UserTasksActions.didLoadTasks([]));
-    }
 }
 
 function* willCreateTransaction(action) {

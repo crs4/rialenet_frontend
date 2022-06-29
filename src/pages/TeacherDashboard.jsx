@@ -20,7 +20,6 @@ export const TeacherDashboard = (props) => {
     
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());
-        //dispatch(UserTasksActions.willLoadTasks());
       }, [])
 
     return (
