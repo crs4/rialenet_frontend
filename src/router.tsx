@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+
 import { ConnectedRouter } from 'connected-react-router'
 
 import {
@@ -9,19 +10,27 @@ import {
     Redirect,
     useHistory
   } from "react-router-dom";
-  import { useSelector } from "react-redux";
+  import { useSelector, useDispatch } from "react-redux";
   import { history } from './store'
   import RialeDiscussionBoard from './pages/DiscussionDashBoard'
   import { StudentDashboard } from "./pages/StudentDashboard";
   import { TeacherDashboard } from "./pages/TeacherDashboard";
   import WenetConnector from "./pages/WenetConnector";
-  import { selectors as UserTasksSelectors} from './store/slices/userTasks'
+  import { selectors as UserTasksSelectors, actions as UserTasksActions } from './store/slices/userTasks'
   import { Role } from "./constants";
 
 export const AppRouter = () => { 
       
       const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+      const dispatch = useDispatch();
 
+      useEffect(() => {
+            dispatch(UserTasksActions.willGetUserProfile(null));
+          }, [])
+
+          useEffect(() => {
+            console.log("UserProfile in router:", userProfile);
+          }, [userProfile])
 
   return (<ConnectedRouter history={history}>
   <Switch>
