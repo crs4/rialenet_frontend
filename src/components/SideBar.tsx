@@ -30,6 +30,7 @@ export const SideBar = ({ active, role }: any) => {
         }}>
 
             <Nav vertical className="list-unstyled pb-3">
+                {/* 
                 <NavItem active={active === "public_area" ? true : false} className="mb-1">
                     <NavLink className={active === "public_area" ? "text-primary" : "text-secondary"}
                         style={{ textDecoration: 'none', fontWeight: 'bolder' }} tag={Link}
@@ -37,6 +38,7 @@ export const SideBar = ({ active, role }: any) => {
                         <FontAwesomeIcon icon={faBriefcase} className="mr-2" /> {t("public_area")}
                     </NavLink>
                 </NavItem>
+                */}
                 {
                     (role==Role.student || role==Role.admin) &&
                     (
