@@ -19,7 +19,8 @@ export function* sagas() {
 
 function* willLogout(action) {
     yield put(UserTasksActions.didLogout());
-    yield put(push("/logout"));
+   // yield put(push("/logout"));
+    yield window.location.href = "/"
   }
 
 
@@ -36,7 +37,7 @@ function* willLogout(action) {
     const userProfile = (response == null) ? null : response
     yield put(UserTasksActions.didGetUserProfile(userProfile));
     if (userProfile==null)
-    {yield put(push("/"));}
+    {yield put(push("/logout"));}
 
     } catch (error) {
       yield put(UserTasksActions.didGetUserProfile(null));
