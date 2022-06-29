@@ -370,21 +370,23 @@ export const TeacherTaskViewer = (props) => {
             if (transactionID != null) {
                 ftd[transactionID] = task.transactions[i]
             }
+            
+        }
+            const filteredT = getFilteredTransactions()
+            setFilteredTransactions(filteredT);
 
             console.log("setFeedbackTeacherTransactions to->: ", ftd)
             setFeedbackTeacherTransactions(ftd);
-            setAmountOfFeedbackToSend(getAmountOfFeedbackToSend());
-        }
- 
-        setFilteredTransactions(getFilteredTransactions());
+            
+            setAmountOfFeedbackToSend(getAmountOfFeedbackToSend(filteredT, ftd));
+    
     }, [props.task])
 
-    const getAmountOfFeedbackToSend = () =>
+    const getAmountOfFeedbackToSend = (transactions, feedbackTransactions) =>
     {  
-        const {transactions} = props.task;
         if (transactions==null || transactions.length<1) return 0;
         const totTransactions = transactions.length;
-        const totFeedbackTransactions = Object.keys(feedbackTeacherTransactions).length;
+        const totFeedbackTransactions = Object.keys(feedbackTransactions).length;
         return (totTransactions-totFeedbackTransactions);
     }
 
