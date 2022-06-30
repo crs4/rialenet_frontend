@@ -18,8 +18,7 @@ import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 import ReactTooltip from "react-tooltip";
-import { push } from 'connected-react-router';
-
+import {ActivityButton} from './ActivityButton';
 
 // link timeline drosophila
 
@@ -69,7 +68,7 @@ const TeacherFeedback = (props) => {
                 />
             </div>
             <div style={{ display: "flex", marginTop: "10px", justifyContent: "flex-end" }}>
-                <Button onClick={() => createFeedbackTransaction()} color="primary">{t("send")}</Button>
+                <ActivityButton onClick={() => createFeedbackTransaction()} color="primary">{t("send")}</ActivityButton>
             </div>
         </FormGroup>
     }
@@ -93,7 +92,7 @@ const TeacherFeedback = (props) => {
     const onChangeSelectedChoice = (ev) => {
         console.log("selected feedback choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
-        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(teachersTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(teachersTransactionOptions[ev.target.value],
             currentSelectedTeacherText)
     }
 
@@ -203,11 +202,11 @@ const TeacherTransaction = (props) => {
                     {transactionActioneer ?
                         <Label style={ props.teacherFeedback==null ? {"color":"#FF0000"} : {"color":"#000000"}}>
                             <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
-                                {' - '} {moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - hh:mm")}</b>
+                                {' - '} {moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - HH:mm")}</b>
                         </Label>
                         :
                         <Label>
-                            <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - hh:mm")}</b>
+                            <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - HH:mm")}</b>
                         </Label>}
 
                 </div>
@@ -284,7 +283,7 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ display: "flex", "justifyContent": "space-between" }}>
                     <Button onClick={(ev) => { props.onClose() }}>Annulla</Button>
-                    <Button color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</Button>
+                    <ActivityButton color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</ActivityButton>
                 </div>
             </FormGroup>
         </Form>
@@ -435,7 +434,7 @@ export const TeacherTaskViewer = (props) => {
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
-        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - hh:mm")
+        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - HH:mm")
         return (
 
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>

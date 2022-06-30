@@ -144,7 +144,7 @@ const StudentTransaction = (props) => {
             {props.transaction &&
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Label>
-                        <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - hh:mm")}</b>
+                        <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - HH:mm")}</b>
                     </Label>
                 </div>
             }
@@ -275,7 +275,7 @@ export const StudentTask = (props) => {
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
-        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - hh:mm")
+        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - HH:mm")
         return (
 
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
