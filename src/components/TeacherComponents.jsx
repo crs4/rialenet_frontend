@@ -203,11 +203,11 @@ const TeacherTransaction = (props) => {
                     {transactionActioneer ?
                         <Label style={ props.teacherFeedback==null ? {"color":"#FF0000"} : {"color":"#000000"}}>
                             <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
-                                {' - '} {moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+                                {' - '} {moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - hh:mm")}</b>
                         </Label>
                         :
                         <Label>
-                            <b>{moment(props.transaction._creationTs).format("DD/MM/YYYY - hh:mm")}</b>
+                            <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - hh:mm")}</b>
                         </Label>}
 
                 </div>
@@ -435,7 +435,7 @@ export const TeacherTaskViewer = (props) => {
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
-        const taskCreationDate = moment(props.task._creationTs).format("DD/MM/YYYY - hh:mm")
+        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - hh:mm")
         return (
 
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
