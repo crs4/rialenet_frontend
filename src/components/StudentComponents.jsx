@@ -55,14 +55,16 @@ const StudentTransaction = (props) => {
     const onChangeSelectedChoice = (ev) => {
         console.log("selected choice:", ev.target.value);
         setCurrentSelectedChoice(ev.target.value);
-        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && ev.target.value >= 0 && 
+        props.onUpdate(studentsTransactionOptions[ev.target.value],
             currentSelectedStudentText)
     }
 
     const onChangeStudentText = (ev) => {
         console.log("current text:", ev.target.value);
         setCurrentStudentText(ev.target.value);
-        props.onUpdate && currentSelectedChoice >= 0 && props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
+        props.onUpdate && currentSelectedChoice >= 0 && 
+        props.onUpdate(studentsTransactionOptions[currentSelectedChoice],
             ev.target.value)
     }
 
