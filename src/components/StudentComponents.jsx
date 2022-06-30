@@ -213,7 +213,8 @@ export const StudentTask = (props) => {
     }, [props.task])
 
     const createNewTransaction = () => {
-        if (transactionData == null) return;
+        if (!isValidTransactionData()) return;
+
         const taskId = props.task["id"];
         const payload = {
             "taskId": taskId, "content": {
@@ -223,6 +224,11 @@ export const StudentTask = (props) => {
         }
         console.log("SAGA2 request da StudentComponents di willCreateTransaction");
         dispatch(UserTasksActions.willCreateTransaction(payload));
+    }
+
+    const isValidTransactionData = () =>
+    {
+        return (transactionData != null && transactionData["label"]!=null)
     }
 
     const getFilteredTransactions = () => {
@@ -298,7 +304,7 @@ export const StudentTask = (props) => {
                     </CardBody>
                     <CardFooter>
                         {
-                            newTransactionFormVisibile &&
+                            newTransactionFormVisibile && isValidTransactionData() &&
                             <div style={{ display: "flex", marginTop: "10px", justifyContent: "flex-end" }}>
                                 <ActivityButton color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</ActivityButton>
                             </div>
