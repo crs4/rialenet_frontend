@@ -148,7 +148,7 @@ const StudentTransaction = (props) => {
                     </Label>
                 </div>
             }
-            <Form style={{ border: "1px solid #007bff", padding: "10px", margin: "10px" }}>
+            <Form style={{ border: "1px solid #FF0000", padding: "10px", margin: "10px" }}>
 
 
                 <Label>
