@@ -148,7 +148,10 @@ const StudentTransaction = (props) => {
                     </Label>
                 </div>
             }
-            <Form style={{ border: "1px solid #FF0000", padding: "10px", margin: "10px" }}>
+            <Form style={props.readonly ? 
+            { border: "1px solid #00FF11", padding: "10px", margin: "10px" } :
+            { border: "1px solid #FF0000", padding: "10px", margin: "10px" }
+            }>
 
 
                 <Label>
@@ -172,11 +175,13 @@ export const StudentTask = (props) => {
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
     const [newTransactionFormVisibile, setNewTransactionFormVisible] = useState(false);
     const [filteredTransactions, setFilteredTransactions] = useState([]);
+    const [isDone, setIsDone] = useState(false);
 
     useEffect(() => {
         const { task } = props;
         console.log("Student task:", task);
         let ftd = {}
+        let isDone = false;
         for (let i = 0; i < task.transactions.length; i++) {
             const transactionID = task.transactions[i]["attributes"]["transactionID"];
             // mappo solamente le feedback transaction riferite alle transaction che hanno
@@ -185,6 +190,9 @@ export const StudentTask = (props) => {
                 userProfile != null && userProfile["id"] == task.transactions[transactionID]["actioneerId"]
             ) {
                 ftd[transactionID] = task.transactions[i]
+                // setto come concluso il task se almeno un feedback del docente indica che la risposta è esatta
+                if (fdt[tramsactionID]["label"]=="rightAnswer")
+                {isDone= true;}
             }
         }
 
@@ -208,6 +216,7 @@ export const StudentTask = (props) => {
         setNewTransactionFormVisible(newTVisible);
         setFilteredTransactions(filteredT);
         setFeedbackTeacherTransactions(ftd);
+        setIsDone(isDone);
 
         console.log("SC: setFeedbackTeacherTransactions to->: ", ftd)
         console.log("SC: NewTransactionFormVisible", newTVisible);
@@ -275,9 +284,14 @@ export const StudentTask = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                           { newTransactionFormVisibile &&
+                           { newTransactionFormVisibile && !isDone &&
                             <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
                                 {t("teacherFeedback")}
+                            </Badge>
+                            }
+                             { isDone &&
+                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#00AA00" }}>
+                                {t("completed")}
                             </Badge>
                             }
                             ({taskCreationDate}) {taskTitle}
