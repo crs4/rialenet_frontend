@@ -50,27 +50,33 @@ function* willLogout(action) {
 
 function* willCreateTask(action) {
   const content = action.payload; 
+  yield put(UserTasksActions.setIsSendingMessage(true));
   const result = yield call(createNewTask,content)
   if (result!=null)
   {
     console.log("SAGA2 willCreateTask result OK. Loading tasks...|",result);
+    yield put(UserTasksActions.setIsSendingMessage(false)); 
     yield put(UserTasksActions.willLoadTasks()); 
   }
   else{
     console.log("SAGA2 willCreateNewTask error");
+    yield put(UserTasksActions.setIsSendingMessage(false)); 
   }
 }
 
 function* willCreateTransaction(action) {
   const content = action.payload; 
+  yield put(UserTasksActions.setIsSendingMessage(true));
   const result = yield call(createNewTransaction,content)
   if (result!=null)
   {
     console.log("SAGA2 willCreateTransaction result OK. Loading tasks...|",result);
+    yield put(UserTasksActions.setIsSendingMessage(false)); 
     yield put(UserTasksActions.willLoadTasks()); 
   }
   else{
     console.log("SAGA2 willCreateTransaction error");
+    yield put(UserTasksActions.setIsSendingMessage(false)); 
   }
 }
 

@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import moment from 'moment';
+import {ActivityButton} from './ActivityButton';
+
 import { transactionFieldMapper, studentsTransactionOptions } from './common';
 
 const fakeStudentTransactions = [
@@ -298,7 +300,7 @@ export const StudentTask = (props) => {
                         {
                             newTransactionFormVisibile &&
                             <div style={{ display: "flex", marginTop: "10px", justifyContent: "flex-end" }}>
-                                <Button color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</Button>
+                                <ActivityButton color="primary" onClick={(ev) => { createNewTransaction() }}>{t("send")}</ActivityButton>
                             </div>
                         }
 

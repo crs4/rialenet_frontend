@@ -5,7 +5,8 @@ export const userTasksSlice = createSlice({
     initialState: {
       user:null,
       tasks: [],
-      studentsProfile: []
+      studentsProfile: [],
+      isSendingMessage: false
     }
   ,
     reducers: {
@@ -21,22 +22,25 @@ export const userTasksSlice = createSlice({
         state.user = action.payload;
       },
 
+      setIsSendingMessage:(state, action) =>
+      {
+        state.isSendingMessage = action.payload;
+      },
+
       didLogout:(state) => { 
         state.user = null;
         state.tasks = [];
+        state.isSendingMessage = false;
         localStorage.removeItem("passcode");
       },
 
       didLoadTasks: (state, action:PayloadAction<any>) =>{
         state.tasks = action.payload;
-      },
 
+      },
       didLoadStudentsProfile: (state, action:PayloadAction<any>) =>{
         state.studentsProfile = action.payload;
-      },
- 
- 
-    
+      }
     }
 });
 
@@ -56,6 +60,11 @@ export const selectors = {
   getStudentsProfile: (state:any) => {
     return state.userTasks.studentsProfile;
   },
+
+  isSendingMessage: (state:any) => {
+    return state.userTasks.isSendingMessage;
+  },
+
 
   getStudentDetailsByWenetID: (wenet_id:any) => (state:any) => {
      const profiles = state.userTasks.studentsProfile;
