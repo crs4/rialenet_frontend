@@ -191,7 +191,7 @@ export const StudentTask = (props) => {
             ) {
                 ftd[transactionID] = task.transactions[i]
                 // setto come concluso il task se almeno un feedback del docente indica che la risposta è esatta
-                if (fdt[tramsactionID]["label"]=="rightAnswer")
+                if (ftd[transactionID]["label"]=="rightAnswer")
                 {isDone= true;}
             }
         }

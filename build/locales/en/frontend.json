@@ -63,5 +63,6 @@
   "details" : "Details",
   "answers_and_questions" : "Answers & Questions",
   "send_feedback_to_student" : "Send a feedback to student",
-  "new_messages_from_students" : "new messages from students"
+  "new_messages_from_students" : "new messages from students",
+  "completed" : "Completed"
 }
