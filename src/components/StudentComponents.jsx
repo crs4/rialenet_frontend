@@ -255,7 +255,7 @@ export const StudentTask = (props) => {
 
         })
         // ordinate cronologicamente dalla più recente alla meno recente
-        ft.sort((t1, t2) => (t1["_creationTs"] - t2["_creationTs"]))
+        ft.sort((t1, t2) => (t2["_creationTs"] - t1["_creationTs"]))
         return ft
     }
 
@@ -291,7 +291,7 @@ export const StudentTask = (props) => {
                             }
                              { isDone &&
                             <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#00AA00" }}>
-                                {t("completed")}
+                                {t("rightAnswer")}
                             </Badge>
                             }
                             ({taskCreationDate}) {taskTitle}

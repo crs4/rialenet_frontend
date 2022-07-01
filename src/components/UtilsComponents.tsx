@@ -4,6 +4,9 @@ import { Button, Spinner, Card, CardHeader, CardBody, CardTitle } from 'reactstr
 import { selectors as UserTasksSelectors } from '../store/slices/userTasks'
 import { useTranslation } from 'react-i18next';
 
+
+//https://reactstrap.github.io/?path=/story/home-installation--page
+
 export const ActivityButton = ({ name, disabled, children, ...rest }: any) => {
 
   //const isActivityRunning = useSelector(state => UISelectors.activityRunningSelector(state, name));
@@ -42,7 +45,13 @@ export const AppLoader = (props: any) => {
           <CardTitle style={{ textAlign: "center" }}>{t("platform_title")}</CardTitle>
         </CardHeader>
         <CardBody>
-          <Spinner size="sm" color="light" />
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Spinner style={{ margin: "20px" }} color="primary" />
+          </div>
         </CardBody>
       </Card>
 
