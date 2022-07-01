@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions as UserTasksActions, selectors as UserTasksSelectors } from '../store/slices/userTasks'
 import { useTranslation } from 'react-i18next';
 
+
 export const Header = ({ className, section, showMenu = false }: any) => {
 
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });

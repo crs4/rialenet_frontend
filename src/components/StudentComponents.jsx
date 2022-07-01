@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import moment from 'moment';
-import {ActivityButton} from './ActivityButton';
+import {ActivityButton} from './UtilsComponents';
 
 import { transactionFieldMapper, studentsTransactionOptions } from './common';
 

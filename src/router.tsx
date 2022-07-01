@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-import { ConnectedRouter } from 'connected-react-router'
+import { ConnectedRouter, push } from 'connected-react-router'
 
 import {
     BrowserRouter as Router,
@@ -30,6 +30,11 @@ export const AppRouter = () => {
 
           useEffect(() => {
             console.log("UserProfile in router:", userProfile);
+            if (userProfile!=null && userProfile["message"]!=null)
+            {
+              alert(userProfile["message"])
+              dispatch(push("/"))
+            }
           }, [userProfile])
 
   return (<ConnectedRouter history={history}>
@@ -51,7 +56,7 @@ export const AppRouter = () => {
     </Route>
 
     <Route path="/teacher_dashboard">
-    { (userProfile==null) ? <p>loading...</p> : (
+    { (userProfile==null) ? <AppLoader/>  : (
             (userProfile.role_id==Role.teacher || userProfile.role_id==Role.admin) ?
             <TeacherDashboard /> :
             <Redirect to="/" />
