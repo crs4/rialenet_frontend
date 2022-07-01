@@ -27,7 +27,7 @@ export const Header = ({ className, section, showMenu = false }: any) => {
     console.log("UserProfile:", userProfile);
     return (
         <Navbar style={{marginBottom:"10px"}} className={className} color="primary" light expand="md">
-            <NavbarBrand className="text-white font-weight-bold" href="/">RIALENET - {_section}</NavbarBrand>
+            <NavbarBrand className="text-white font-weight-bold">RIALENET - {_section}</NavbarBrand>
             {showMenu && (<>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>

@@ -12,7 +12,7 @@ import {
   } from "react-router-dom";
   import { useSelector, useDispatch } from "react-redux";
   import { history } from './store'
-  import RialeDiscussionBoard from './pages/DiscussionDashBoard'
+  import {AppLoader} from "./components/UtilsComponents";
   import { StudentDashboard } from "./pages/StudentDashboard";
   import { TeacherDashboard } from "./pages/TeacherDashboard";
   import WenetConnector from "./pages/WenetConnector";
@@ -41,7 +41,7 @@ export const AppRouter = () => {
     */}
 
     <Route path="/student_dashboard">
-          { (userProfile==null) ? <p>loading...</p> : (
+          { (userProfile==null) ? <AppLoader/> : (
             (userProfile.role_id==Role.student || userProfile.role_id==Role.admin) ?
             <StudentDashboard /> :
             <Redirect to="/" />

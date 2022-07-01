@@ -18,7 +18,7 @@ import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 import ReactTooltip from "react-tooltip";
-import {ActivityButton} from './ActivityButton';
+import {ActivityButton} from './UtilsComponents';
 
 // link timeline drosophila
 
