@@ -255,9 +255,10 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ marginTop: "20px" }}>
                     <Label for="teacherTaskTitle">
-                        <b>{t("teacherTaskTitle")}</b>
+                        <b>{t("question_topic")}</b>
                     </Label>
                     <Input
+                        required
                         id="teacherTaskTitle"
                         name="text"
                         type="text"
@@ -269,9 +270,10 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ marginTop: "20px" }}>
                     <Label for="teacherTaskDescription">
-                        <b>{t("teacherTaskDescription")}</b>
+                        <b>{t("question_content")}</b>
                     </Label>
                     <Input
+                        required
                         id="teacherTaskDescription"
                         name="text"
                         type="textarea"
@@ -283,7 +285,7 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ display: "flex", "justifyContent": "space-between" }}>
                     <Button onClick={(ev) => { props.onClose() }}>Annulla</Button>
-                    <ActivityButton color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</ActivityButton>
+                    <Button disabled={currentTaskTitle.trim()=="" || currentTaskDescription.trim()==""}  color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</Button>
                 </div>
             </FormGroup>
         </Form>

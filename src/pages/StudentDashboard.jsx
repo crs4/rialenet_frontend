@@ -51,7 +51,7 @@ export const StudentDashboard = (props) => {
     const renderContentHeader = () =>
     {
         return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-        <NavbarBrand className="text-white" href="/">{t("answers_and_questions")}</NavbarBrand>
+        <NavbarBrand className="text-white">{t("answers_and_questions")}</NavbarBrand>
         <Nav className="mr-auto" navbar>
         </Nav>
         <Nav navbar>

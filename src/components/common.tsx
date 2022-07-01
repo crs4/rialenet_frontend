@@ -9,7 +9,9 @@ export const transactionFieldMapper = {
     "rightAnswer": "message"
 }
 
-export const studentsTransactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
+//export const studentsTransactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
+export const studentsTransactionOptions = ["myAnswer", "needClarification", "cannotAnswer" ];
+
 export const teachersTransactionOptions = ["goToAttachment", "goToTimelinePosition", "goToTag", "rightAnswer"];
 
 

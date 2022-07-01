@@ -4,7 +4,7 @@ import { SideBar } from '../components/SideBar'
 import { Content } from '../components/Content';
 import { selectors as UserTasksSelectors, actions as UserTasksActions } from '../store/slices/userTasks'
 import { useSelector, useDispatch } from "react-redux";
-import { TaskCreator, TeacherTasksViewer } from '../components/TeacherComponents';
+import { TeacherTasksViewer } from '../components/TeacherComponents';
 import { StudentsProfileViewer } from '../components/StudentsProfileViewer';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';

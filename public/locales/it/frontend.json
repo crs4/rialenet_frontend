@@ -10,7 +10,7 @@
   "connect_to_wenet": "Clicca qui per accedere",
   "login": "Login",
   "logout": "Logout",
-  "selectAnswer": "Seleziona la risposta:",
+  "selectAnswer": "Seleziona una delle seguenti opzioni:",
   "selectAnswer_done" : "Risposta selezionata",
   "teacher_selectAnswer":"Risposta selezionata",
   "enterComment": "Inserisci un tuo commento",
@@ -62,6 +62,9 @@
   "send_feedback_to_student" : "Invia un feedback allo studente",
 
   "new_messages_from_students" : "nuovi messaggi dagli studenti",
-  "completed" : "Completato"
+  "completed" : "Completato",
+  "question_reproposal" : "Riprongo la domanda:",
+  "question_topic" : "Argomento",
+  "question_content" : "Testo della domanda"
 
 }

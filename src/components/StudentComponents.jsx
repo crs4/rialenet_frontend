@@ -269,7 +269,21 @@ export const StudentTask = (props) => {
     }
 
     const renderNewTransaction = () => {
-        return <StudentTransaction onUpdate={(label, message) => setTransactionData({ label, message })} />
+        const taskTitle = props.task.goal.name;
+        const taskDescription = props.task.goal.description;
+        const numFeedbacks = Object.keys(feedbackTeacherTransactions).length;
+        return (  <> 
+        {(numFeedbacks>0) && 
+            <div style={{ padding: "10px", margin: "10px", backgroundColor: "#EEEEEE", }}>
+              {t("question_reproposal")}: {taskDescription}
+            </div>
+        }  
+        
+        <StudentTransaction onUpdate={(label, message) => setTransactionData({ label, message })} />
+        </> 
+        
+        )
+        
     }
 
     const renderTopicContents = () => {
@@ -315,7 +329,7 @@ export const StudentTask = (props) => {
                     <CardBody>
                         <Form>
                             {renderTransactions()}
-                            {newTransactionFormVisibile && renderNewTransaction()}
+                            {newTransactionFormVisibile && !isDone && renderNewTransaction()}
                         </Form>
                     </CardBody>
                     <CardFooter>

@@ -12,7 +12,7 @@
   "logout": "Logout",
 
   "selectAnswer" : "Select the answer:",
-  "selectAnswer_done" : "Selected answer:",
+  "selectAnswer_done" : "Selected one of the following options:",
   "teacher_selectAnswer":"Selected answer",
   "enterComment" : "Enter your comment",
 
@@ -64,5 +64,8 @@
   "answers_and_questions" : "Answers & Questions",
   "send_feedback_to_student" : "Send a feedback to student",
   "new_messages_from_students" : "new messages from students",
-  "completed" : "Completed"
+  "completed" : "Completed",
+  "question_reproposal" : "Question reproposal:",
+  "question_topic" : "Topic",
+  "question_content" : "Question content"
 }

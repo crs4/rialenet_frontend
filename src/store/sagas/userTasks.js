@@ -96,7 +96,7 @@ function* willLoadTasks(action) {
 
     const tasks = (response == null) ? [] : response["tasks"]
     // Ordino i task dal più recente al piu' vecchio
-    tasks.sort((t1,t2)=> t2["_creactionTs"]- t1["_creactionTs"])
+    tasks.sort((t1,t2)=> t2["_creationTs"]- t1["_creationTs"])
 
     yield put(UserTasksActions.didLoadTasks(tasks));
     } catch (error) {
