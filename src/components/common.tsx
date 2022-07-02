@@ -6,13 +6,15 @@ export const transactionFieldMapper = {
     "goToAttachment": "attachment",
     "goToTimelinePosition": "timelineLink",
     "goToTag": "tag",
-    "rightAnswer": "message"
+    "rightAnswer": "message",
+    "freeAnnotation" : "message"
 }
 
 //export const studentsTransactionOptions = ["cannotAnswer", "needClarification", "notSure", "myAnswer"];
 export const studentsTransactionOptions = ["myAnswer", "needClarification", "cannotAnswer" ];
 
-export const teachersTransactionOptions = ["goToAttachment", "goToTimelinePosition", "goToTag", "rightAnswer"];
+export const teachersTransactionOptions = ["freeAnnotation", "goToAttachment", "goToTimelinePosition", 
+                                            "goToTag", "rightAnswer"];
 
 
 const fakeStudentTransactions = [

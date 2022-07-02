@@ -31,6 +31,7 @@
   "goToTimelinePosition" : "Go to timeline at the position...",
   "goToTag" : "Go to tag...",
   "rightAnswer" : "Correct answer",
+  "freeAnnotation" : "Free annotazione",
 
   "comment_on_cannotAnswer" : "Enter a comment",
   "comment_on_cannotAnswer_done" : "Comment",
@@ -40,6 +41,7 @@
   "comment_on_notSure_done" : "Comment",
   "comment_on_myAnswer" : "Enter the answer",
   "comment_on_myAnswer_done" : "Answer",
+  "comment_on_freeAnnotation" : "Enter here your annotation",
   
 
   "teacher_comment_on_cannotAnswer" : "Student comment",
