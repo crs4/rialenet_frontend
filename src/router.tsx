@@ -29,7 +29,7 @@ export const AppRouter = () => {
       useEffect(() => {
 
             //@audit UNCOMMENT FOR PRODUCTION!
-            //dispatch(UserTasksActions.willGetUserProfile(null));
+            dispatch(UserTasksActions.willGetUserProfile(null));
           }, [])
 
           useEffect(() => {
@@ -37,8 +37,7 @@ export const AppRouter = () => {
             if (userProfile!=null && userProfile["message"]!=null)
             {
               alert(userProfile["message"])
-              //@audit UNCOMMENT FOR PRODUCTION!
-              //dispatch(push("/"))
+              dispatch(push("/"))
             }
           }, [userProfile])
 

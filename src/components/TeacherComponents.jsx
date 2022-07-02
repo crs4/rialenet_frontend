@@ -305,13 +305,14 @@ export const TeacherTasksViewer = (props) => {
     const tasks = useSelector(UserTasksSelectors.getTasks);
     const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
     const [filteredTasks, setFilteredTasks] = useState(tasks); 
-    /*
+    
+    /* NON NECESSARIO in quanto questa chiamata avviene in router.tsx
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());   
     }, [])
+     
     */
     
-    /*
     useEffect(() => {
 
         dispatch(UserTasksActions.willLoadTasks());
@@ -323,7 +324,7 @@ export const TeacherTasksViewer = (props) => {
         }, seconds*1000);
         return () => clearInterval(interval);
       }, []);
-    */
+    
 
       useEffect(() => {
         if (filteredIds==null) setFilteredTasks(tasks)
@@ -349,7 +350,7 @@ export const TeacherTasksViewer = (props) => {
     const renderHeader = () =>
     {
         return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-        <NavbarBrand className="text-white font-weight-bold" href="/">{t("answers_and_questions")}</NavbarBrand>
+        <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")}</NavbarBrand>
         <Nav className="mr-auto" navbar>
         </Nav>
         <Nav navbar>

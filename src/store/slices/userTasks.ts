@@ -7,7 +7,7 @@ export const userTasksSlice = createSlice({
       user:null,
 
       //@audit INFO in production replace with []
-      tasks: fakeTasks,
+      tasks: [],
       filteredIds: null,
       studentsProfile: [],
       isSendingMessage: false

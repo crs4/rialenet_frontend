@@ -73,5 +73,7 @@
   "completed" : "Completed",
   "question_reproposal" : "Question reproposal:",
   "question_topic" : "Topic",
-  "question_content" : "Question content"
+  "question_content" : "Question content",
+
+  "search_tasks" :"Search questions"
 }
