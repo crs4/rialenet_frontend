@@ -19,6 +19,7 @@ import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 import ReactTooltip from "react-tooltip";
 import {ActivityButton} from './UtilsComponents';
+import { SearchBar } from './SearchBar';
 
 // link timeline drosophila
 
@@ -31,7 +32,7 @@ const TeacherFeedback = (props) => {
     const [currentSelectedTeacherText, setCurrentTeacherText] =
         useState("") //(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
     const dispatch = useDispatch();
-  
+    
 
     const createFeedbackTransaction = () => {
         if (currentSelectedChoice < 0) return;
@@ -302,13 +303,15 @@ export const TeacherTasksViewer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const tasks = useSelector(UserTasksSelectors.getTasks);
-    
+    const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
+    const [filteredTasks, setFilteredTasks] = useState(tasks); 
     /*
     useEffect(() => {
         dispatch(UserTasksActions.willGetUserProfile());   
     }, [])
     */
-
+    
+    /*
     useEffect(() => {
 
         dispatch(UserTasksActions.willLoadTasks());
@@ -320,6 +323,15 @@ export const TeacherTasksViewer = (props) => {
         }, seconds*1000);
         return () => clearInterval(interval);
       }, []);
+    */
+
+      useEffect(() => {
+        if (filteredIds==null) setFilteredTasks(tasks)
+        else {
+             setFilteredTasks( tasks.filter((task) => filteredIds.includes(task["id"])));
+        }
+        
+      }, [tasks, filteredIds])
 
     
     const renderTaskCreator = () => {
@@ -331,7 +343,7 @@ export const TeacherTasksViewer = (props) => {
         </Modal>
     }
     const renderTasks = () => {
-        return tasks && tasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
+        return filteredTasks && filteredTasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
     }
 
     const renderHeader = () =>
@@ -363,6 +375,10 @@ export const TeacherTasksViewer = (props) => {
     return (
         <>
             {renderHeader()}
+            <div  style={{margin:"10px"}} >
+            <SearchBar tasks={tasks}/>
+            </div>
+           
             {isOpen && renderTaskCreator()}
             {renderTasks()}
         </>

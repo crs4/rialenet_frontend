@@ -15,23 +15,28 @@
   "selectAnswer_done" : "Selected one of the following options:",
   "teacher_selectAnswer":"Selected answer",
   "enterComment" : "Enter your comment",
-
   "cannotAnswer" : "I cannot answer",
   "needClarification" : "I need clarification",
   "notSure" : "I'm not sure about the answer" ,
   "myAnswer" : "I can answer",
+  "teacherFeedback" : "Teacher Feedback",
   "send" : "Send",
 
-  "teacherFeedback" : "Teacher Feedback",
-  
   "teacherCreateNewTask"   : "Create new question",
   "teacherTaskTitle" : "Title",
   "teacherTaskDescription" : "Description",
-  "goToAttachment" : "Go to attachnent...",
+
+  "goToAttachment" : "Go to attachment...",
   "goToTimelinePosition" : "Go to timeline at the position...",
   "goToTag" : "Go to tag...",
   "rightAnswer" : "Correct answer",
-  "freeAnnotation" : "Free annotazione",
+  "freeAnnotation" : "Free annotation",
+
+  "student_comment_on_goToAttachment" : "Go to the following attachment:",
+  "student_comment_on_goToTimelinePosition" : "Go to timeline at the following position:",
+  "student_comment_on_goToTag" : "Go to tag:",
+  "student_comment_on_rightAnswer" : "Correct answer",
+  "student_comment_on_freeAnnotation" : "",
 
   "comment_on_cannotAnswer" : "Enter a comment",
   "comment_on_cannotAnswer_done" : "Comment",
@@ -41,9 +46,7 @@
   "comment_on_notSure_done" : "Comment",
   "comment_on_myAnswer" : "Enter the answer",
   "comment_on_myAnswer_done" : "Answer",
-  "comment_on_freeAnnotation" : "Enter here your annotation",
   
-
   "teacher_comment_on_cannotAnswer" : "Student comment",
   "teacher_comment_on_needClarification" : "Student comment",
   "teacher_comment_on_notSure" : "Student comment",
@@ -52,6 +55,7 @@
   "teacher_comment_on_goToTimelinePosition" : "Enter the link to the timeline",
   "teacher_comment_on_goToTag" : "Enter the Tag name",
   "teacher_comment_on_rightAnswer" : "Enter a comment (optional)",
+  "teacher_comment_on_freeAnnotation" : "Enter here your annotation",
   
 
   "students_answers" : "Students answers",
@@ -69,5 +73,7 @@
   "completed" : "Completed",
   "question_reproposal" : "Question reproposal:",
   "question_topic" : "Topic",
-  "question_content" : "Question content"
+  "question_content" : "Question content",
+
+  "search_tasks" :"Search questions"
 }

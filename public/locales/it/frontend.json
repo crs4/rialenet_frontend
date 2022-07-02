@@ -21,7 +21,6 @@
   "teacherFeedback": "Feedback del docente",
   "send" : "Invia",
   
-
   "teacherCreateNewTask": "Nuova domanda",
   "teacherTaskTitle": "Titolo",
   "teacherTaskDescription": "Descrizione",
@@ -32,6 +31,12 @@
   "rightAnswer" : "Risposta esatta",
   "freeAnnotation" : "Annotazione libera",
 
+  "student_comment_on_goToAttachment": "Vai al seguente allegato della timeline:",
+  "student_comment_on_goToTimelinePosition": "Vai alla timeline alla posizione seguente:",
+  "student_comment_on_goToTag": "Vai al tag:",
+  "student_comment_on_rightAnswer" : "Risposta esatta",
+  "student_comment_on_freeAnnotation" : "",
+
   "comment_on_cannotAnswer" : "inserisci un commento",
   "comment_on_cannotAnswer_done" : "Commento",
   "comment_on_needClarification" : "Inserisci un commento",
@@ -40,7 +45,6 @@
   "comment_on_notSure_done" : "Commento",
   "comment_on_myAnswer" : "Inserisci qui la risposta",
   "comment_on_myAnswer_done" : "Risposta",
-  "comment_on_freeAnnotation" : "Inserisci qui la tua annotazione",
  
   "teacher_comment_on_cannotAnswer" : "Commento dello studente",
   "teacher_comment_on_needClarification" : "Commento dello studente",
@@ -50,6 +54,7 @@
   "teacher_comment_on_goToTimelinePosition" : "Inserisci qui il link alla timeline",
   "teacher_comment_on_goToTag" : "Inserisci qui il nome del Tag",
   "teacher_comment_on_rightAnswer" : "Inserisci un commento (opzionale)",
+  "teacher_comment_on_freeAnnotation" : "Inserisci qui la tua annotazione",
 
   "students_answers" : "Risposte degli studenti",
   "students_profile" : "Profilo degli studenti",
@@ -64,9 +69,10 @@
   "send_feedback_to_student" : "Invia un feedback allo studente",
 
   "new_messages_from_students" : "nuovi messaggi dagli studenti",
-  "completed" : "Completato",
   "question_reproposal" : "Riprongo la domanda:",
   "question_topic" : "Argomento",
-  "question_content" : "Testo della domanda"
+  "question_content" : "Testo della domanda",
+
+  "search_tasks" :"Ricerca domande"
 
 }

@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
-
+import { map, includes } from 'lodash'
+import { fakeTasks } from '../../components/common';
 export const userTasksSlice = createSlice({
     name: 'userTasks',
     initialState: {
       user:null,
-      tasks: [],
+
+      //@audit INFO in production replace with []
+      tasks: fakeTasks,
+      filteredIds: null,
       studentsProfile: [],
       isSendingMessage: false
     }
@@ -17,6 +21,15 @@ export const userTasksSlice = createSlice({
      willCreateTask: (state, action:PayloadAction<any>) => state,
      willCreateTransaction: (state, action:PayloadAction<any>) => state,
      willLoadStudentsProfile: (state, action:PayloadAction<any>) => state,
+
+     setFilteredIds: (state, action) => {
+      state.filteredIds = map(action.payload, 'id') as any;
+    },
+
+    clearFilter: (state, action: PayloadAction<any>) => {
+      console.log('in clear filter')
+      state.filteredIds = null;
+    },
       
      didGetUserProfile: (state, action:PayloadAction<any>) => { 
         state.user = action.payload;
@@ -47,6 +60,9 @@ export const userTasksSlice = createSlice({
 export const { actions, reducer } = userTasksSlice;
 
 export const selectors = {
+
+  getFilteredIds: (state: any) => state.userTasks.filteredIds,
+
   isLogged: (state:any) => {
     return state.userTasks.user!=null && localStorage.getItem("passcode")==state.userTasks.user["passcode"];
   },

@@ -107,7 +107,7 @@ const StudentTransaction = (props) => {
         const { teacherFeedback, transaction } = props;
         if (teacherFeedback == null) return null;
         console.log("TF FeedbackTransaction ID:", teacherFeedback);
-        const teacherText = t(`${teacherFeedback["label"]}`) + " " +
+        const teacherText = t(`student_comment_on_${teacherFeedback["label"]}`) + " " +
             teacherFeedback["attributes"][transactionFieldMapper[teacherFeedback["label"]]]
         return teacherText;
     }
@@ -299,8 +299,8 @@ export const StudentTask = (props) => {
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
                            { newTransactionFormVisibile && !isDone &&
-                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
-                                {t("teacherFeedback")}
+                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: (filteredTransactions.length>0 ?"#FF0000" : "orange") }}>
+                                {t(filteredTransactions.length>0 ? "teacherFeedback" : "new_question")}
                             </Badge>
                             }
                              { isDone &&

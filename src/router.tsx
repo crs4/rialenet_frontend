@@ -15,6 +15,8 @@ import {
   import {AppLoader} from "./components/UtilsComponents";
   import { StudentDashboard } from "./pages/StudentDashboard";
   import { TeacherDashboard } from "./pages/TeacherDashboard";
+  import { TeacherTasksViewer } from "./components/TeacherComponents";
+  import  {fakeTasks} from './components/common';
   import WenetConnector from "./pages/WenetConnector";
   import { selectors as UserTasksSelectors, actions as UserTasksActions } from './store/slices/userTasks'
   import { Role } from "./constants";
@@ -25,7 +27,9 @@ export const AppRouter = () => {
       const dispatch = useDispatch();
 
       useEffect(() => {
-            dispatch(UserTasksActions.willGetUserProfile(null));
+
+            //@audit UNCOMMENT FOR PRODUCTION!
+            //dispatch(UserTasksActions.willGetUserProfile(null));
           }, [])
 
           useEffect(() => {
@@ -33,7 +37,8 @@ export const AppRouter = () => {
             if (userProfile!=null && userProfile["message"]!=null)
             {
               alert(userProfile["message"])
-              dispatch(push("/"))
+              //@audit UNCOMMENT FOR PRODUCTION!
+              //dispatch(push("/"))
             }
           }, [userProfile])
 
@@ -44,6 +49,10 @@ export const AppRouter = () => {
           <RialeDiscussionBoard />
     </Route>
     */}
+
+<Route path="/devTasks">
+          <TeacherTasksViewer tasks={fakeTasks} />
+    </Route>
 
     <Route path="/student_dashboard">
           { (userProfile==null) ? <AppLoader/> : (
