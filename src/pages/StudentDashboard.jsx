@@ -20,8 +20,8 @@ import { SearchBar } from '../components/SearchBar';
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const tasks = useSelector(UserTasksSelectors.getTasks);
-    const tasks = useSelector(UserTasksSelectors.getTasks);
     const offset = useSelector(UserTasksSelectors.getTasksOffset);
+    const total = useSelector(UserTasksSelectors.getTasksTotal);
     const [filteredTasks, setFilteredTasks] = useState(tasks);
     const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
     const dispatch = useDispatch();
