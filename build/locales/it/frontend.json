@@ -73,6 +73,9 @@
   "question_topic" : "Argomento",
   "question_content" : "Testo della domanda",
 
-  "search_tasks" :"Ricerca domande"
+  "search_tasks" :"Ricerca domande",
+  "of" : "di",
+  "from" : "da",
+  "to" : "a"
 
 }

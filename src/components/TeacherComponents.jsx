@@ -303,15 +303,10 @@ export const TeacherTasksViewer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const tasks = useSelector(UserTasksSelectors.getTasks);
+    const offset = useSelector(UserTasksSelectors.getTasksOffset);
+    const total = useSelector(UserTasksSelectors.getTasksTotal);
     const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
     const [filteredTasks, setFilteredTasks] = useState(tasks); 
-    
-    /* NON NECESSARIO in quanto questa chiamata avviene in router.tsx
-    useEffect(() => {
-        dispatch(UserTasksActions.willGetUserProfile());   
-    }, [])
-     
-    */
     
     useEffect(() => {
 
@@ -347,10 +342,14 @@ export const TeacherTasksViewer = (props) => {
         return filteredTasks && filteredTasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
     }
 
+    const getOffsetAndTotalTasksInfo = () =>{
+       return (`${offset+1}-${offset+tasks.length} ${t("of")} ${total}`)
+    }
+
     const renderHeader = () =>
     {
         return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-        <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")}</NavbarBrand>
+        <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")} ({getOffsetAndTotalTasksInfo()})</NavbarBrand>
         <Nav className="mr-auto" navbar>
         </Nav>
         <Nav navbar>

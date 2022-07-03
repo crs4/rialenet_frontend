@@ -95,12 +95,15 @@ function* willLoadTasks(action) {
     );
 
     const tasks = (response == null) ? [] : response["tasks"]
+    const offset =  (response == null) ? 0 : response["offset"]
+    const total =  (response == null) ? 0 : response["total"]
     // Ordino i task dal più recente al piu' vecchio
-    tasks.sort((t1,t2)=> t2["_creationTs"]- t1["_creationTs"])
+    tasks.sort((t1,t2)=> t2["_creationTs"]- t1["_creationTs"]);
 
-    yield put(UserTasksActions.didLoadTasks(tasks));
+    yield put(UserTasksActions.didLoadTasks({tasks, offset, total}));
+  
     } catch (error) {
-      yield put(UserTasksActions.didLoadTasks([]));
+      yield put(UserTasksActions.didLoadTasks({tasks:[], offset:0, total:0}));
     }
 }
 

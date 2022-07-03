@@ -20,19 +20,14 @@ import { SearchBar } from '../components/SearchBar';
 export const StudentDashboard = (props) => {
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     const tasks = useSelector(UserTasksSelectors.getTasks);
+    const tasks = useSelector(UserTasksSelectors.getTasks);
+    const offset = useSelector(UserTasksSelectors.getTasksOffset);
     const [filteredTasks, setFilteredTasks] = useState(tasks);
     const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
 
-    /*
-    useEffect(() => {
-        dispatch(UserTasksActions.willGetUserProfile());
-        dispatch(UserTasksActions.willLoadTasks());
-      }, [])
-
-      */
-
+    
     useEffect(() => {
 
         dispatch(UserTasksActions.willLoadTasks());
@@ -58,9 +53,13 @@ export const StudentDashboard = (props) => {
         return tasks && filteredTasks && filteredTasks.map((task, index) => <StudentTask task={task} key={index} />)
     }
 
+    const getOffsetAndTotalTasksInfo = () =>{
+        return (`${offset+1}-${offset+tasks.length} ${t("of")} ${total}`)
+     }
+
     const renderContentHeader = () => {
         return <Navbar style={{ marginTop: "10px", marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-            <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")}</NavbarBrand>
+            <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")} ({getOffsetAndTotalTasksInfo()})</NavbarBrand>
             <Nav className="mr-auto" navbar>
             </Nav>
             <Nav navbar>

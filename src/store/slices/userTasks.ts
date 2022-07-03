@@ -8,6 +8,8 @@ export const userTasksSlice = createSlice({
 
       //@audit INFO in production replace with []
       tasks: [],
+      offset: 0,
+      total : 0,
       filteredIds: null,
       studentsProfile: [],
       isSendingMessage: false
@@ -40,6 +42,17 @@ export const userTasksSlice = createSlice({
         state.isSendingMessage = action.payload;
       },
 
+      setTotal:(state, action) =>
+      {
+        state.total = action.payload;
+      },
+
+      setOffset:(state, action) =>
+      {
+        state.offset = action.payload;
+      },
+
+
       didLogout:(state) => { 
         state.user = null;
         state.tasks = [];
@@ -48,8 +61,9 @@ export const userTasksSlice = createSlice({
       },
 
       didLoadTasks: (state, action:PayloadAction<any>) =>{
-        state.tasks = action.payload;
-
+        state.tasks = action.payload["tasks"];
+        state.offset =  action.payload["offset"];
+        state.total =  action.payload["total"];
       },
       didLoadStudentsProfile: (state, action:PayloadAction<any>) =>{
         state.studentsProfile = action.payload;
@@ -79,6 +93,14 @@ export const selectors = {
 
   isSendingMessage: (state:any) => {
     return state.userTasks.isSendingMessage;
+  },
+
+  getTasksTotal: (state:any) => {
+    return state.userTasks.total;
+  },
+
+  getTasksOffset: (state:any) => {
+    return state.userTasks.offset;
   },
 
 
