@@ -54,8 +54,10 @@ export const StudentDashboard = (props) => {
     }
 
     const getOffsetAndTotalTasksInfo = () =>{
-        return (`${offset+1}-${offset+tasks.length} ${t("of")} ${total}`)
-     }
+        if (total<0) return (`${t("loading")}`)
+        else
+       return (`${offset+1}-${offset+tasks.length} ${t("of")} ${total}`)
+    }
 
     const renderContentHeader = () => {
         return <Navbar style={{ marginTop: "10px", marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">

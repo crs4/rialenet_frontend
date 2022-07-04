@@ -78,5 +78,6 @@
   "search_tasks" :"Search questions",
   "of" : "of",
   "from" : "from",
-  "to" : "to"
+  "to" : "to",
+  "loading" : "Loading..."
 }

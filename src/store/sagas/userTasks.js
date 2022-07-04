@@ -84,9 +84,10 @@ function* willCreateTransaction(action) {
 
 function* willLoadTasks(action) {
   console.log("SAGA2 called willLoadTasks NEW!");
-    //const data = action.payload;
-    //const passcode = localStorage.getItem("passcode")
-    const url = `/tasks`;
+    let offset = action.payload;
+    if (offset==null) offset = yield select(UserTasksSelector.getTasksOffset);
+    const limit =  yield select(UserTasksSelector.getTasksLimit);
+    const url = `/tasks?offset=${offset}&limit=${limit}`;
    
     try{
     const response = yield call(() => fetch(url)

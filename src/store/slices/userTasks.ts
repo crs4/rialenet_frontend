@@ -9,7 +9,8 @@ export const userTasksSlice = createSlice({
       //@audit INFO in production replace with []
       tasks: [],
       offset: 0,
-      total : 0,
+      limit: 10,
+      total : -1, // -1 -> caricamento in corso
       filteredIds: null,
       studentsProfile: [],
       isSendingMessage: false
@@ -93,6 +94,10 @@ export const selectors = {
 
   isSendingMessage: (state:any) => {
     return state.userTasks.isSendingMessage;
+  },
+
+  getTasksLimit: (state:any) => {
+    return state.userTasks.limit;
   },
 
   getTasksTotal: (state:any) => {

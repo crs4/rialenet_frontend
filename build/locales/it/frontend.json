@@ -76,6 +76,7 @@
   "search_tasks" :"Ricerca domande",
   "of" : "di",
   "from" : "da",
-  "to" : "a"
+  "to" : "a",
+  "loading" : "Caricamento in corso..."
 
 }
