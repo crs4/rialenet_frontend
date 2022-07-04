@@ -18,12 +18,6 @@ export const Header = ({ className, section, showMenu = false }: any) => {
     const dispatch = useDispatch();
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
     
-/*
-    useEffect(() => {
-        dispatch(push("/"));
-       // dispatch(UserTasksActions.willLoadTasks());
-    }, [userProfile])
-*/
 
     console.log("UserProfile:", userProfile);
     return (

@@ -311,12 +311,12 @@ export const TeacherTasksViewer = (props) => {
     
     useEffect(() => {
 
-        dispatch(UserTasksActions.willLoadTasks(offset));
+        dispatch(UserTasksActions.willLoadTasks(null));
         
         const seconds = 10;
         const interval = setInterval(() => {
           console.log(`WillLoad task for teacher every ${seconds} seconds`);
-          dispatch(UserTasksActions.willLoadTasks(offset));
+          dispatch(UserTasksActions.willLoadTasks(null));
         }, seconds*1000);
         return () => clearInterval(interval);
       }, []);
@@ -330,25 +330,7 @@ export const TeacherTasksViewer = (props) => {
         
       }, [tasks, filteredIds])
 
-      const loadNextTasks = () => 
-      { 
-          if (tasks==null) return;
-          // 1-10 di 15 -> newOffset = 0 -> 10
-          const newOffset = offset+limit;
-          if (newOffset>=total) return;
-          dispatch(UserTasksActions.willLoadTasks(newOffset));
-      }
-
-      const loadPrevTasks = () => 
-      { 
-          if (tasks==null) return;
-          const newOffset = offset-limit;
-          if (newOffset<0) return;
-          dispatch(UserTasksActions.willLoadTasks(newOffset));
-      }
-
-
-    
+      
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>
             <ModalHeader>{t("new_question")}</ModalHeader>
@@ -360,6 +342,23 @@ export const TeacherTasksViewer = (props) => {
 
     const renderTasks = () => {
         return filteredTasks && filteredTasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
+    }
+
+    const loadNextTasks = () => 
+    { 
+        if (tasks==null) return;
+        // 1-10 di 15 -> newOffset = 0 -> 10
+        const newOffset = offset+limit;
+        if (newOffset>=total) return;
+        dispatch(UserTasksActions.willLoadTasks(newOffset));
+    }
+
+    const loadPrevTasks = () => 
+    { 
+        if (tasks==null) return;
+        const newOffset = offset-limit;
+        if (newOffset<0) return;
+        dispatch(UserTasksActions.willLoadTasks(newOffset));
     }
 
     const renderOffsetAndTotalTasksBar = () =>{
@@ -388,7 +387,7 @@ export const TeacherTasksViewer = (props) => {
                 style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} color="primary">
                 <FontAwesomeIcon icon={faPlus} />{t("new_question")}</Button>
             <IconButton
-                onClick={() => {dispatch(UserTasksActions.willLoadTasks()); }}
+                onClick={() => {dispatch(UserTasksActions.willLoadTasks(0)); }}
                 style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} 
             >
                 <IconContext.Provider value={{ color: "white", className: "global-class-name" }}>
