@@ -66,12 +66,12 @@ export const TaskTransactionsSummary = (props: any) => {
         justifyContent: 'center'
       }}>
         {value["completed"]  ?
-          <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
-            {t("yes")}
+          <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#00EE00" }}>
+            {` ${t("yes")} `}
           </Badge>
           :
           <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "orange" }}>
-            {t("no")}
+            {` ${t("no")} `}
           </Badge>}
       </div>)
   }
