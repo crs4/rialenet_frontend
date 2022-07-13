@@ -205,7 +205,7 @@ const TeacherTransaction = (props) => {
                     {transactionActioneer ?
                         <Label style={props.teacherFeedback == null ? { "color": "#FF0000" } : { "color": "#000000" }}>
                             <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
-                            {` (${transactionActioneer["id"]}) `}
+                                {` (${transactionActioneer["id"]}) `}
                                 {' - '} {moment(props.transaction._creationTs * 1000).format("DD/MM/YYYY - HH:mm")}</b>
                         </Label>
                         :
@@ -314,15 +314,15 @@ export const TeacherTasksViewer = (props) => {
     useEffect(() => {
 
         dispatch(UserTasksActions.willLoadTasks(null));
-        
+
         const seconds = 10;
         const interval = setInterval(() => {
-          console.log(`WillLoad task for teacher every ${seconds} seconds`);
-          dispatch(UserTasksActions.willLoadTasks(null));
-        }, seconds*1000);
+            console.log(`WillLoad task for teacher every ${seconds} seconds`);
+            dispatch(UserTasksActions.willLoadTasks(null));
+        }, seconds * 1000);
         return () => clearInterval(interval);
-      }, []);
-    
+    }, []);
+
 
     useEffect(() => {
         if (filteredIds == null) setFilteredTasks(tasks)
@@ -419,14 +419,14 @@ export const TeacherTaskViewer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
-    const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    const studentsProfile = useSelector(StudentsProfileSelector.getStudentsProfile);
     // dizionario delle transazioni feedback associate a quelle degli studenti
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
     const [filteredTransactions, setFilteredTransactions] = useState([]);
     const [amountOfFeedbackToSend, setAmountOfFeedbackToSend] = useState(0);
     const [studentsInteractionsSummary, setStudentsInteractionsSummary] = useState({})
     const [activeTab, setActiveTab] = useState("0");
-
+    const [totCompletedTask, setTotCompletedTask] = useState("0");
     useEffect(() => {
         const { task } = props;
         console.log("Student task:", task);
@@ -447,10 +447,13 @@ export const TeacherTaskViewer = (props) => {
         setFeedbackTeacherTransactions(ftd);
 
         setAmountOfFeedbackToSend(getAmountOfFeedbackToSend(filteredT, ftd));
-        const summaryR = getStudentsInteractionsSummary()
-        console.log("summary (FR)", summaryR)
-        if (summaryR!=null) setStudentsInteractionsSummary(summaryR);
-    
+        const result = getStudentsInteractionsSummary()
+        console.log("summary (FR)", JSON.stringify(result))
+        if (result != null) {
+            setStudentsInteractionsSummary(result["summary"]);
+            setTotCompletedTask(result["totCompleted"]);
+        }
+
     }, [props.task])
 
     // restituisce il numero di transazioni degli studenti per le quali il 
@@ -479,32 +482,38 @@ export const TeacherTaskViewer = (props) => {
         return ft
     }
 
-    const getStudentsInteractionsSummary = () =>
-    {
+    const getStudentsInteractionsSummary = () => {
         let summary = {}
+        let totalCompleted = 0;
         // ciclo su tutte le transazioni degli studenti
         // e le conto come interazioni associate all'actioneer 
         // della transaction
         console.log("DS: numero delle transazioni:", filteredTransactions.length);
-        for (let i=0; i<filteredTransactions.length;i++)
-        {
+        for (let i = 0; i < filteredTransactions.length; i++) {
             const studentWenetId = filteredTransactions[i]["actioneerId"]
             console.log("DS: transaction StudentWenet ID:", studentWenetId);
-            if (summary[studentWenetId]==null) summary[studentWenetId] = {"interactions" : 1 , "feedbacks" : 0, "completed" : false};
-            else summary[studentWenetId]["interactions"] +=1
+            if (summary[studentWenetId] == null) summary[studentWenetId] = { "interactions": 1, "feedbacks": 0, "completed": false };
+            else summary[studentWenetId]["interactions"] += 1
 
             // verifico se esiste un feedback associato alla transazione corrente
             const teacherFeedback = feedbackTeacherTransactions[filteredTransactions[i]["id"]]
             console.log(`DS: teacherFeedback for user ${studentWenetId}:`, JSON.stringify(teacherFeedback))
-            if (teacherFeedback!=null)
-            {
-               const completed = (teacherFeedback["label"]=="rightAnswer");
-               summary[studentWenetId]["feedbacks"] +=1;
-               summary[studentWenetId]["completed"] = summary[studentWenetId]["completed"] || completed;
+            if (teacherFeedback != null) {
+                const completed = (teacherFeedback["label"] == "rightAnswer");
+                summary[studentWenetId]["feedbacks"] += 1;
+                summary[studentWenetId]["completed"] = summary[studentWenetId]["completed"] || completed;
             }
+            if (summary[studentWenetId]["completed"]) totalCompleted += 1
         }
         console.log("DS: Summary (F)", JSON.stringify(summary));
-        return summary;
+        return { "summary": summary, "totCompleted": totalCompleted };
+    }
+
+    const renderTotalCompletedBadge = () => {
+        const total = (studentsProfile != null ? studentsProfile.length : 0);
+        const bcolor = totCompletedTask < total ? "primary" : "success";
+        const bText = `${totCompletedTask} ${t("of")} ${total} ${t("completed")}`
+        return <Badge color={bcolor}>{bText}</Badge>
     }
 
     const renderTransactions = () => {
@@ -528,13 +537,18 @@ export const TeacherTaskViewer = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                            {(amountOfFeedbackToSend > 0) &&
-                                <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
-                                    {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
-                                </Badge>
-                            }
+                            <div style={{ display: "flex", "justifyContent": "flex-start" }}>
+                                {renderTotalCompletedBadge()}
+                                { (amountOfFeedbackToSend > 0) &&
+                                        <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
+                                            {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
+                                        </Badge>
+                                }
+                                </div>
 
-                            ({taskCreationDate}) {taskTitle}
+                            {taskCreationDate} 
+                            {taskTitle}
+                            
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
                                 <AiOutlineCaretDown size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretDown>
@@ -579,7 +593,7 @@ export const TeacherTaskViewer = (props) => {
                                 </Form>
                             </TabPane>
                             <TabPane tabId="1">
-                                <TaskTransactionsSummary summary={studentsInteractionsSummary}/>
+                                <TaskTransactionsSummary summary={studentsInteractionsSummary} />
                             </TabPane>
                         </TabContent>
 

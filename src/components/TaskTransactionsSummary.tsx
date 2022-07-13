@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import BootstrapTable from 'react-bootstrap-table-next';
-import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
+import { selectors as StudentsProfileSelector } from '../store/slices/userTasks'
 import { useTranslation } from 'react-i18next';
 import { Badge } from 'reactstrap'
 
@@ -66,11 +66,11 @@ export const TaskTransactionsSummary = (props: any) => {
         justifyContent: 'center'
       }}>
         {value["completed"]  ?
-          <Badge style={{ margin: '5px', padding: '5px', color: "success"}}>
+          <Badge color="success" style={{ margin: '5px', padding: '10px'}}>
             {` ${t("yes")} `}
           </Badge>
           :
-          <Badge style={{ margin: '5px', padding: '5px', color: "warning" }}>
+          <Badge color="warning" style={{ margin: '5px', padding: '10px' }}>
             {` ${t("no")} `}
           </Badge>}
       </div>)
