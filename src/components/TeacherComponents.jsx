@@ -511,7 +511,7 @@ export const TeacherTaskViewer = (props) => {
 
     const renderTotalCompletedBadge = () => {
         const total = (studentsProfile != null ? studentsProfile.length : 0);
-        const bcolor = totCompletedTask < total ? "primary" : "success";
+        const bcolor = totCompletedTask < total ? "info" : "success";
         const bText = `${totCompletedTask} ${t("of")} ${total} ${t("completed")}`
         return <Badge color={bcolor}>{bText}</Badge>
     }
@@ -537,7 +537,7 @@ export const TeacherTaskViewer = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                            <div style={{ display: "flex", "justifyContent": "flex-start" }}>
+                            <div style={{ display: "flex", marginRight:"10px", "justifyContent": "flex-start" }}>
                                 {renderTotalCompletedBadge()}
                                 { (amountOfFeedbackToSend > 0) &&
                                         <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
@@ -546,9 +546,8 @@ export const TeacherTaskViewer = (props) => {
                                 }
                                 </div>
 
-                            {taskCreationDate} 
-                            {taskTitle}
-                            
+                            {taskCreationDate} {`${taskCreationDate}  ${taskTitle}`}
+                           
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
                                 <AiOutlineCaretDown size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretDown>
