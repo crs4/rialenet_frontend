@@ -79,5 +79,10 @@
   "of" : "of",
   "from" : "from",
   "to" : "to",
-  "loading" : "Loading..."
+  "loading" : "Loading...",
+
+  "interactions_with_students" : "Interactions with students",
+  "summary" : "Summary",
+  "interactions" : "Student Interactions",
+  "feedbacks" : "Teacher Feedback"
 }

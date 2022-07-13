@@ -6,7 +6,7 @@ export const userTasksSlice = createSlice({
     initialState: {
       user:null,
 
-      //@audit INFO in production replace with []
+      //@audit INFO in production replace fakeTasks with []
       tasks: [],
       offset: 0,
       limit: 10,

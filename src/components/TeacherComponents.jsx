@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import {
     Button, Collapse, Form, Nav, Navbar, NavbarBrand, Badge,
-    FormText, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardSubtitle, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label
+    FormText, Modal, ModalHeader, ModalBody, TabContent, TabPane, NavItem, NavLink,
+    Card, CardSubtitle, CardHeader, CardTitle, CardBody, CardFooter, FormGroup, Input, Label
 } from 'reactstrap'
-import { AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineCaretLeft, AiOutlineCaretRight} from "react-icons/ai";
+import { AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -18,8 +19,9 @@ import { fakeTask } from '../components/common';
 import moment from 'moment';
 import { selectors as StudentsProfileSelector, actions as StudentsProfileAction } from '../store/slices/userTasks'
 import ReactTooltip from "react-tooltip";
-import {ActivityButton} from './UtilsComponents';
+import { ActivityButton } from './UtilsComponents';
 import { SearchBar } from './SearchBar';
+import { TaskTransactionsSummary } from './TaskTransactionsSummary';
 
 // link timeline drosophila
 
@@ -32,7 +34,7 @@ const TeacherFeedback = (props) => {
     const [currentSelectedTeacherText, setCurrentTeacherText] =
         useState("") //(transaction == null ? "" : transaction["attributes"][transactionFieldMapper[transaction["label"]]])
     const dispatch = useDispatch();
-    
+
 
     const createFeedbackTransaction = () => {
         if (currentSelectedChoice < 0) return;
@@ -201,13 +203,14 @@ const TeacherTransaction = (props) => {
             {props.transaction &&
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     {transactionActioneer ?
-                        <Label style={ props.teacherFeedback==null ? {"color":"#FF0000"} : {"color":"#000000"}}>
+                        <Label style={props.teacherFeedback == null ? { "color": "#FF0000" } : { "color": "#000000" }}>
                             <b>{transactionActioneer["name"]} {` `} {transactionActioneer["surname"]}
-                                {' - '} {moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - HH:mm")}</b>
+                            {` (${transactionActioneer["id"]}) `}
+                                {' - '} {moment(props.transaction._creationTs * 1000).format("DD/MM/YYYY - HH:mm")}</b>
                         </Label>
                         :
                         <Label>
-                            <b>{moment(props.transaction._creationTs*1000).format("DD/MM/YYYY - HH:mm")}</b>
+                            <b>{moment(props.transaction._creationTs * 1000).format("DD/MM/YYYY - HH:mm")}</b>
                         </Label>}
 
                 </div>
@@ -286,15 +289,13 @@ export const TaskCreator = (props) => {
             <FormGroup>
                 <div style={{ display: "flex", "justifyContent": "space-between" }}>
                     <Button onClick={(ev) => { props.onClose() }}>Annulla</Button>
-                    <Button disabled={currentTaskTitle.trim()=="" || currentTaskDescription.trim()==""}  color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</Button>
+                    <Button disabled={currentTaskTitle.trim() == "" || currentTaskDescription.trim() == ""} color="primary" onClick={(ev) => { createNewTask(ev); props.onClose() }}>{t("send")}</Button>
                 </div>
             </FormGroup>
         </Form>
     )
 }
 
-//@audit Local Frontend DEV
-//const tasks = [fakeTask];
 
 export const TeacherTasksViewer = (props) => {
 
@@ -307,8 +308,9 @@ export const TeacherTasksViewer = (props) => {
     const limit = useSelector(UserTasksSelectors.getTasksLimit);
     const total = useSelector(UserTasksSelectors.getTasksTotal);
     const filteredIds = useSelector(UserTasksSelectors.getFilteredIds);
-    const [filteredTasks, setFilteredTasks] = useState(tasks); 
-    
+    const [filteredTasks, setFilteredTasks] = useState(tasks);
+
+    //@audit decommentare in produzione!
     useEffect(() => {
 
         dispatch(UserTasksActions.willLoadTasks(null));
@@ -322,15 +324,15 @@ export const TeacherTasksViewer = (props) => {
       }, []);
     
 
-      useEffect(() => {
-        if (filteredIds==null) setFilteredTasks(tasks)
+    useEffect(() => {
+        if (filteredIds == null) setFilteredTasks(tasks)
         else {
-             setFilteredTasks( tasks.filter((task) => filteredIds.includes(task["id"])));
+            setFilteredTasks(tasks.filter((task) => filteredIds.includes(task["id"])));
         }
-        
-      }, [tasks, filteredIds])
 
-      
+    }, [tasks, filteredIds])
+
+
     const renderTaskCreator = () => {
         return <Modal isOpen={isOpen}>
             <ModalHeader>{t("new_question")}</ModalHeader>
@@ -344,71 +346,68 @@ export const TeacherTasksViewer = (props) => {
         return filteredTasks && filteredTasks.map((task, index) => <TeacherTaskViewer task={task} key={index} />)
     }
 
-    const loadNextTasks = () => 
-    { 
-        if (tasks==null) return;
+    const loadNextTasks = () => {
+        if (tasks == null) return;
         // 1-10 di 15 -> newOffset = 0 -> 10
-        const newOffset = offset+limit;
-        if (newOffset>=total) return;
+        const newOffset = offset + limit;
+        if (newOffset >= total) return;
         dispatch(UserTasksActions.willLoadTasks(newOffset));
     }
 
-    const loadPrevTasks = () => 
-    { 
-        if (tasks==null) return;
-        const newOffset = offset-limit;
-        if (newOffset<0) return;
+    const loadPrevTasks = () => {
+        if (tasks == null) return;
+        const newOffset = offset - limit;
+        if (newOffset < 0) return;
         dispatch(UserTasksActions.willLoadTasks(newOffset));
     }
 
-    const renderOffsetAndTotalTasksBar = () =>{
-        if (total<0) return `(${t("loading")})`
+    const renderOffsetAndTotalTasksBar = () => {
+        if (total < 0) return `(${t("loading")})`
         else
-       return <span style={{display:"flex", "justifyContent" : "flex-start"}}>
-       <AiOutlineCaretLeft size={"1.6em"} cursor="pointer" color='white' 
-       onClick={() => {loadPrevTasks()}}>
-           </AiOutlineCaretLeft> 
-      
-       {`${offset+1}-${offset+tasks.length} ${t("of")} ${total}`}
-       <AiOutlineCaretRight size={"1.6em"} cursor="pointer" color='white' 
-       onClick={() => {loadNextTasks()}}></AiOutlineCaretRight> 
-      
-       </span>
+            return <span style={{ display: "flex", "justifyContent": "flex-start" }}>
+                <AiOutlineCaretLeft size={"1.6em"} cursor="pointer" color='white'
+                    onClick={() => { loadPrevTasks() }}>
+                </AiOutlineCaretLeft>
+
+                {`${offset + 1}-${offset + tasks.length} ${t("of")} ${total}`}
+                <AiOutlineCaretRight size={"1.6em"} cursor="pointer" color='white'
+                    onClick={() => { loadNextTasks() }}></AiOutlineCaretRight>
+
+            </span>
     }
 
-    const renderHeader = () =>
-    {
-        return <Navbar style={{ marginTop: "10px" , marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
-        <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")}{` `}{renderOffsetAndTotalTasksBar()}</NavbarBrand>
-        <Nav className="mr-auto" navbar>
-        </Nav>
-        <Nav navbar>
-            <Button onClick={(ev) => { console.log("Click new Question"); setIsOpen(true) }}
-                style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} color="primary">
-                <FontAwesomeIcon icon={faPlus} />{t("new_question")}</Button>
-            <IconButton
-                onClick={() => {dispatch(UserTasksActions.willLoadTasks(0)); }}
-                style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} 
-            >
-                <IconContext.Provider value={{ color: "white", className: "global-class-name" }}>
-                    <HiOutlineRefresh color="white" data-place="top"
-                        data-for="teacherdashboard"
-                        data-tip={t("refresh")}
-                    />
-                </IconContext.Provider>
-            </IconButton>
-        </Nav>
-        <ReactTooltip id="teacherdashboard"/>
-    </Navbar>
+    const renderHeader = () => {
+        return <Navbar style={{ marginTop: "10px", marginBottom: "10px" }} className="mb-0 text-white" color="primary" light expand="md">
+            <NavbarBrand className="text-white font-weight-bold">{t("answers_and_questions")}{` `}{renderOffsetAndTotalTasksBar()}</NavbarBrand>
+            <Nav className="mr-auto" navbar>
+            </Nav>
+            <Nav navbar>
+                <Button onClick={(ev) => { console.log("Click new Question"); setIsOpen(true) }}
+                    style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }} color="primary">
+                    <FontAwesomeIcon icon={faPlus} />{t("new_question")}</Button>
+                <IconButton
+                    onClick={() => { dispatch(UserTasksActions.willLoadTasks(0)); }}
+                    style={{ height: 34, marginRight: 12, marginTop: 6, marginBottom: 6, borderWidth: 1, borderColor: 'white', borderStyle: 'solid', borderRadius: 4 }}
+                >
+                    <IconContext.Provider value={{ color: "white", className: "global-class-name" }}>
+                        <HiOutlineRefresh color="white" data-place="top"
+                            data-for="teacherdashboard"
+                            data-tip={t("refresh")}
+                        />
+                    </IconContext.Provider>
+                </IconButton>
+            </Nav>
+            <ReactTooltip id="teacherdashboard" />
+        </Navbar>
     }
 
     return (
         <>
             {renderHeader()}
-            <div  style={{margin:"10px"}} >
-            <SearchBar tasks={tasks}/>
+            <div style={{ margin: "10px" }} >
+                <SearchBar tasks={tasks} />
             </div>
-           
+
             {isOpen && renderTaskCreator()}
             {renderTasks()}
         </>
@@ -421,9 +420,12 @@ export const TeacherTaskViewer = (props) => {
     const toggle = () => setIsOpen(!isOpen);
     const { t, i18n } = useTranslation('frontend', { useSuspense: false });
     const userProfile = useSelector(UserTasksSelectors.getUserProfile);
+    // dizionario delle transazioni feedback associate a quelle degli studenti
     const [feedbackTeacherTransactions, setFeedbackTeacherTransactions] = useState({})
     const [filteredTransactions, setFilteredTransactions] = useState([]);
     const [amountOfFeedbackToSend, setAmountOfFeedbackToSend] = useState(0);
+    const [studentsInteractionsSummary, setStudentsInteractionsSummary] = useState({})
+    const [activeTab, setActiveTab] = useState("0");
 
     useEffect(() => {
         const { task } = props;
@@ -431,37 +433,45 @@ export const TeacherTaskViewer = (props) => {
         let ftd = {}
         for (let i = 0; i < task.transactions.length; i++) {
             const transactionID = task.transactions[i]["attributes"]["transactionID"];
+            // se la transazione ha l'attributo transactionID allora si tratta del 
+            // feedback ad uno studente
             if (transactionID != null) {
                 ftd[transactionID] = task.transactions[i]
             }
-            
+
         }
-            const filteredT = getFilteredTransactions()
-            setFilteredTransactions(filteredT);
+        const filteredT = getFilteredTransactions()
+        setFilteredTransactions(filteredT);
 
-            console.log("setFeedbackTeacherTransactions to->: ", ftd)
-            setFeedbackTeacherTransactions(ftd);
+        console.log("setFeedbackTeacherTransactions to->: ", ftd)
+        setFeedbackTeacherTransactions(ftd);
 
-            setAmountOfFeedbackToSend(getAmountOfFeedbackToSend(filteredT, ftd));
+        setAmountOfFeedbackToSend(getAmountOfFeedbackToSend(filteredT, ftd));
+        const summaryR = getStudentsInteractionsSummary()
+        console.log("summary (FR)", summaryR)
+        if (summaryR!=null) setStudentsInteractionsSummary(summaryR);
     
     }, [props.task])
 
-    const getAmountOfFeedbackToSend = (transactions, feedbackTransactions) =>
-    {  
-        if (transactions==null || transactions.length<1) return 0;
+    // restituisce il numero di transazioni degli studenti per le quali il 
+    // docente non ha ancora creato un feedback
+    const getAmountOfFeedbackToSend = (transactions, feedbackTransactions) => {
+        if (transactions == null || transactions.length < 1) return 0;
         const totTransactions = transactions.length;
         const totFeedbackTransactions = Object.keys(feedbackTransactions).length;
-        return (totTransactions-totFeedbackTransactions);
+        return (totTransactions - totFeedbackTransactions);
     }
 
+    // restituisce le transazioni degli studenti (le rimanenti sono quelle dei feedback del docente)
     const getFilteredTransactions = () => {
         console.log("Transaction: (Task):", props.task.transactions);
         if (props.task.transactions == null) return [];
 
         const ft = props.task.transactions.filter((transaction) => {
             console.log("Transaction: (Filter):", transaction);
-            // mostro tutte le transactions create dagli compatilmente con le
+            // mostro tutte le transactions create dagli studenti compatibilmente con le
             // label definite dalla app logic
+            // le transazioni rimanenti sono quelle relative ai feedback dei docenti
             return studentsTransactionOptions.includes(transaction["label"])
         })
         // ordinate cronologicamente dalla meno recente alla più recente
@@ -469,8 +479,35 @@ export const TeacherTaskViewer = (props) => {
         return ft
     }
 
+    const getStudentsInteractionsSummary = () =>
+    {
+        let summary = {}
+        // ciclo su tutte le transazioni degli studenti
+        // e le conto come interazioni associate all'actioneer 
+        // della transaction
+        console.log("DS: numero delle transazioni:", filteredTransactions.length);
+        for (let i=0; i<filteredTransactions.length;i++)
+        {
+            const studentWenetId = filteredTransactions[i]["actioneerId"]
+            console.log("DS: transaction StudentWenet ID:", studentWenetId);
+            if (summary[studentWenetId]==null) summary[studentWenetId] = {"interactions" : 1 , "feedbacks" : 0, "completed" : false};
+            else summary[studentWenetId]["interactions"] +=1
+
+            // verifico se esiste un feedback associato alla transazione corrente
+            const teacherFeedback = feedbackTeacherTransactions[filteredTransactions[i]["id"]]
+            console.log(`DS: teacherFeedback for user ${studentWenetId}:`, JSON.stringify(teacherFeedback))
+            if (teacherFeedback!=null)
+            {
+               const completed = (teacherFeedback["label"]=="rightAnswer");
+               summary[studentWenetId]["feedbacks"] +=1;
+               summary[studentWenetId]["completed"] = summary[studentWenetId]["completed"] || completed;
+            }
+        }
+        console.log("DS: Summary (F)", JSON.stringify(summary));
+        return summary;
+    }
+
     const renderTransactions = () => {
-        //const filteredTransactions = getFilteredTransactions()
         console.log("Transaction: (filter):", filteredTransactions);
         return filteredTransactions.map((transaction, index) => {
             return <TeacherTransaction readonly transaction={transaction}
@@ -482,7 +519,7 @@ export const TeacherTaskViewer = (props) => {
     const renderTopicContents = () => {
         const taskTitle = props.task.goal.name;
         const taskDescription = props.task.goal.description;
-        const taskCreationDate = moment(props.task._creationTs*1000).format("DD/MM/YYYY - HH:mm")
+        const taskCreationDate = moment(props.task._creationTs * 1000).format("DD/MM/YYYY - HH:mm")
         return (
 
             <Card className="mb-4" style={{ padding: "10px", borderColor: "#007bff" }}>
@@ -491,10 +528,10 @@ export const TeacherTaskViewer = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                        { (amountOfFeedbackToSend>0) &&
-                            <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
-                                {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
-                            </Badge>
+                            {(amountOfFeedbackToSend > 0) &&
+                                <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
+                                    {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
+                                </Badge>
                             }
 
                             ({taskCreationDate}) {taskTitle}
@@ -516,9 +553,36 @@ export const TeacherTaskViewer = (props) => {
                     }
 
                     <CardBody>
-                        <Form>
-                            {renderTransactions()}
-                        </Form>
+
+                        <Nav tabs>
+                            <NavItem>
+                                <NavLink style={activeTab === '0' ?
+                                    { cursor: "arrow", fontWeight: "bold", background: "#EEEEEE" } : { cursor: "pointer", fontWeight: "normal" }}
+                                    onClick={() => { setActiveTab('0'); }}
+                                >
+                                    {t("interactions_with_students")}
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink style={activeTab === '1' ?
+                                    { cursor: "arrow", fontWeight: "bold", background: "#EEEEEE" } : { cursor: "pointer", fontWeight: "normal" }}
+                                    onClick={() => { setActiveTab('1'); }}
+                                >
+                                    {t("summary")}
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <TabContent activeTab={activeTab}>
+                            <TabPane tabId="0">
+                                <Form>
+                                    {renderTransactions()}
+                                </Form>
+                            </TabPane>
+                            <TabPane tabId="1">
+                                <TaskTransactionsSummary summary={studentsInteractionsSummary}/>
+                            </TabPane>
+                        </TabContent>
+
                     </CardBody>
                 </Collapse>
             </Card>)

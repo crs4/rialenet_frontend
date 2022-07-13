@@ -69,14 +69,20 @@
   "send_feedback_to_student" : "Invia un feedback allo studente",
 
   "new_messages_from_students" : "nuovi messaggi dagli studenti",
+  "completed" : "Completato",
   "question_reproposal" : "Riprongo la domanda:",
   "question_topic" : "Argomento",
   "question_content" : "Testo della domanda",
 
-  "search_tasks" :"Ricerca domande",
+  "search_tasks" :"Ricerca domande in questa pagina",
   "of" : "di",
   "from" : "da",
   "to" : "a",
-  "loading" : "Caricamento in corso..."
+  "loading" : "Caricamento in corso...",
+
+  "interactions_with_students" : "Interazioni con gli studenti",
+  "summary" : "Riepilogo",
+  "interactions" : "Interazioni dello studente",
+  "feedbacks" : "Feedback del docente"
 
 }

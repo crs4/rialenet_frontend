@@ -53,8 +53,6 @@ export const TeacherDashboard = (props) => {
                         <StudentsProfileViewer/>
                     </TabPane>
                 </TabContent>
-
-                
             </Content>
         </>
     )

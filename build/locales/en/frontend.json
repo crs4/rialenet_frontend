@@ -75,9 +75,14 @@
   "question_topic" : "Topic",
   "question_content" : "Question content",
 
-  "search_tasks" :"Search questions",
+  "search_tasks" :"Search questions in this page",
   "of" : "of",
   "from" : "from",
   "to" : "to",
-  "loading" : "Loading..."
+  "loading" : "Loading...",
+
+  "interactions_with_students" : "Interactions with students",
+  "summary" : "Summary",
+  "interactions" : "Student Interactions",
+  "feedbacks" : "Teacher Feedback"
 }
