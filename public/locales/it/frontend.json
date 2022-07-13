@@ -83,6 +83,8 @@
   "interactions_with_students" : "Interazioni con gli studenti",
   "summary" : "Riepilogo",
   "interactions" : "Interazioni dello studente",
-  "feedbacks" : "Feedback del docente"
+  "feedbacks" : "Feedback del docente",
+  "yes" : "Si",
+  "no": "No"
 
 }

@@ -84,5 +84,7 @@
   "interactions_with_students" : "Interactions with students",
   "summary" : "Summary",
   "interactions" : "Student Interactions",
-  "feedbacks" : "Teacher Feedback"
+  "feedbacks" : "Teacher Feedback",
+  "yes" : "Yes",
+  "no": "No"
 }

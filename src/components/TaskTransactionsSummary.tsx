@@ -25,8 +25,8 @@ const fakeProfiles = [
 export const TaskTransactionsSummary = (props: any) => {
   const { t, i18n } = useTranslation('frontend', { useSuspense: false });
   const dispatch = useDispatch();
-  //const studentsProfile = useSelector(StudentsProfileSelector.getStudentsProfile);
-  const studentsProfile = fakeProfiles;
+  const studentsProfile = useSelector(StudentsProfileSelector.getStudentsProfile);
+  //const studentsProfile = fakeProfiles;
 
   const [summaryData, setSummaryData] = useState([] as any)
 
@@ -66,11 +66,11 @@ export const TaskTransactionsSummary = (props: any) => {
         justifyContent: 'center'
       }}>
         {value["completed"]  ?
-          <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#00EE00" }}>
+          <Badge style={{ margin: '5px', padding: '5px', color: "success"}}>
             {` ${t("yes")} `}
           </Badge>
           :
-          <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "orange" }}>
+          <Badge style={{ margin: '5px', padding: '5px', color: "warning" }}>
             {` ${t("no")} `}
           </Badge>}
       </div>)
