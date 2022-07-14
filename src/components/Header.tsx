@@ -38,7 +38,7 @@ export const Header = ({ className, section, showMenu = false }: any) => {
                                 <DropdownMenu right>
                                 <DropdownItem onClick={() => {
                                             dispatch(UserTasksActions.willLogout(""));
-                                        }}>Logout</DropdownItem>
+                                        }}>{t("logout")}</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </>
