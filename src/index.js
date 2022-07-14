@@ -12,7 +12,10 @@ import App from './App';
 import i18n from './i18n';
 
 var lng = window.navigator['userLanguage']|| window.navigator.language;
-if(lng !== 'it-IT'){
+
+const languageStorage = localStorage.getItem("rialenet_language") || lng;
+
+if(languageStorage !== 'it-IT'){
     i18n.changeLanguage('en-US');
 }else{
     i18n.changeLanguage('it-IT');

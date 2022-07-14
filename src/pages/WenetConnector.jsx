@@ -6,6 +6,7 @@ import {
     CardText, CardTitle, CardFooter
 } from 'reactstrap';
 
+import { LanguageSelector } from '../components/UtilsComponents';
 
 //https://www.npmjs.com/package/compress-json
 const WenetConnector = () => {
@@ -63,6 +64,7 @@ const WenetConnector = () => {
 
                 }}>
                     <CardTitle style={{ textAlign: "center" }}>{t("platform_title")}</CardTitle>
+                    <LanguageSelector/>
                 </CardHeader>
                 <CardBody>
 

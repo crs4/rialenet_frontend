@@ -546,7 +546,7 @@ export const TeacherTaskViewer = (props) => {
                                 }
                                 </div>
 
-                            {taskCreationDate} {`${taskCreationDate}  ${taskTitle}`}
+                            {`(${taskCreationDate})  ${taskTitle}`}
                            
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
