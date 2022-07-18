@@ -72,8 +72,12 @@ export const AppRouter = () => {
           }
     </Route>
 
+    <Route path="/login/:mypasscode">
+         <WenetConnector />
+    </Route>
+
     <Route path="/">
-          <WenetConnector />
+    <WenetConnector />
     </Route>
   </Switch>
 
