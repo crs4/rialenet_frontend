@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import BootstrapTable from 'react-bootstrap-table-next';
 import { selectors as StudentsProfileSelector } from '../store/slices/userTasks'
 import { useTranslation } from 'react-i18next';
-import { Badge } from 'reactstrap'
+import { Badge, Container, Row,Col } from 'reactstrap'
 import TransactionsAnalyzer from './TransactionsAnalyxer';
 
 
@@ -36,7 +36,7 @@ export const TaskTransactionsSummary = (props: any) => {
    for (let i=0;i<data.length;i++)
    {tdata[data[i]["wenet_id"]] = data[i]}
  
-   console.log("Fake data:", tdata);
+   console.log("Fake data-->:", tdata);
    return tdata
  }
 
@@ -140,14 +140,19 @@ export const TaskTransactionsSummary = (props: any) => {
       return () => { }
     }, []);
 
-    return <>
-      <BootstrapTable bootstrap4 keyField='passcode' data={
+    return <Container fluid>
+      <Row>
+        <Col>
+        <BootstrapTable bootstrap4 keyField='passcode' data={
         summaryData
       }
         columns={columns} />
-
-     {summaryData && summaryData.length>0 && <TransactionsAnalyzer data={convertData(summaryData)}/>}
-
-
-    </>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+        {summaryData && summaryData.length>0 && <TransactionsAnalyzer data={convertData(summaryData)}/>}
+        </Col>
+      </Row>
+    </Container>
   }

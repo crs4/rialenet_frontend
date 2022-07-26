@@ -48,7 +48,7 @@ export const SearchBar = (props:any) => {
             
             //return document[fieldName];
             const result = fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
-            console.log("SB:Trovato campo per field name:>>",fieldName, result);
+            //console.log("SB:Trovato campo per field name:>>",fieldName, result);
             return result;
           }
         },
