@@ -124,21 +124,29 @@ const TransactionsAnalyzer = (props) => {
                   
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>} data={data[0]} key={i} />;
+                    return <VictoryBar labelComponent={<VictoryTooltip  
+                    style={{fontSize: '8px'}}
+                    dy={0} 
+                   centerOffset={{ x: 25 }}/>} data={data[0]} key={i} />;
                   })}
                 </VictoryStack>
                 <VictoryStack
                   colorScale={teachersScale}
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>}  data={data[1]} key={i}/>;
+                    return <VictoryBar labelComponent={<VictoryTooltip 
+                      style={{fontSize: '8px'}}
+                      dy={0} 
+                     centerOffset={{ x: -25 }}
+
+                    />}  data={data[1]} key={i}/>;
                   })}
                 </VictoryStack>
               </VictoryGroup>
               <VictoryAxis dependentAxis
                 tickFormat={(tick) => `${tick}`}
               />
-              <VictoryAxis tickFormat={(studentId) => `${props.data[studentId]["name"]}\n${props.data[studentId]["surname"]}`}  />
+              <VictoryAxis style={{tickLabels:{fontSize: '10px'}}} tickFormat={(studentId) => `${props.data[studentId]["name"]}\n${props.data[studentId]["surname"]}`}  />
               {/*
                 Object.keys(fakeData).map((d, i) => {
                   return (
@@ -156,7 +164,7 @@ const TransactionsAnalyzer = (props) => {
           <CardFooter>
           <div style={{margin:"10px",display:"flex" , justifyContent:"space-between"}}>
               <VictoryLegend
-                title={`  ${"teacherFeedback"}`}
+                title={`  ${t("teacherFeedback")}`}
                 centerTitle
                 gutter={5}
                 rowGutter={5}
@@ -170,7 +178,7 @@ const TransactionsAnalyzer = (props) => {
               }
               />
                 <VictoryLegend
-                title={`  t("students_answers")`}
+                title={`  ${t("students_answers")}`}
                 centerTitle
                 gutter={5}
                 rowGutter={5}
@@ -179,7 +187,7 @@ const TransactionsAnalyzer = (props) => {
                 style={{ labels:{fontSize: 18},   title: { fontSize: 20 } }}
                 colorScale={studentsScale}
                 data={
-                  studentInteractions.filter((data) => {return data!=null && data.length>0}).map((data) => {return { name: data } })
+                  studentInteractions.filter((data) => {return data!=null && data.length>0}).map((data) => {return { name: t(data) } })
               }
               />
               </div>
