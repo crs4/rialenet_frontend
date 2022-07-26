@@ -12,34 +12,7 @@ const studentsScale = "red"
 const teacherFeedbacks = ["freeAnnotation","goToAttachment","goToTimelinePosition","goToTag","rightAnswer"]
 const teachersScale = "green"
 
-const buildDataset = (myData) =>
-  {
-    const students = Object.keys(myData)
-    const totInteractions = studentInteractions.length; // reso uguale ai possibili feedback del docente
-    const totStudents = students.length;
-    let data = []
-    for (let i=0;i<totInteractions;i++)
-    {
-      let interation = []
-      //students interaction
-      let studentsInteraction = []
-      let teacherFeedback = []
-      for (let j=0;j<totStudents;j++)
-      {
-        const yStudents = myData[students[j]]["interactionsDetails"][studentInteractions[i]] || 0
-        const yTeacher = myData[students[j]]["feedbacksDetails"][teacherFeedbacks[i]] || 0
-        studentsInteraction.push({ x: `${students[j]}`, y: yStudents, label: ` ${t(studentInteractions[i])} (${yStudents}) `, type:`${studentInteractions[i]}`})
-        teacherFeedback.push({ x: `${students[j]}`, y: yTeacher, label: ` ${t(teacherFeedbacks[i])} (${yTeacher}) `,  type:`${teacherFeedbacks[i]}`})
-      }
 
-      interation.push(studentsInteraction)
-      interation.push(teacherFeedback)
-
-      data.push(interation)
-    }
-    console.log("Data:" ,data)
-    return data
-  }
 
 const myDataset = [
 
@@ -91,6 +64,35 @@ const colorsMap = {
 const TransactionsAnalyzer = (props) => {
   const { t, i18n } = useTranslation('frontend', { useSuspense: false });
   const [dataset, setDataset] = useState(null);
+
+  const buildDataset = (myData) =>
+  {
+    const students = Object.keys(myData)
+    const totInteractions = studentInteractions.length; // reso uguale ai possibili feedback del docente
+    const totStudents = students.length;
+    let data = []
+    for (let i=0;i<totInteractions;i++)
+    {
+      let interation = []
+      //students interaction
+      let studentsInteraction = []
+      let teacherFeedback = []
+      for (let j=0;j<totStudents;j++)
+      {
+        const yStudents = myData[students[j]]["interactionsDetails"][studentInteractions[i]] || 0
+        const yTeacher = myData[students[j]]["feedbacksDetails"][teacherFeedbacks[i]] || 0
+        studentsInteraction.push({ x: `${students[j]}`, y: yStudents, label: ` ${t(studentInteractions[i])} (${yStudents}) `, type:`${studentInteractions[i]}`})
+        teacherFeedback.push({ x: `${students[j]}`, y: yTeacher, label: ` ${t(teacherFeedbacks[i])} (${yTeacher}) `,  type:`${teacherFeedbacks[i]}`})
+      }
+
+      interation.push(studentsInteraction)
+      interation.push(teacherFeedback)
+
+      data.push(interation)
+    }
+    console.log("Data:" ,data)
+    return data
+  }
 
   useEffect(()=>{
       setDataset(buildDataset(props.data))
