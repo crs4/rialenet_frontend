@@ -28,8 +28,8 @@ const buildDataset = (myData) =>
       {
         const yStudents = myData[students[j]]["interactionsDetails"][studentInteractions[i]] || 0
         const yTeacher = myData[students[j]]["feedbacksDetails"][teacherFeedbacks[i]] || 0
-        studentsInteraction.push({ x: `${students[j]}`, y: yStudents, label: ` ${studentInteractions[i]} (${yStudents}) `, type:`${studentInteractions[i]}`})
-        teacherFeedback.push({ x: `${students[j]}`, y: yTeacher, label: ` ${teacherFeedbacks[i]} (${yTeacher}) `,  type:`${teacherFeedbacks[i]}`})
+        studentsInteraction.push({ x: `${students[j]}`, y: yStudents, label: ` ${t(studentInteractions[i])} (${yStudents}) `, type:`${studentInteractions[i]}`})
+        teacherFeedback.push({ x: `${students[j]}`, y: yTeacher, label: ` ${t(teacherFeedbacks[i])} (${yTeacher}) `,  type:`${teacherFeedbacks[i]}`})
       }
 
       interation.push(studentsInteraction)
@@ -122,14 +122,14 @@ const TransactionsAnalyzer = (props) => {
                   
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>} data={t(data[0])} key={i} />;
+                    return <VictoryBar labelComponent={<VictoryTooltip/>} data={data[0]} key={i} />;
                   })}
                 </VictoryStack>
                 <VictoryStack
                   colorScale={teachersScale}
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>}  data={t(data[1])} key={i}/>;
+                    return <VictoryBar labelComponent={<VictoryTooltip/>}  data={data[1]} key={i}/>;
                   })}
                 </VictoryStack>
               </VictoryGroup>
