@@ -1,29 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
+
 import {
   Label, Button, Badge, Input, Alert, Card, CardText, CardBody, CardLink,
   CardHeader, CardFooter, CardTitle, CardSubtitle, Container
 } from 'reactstrap';
 import {Border, VictoryChart, VictoryBar, VictoryLegend, VictoryGroup, VictoryTooltip, VictoryVoronoiContainer, VictoryAxis, VictoryLabel, VictoryStack, VictoryContainer } from 'victory'
-
-/*
-    "cannotAnswer": "reason",
-    "needClarification": "note",
-    "notSure": "note",
-    "myAnswer": "answer",
-
-    "goToAttachment": "attachment",
-    "goToTimelinePosition": "timelineLink",
-    "goToTag": "tag",
-    "freeAnnotation" : "message",
-    "rightAnswer": "message"
-    */
-
-
+import { useTranslation } from 'react-i18next';
 
 const studentInteractions = ["cannotAnswer","notSure","needClarification","myAnswer",""]
 const studentsScale = "red"
 const teacherFeedbacks = ["freeAnnotation","goToAttachment","goToTimelinePosition","goToTag","rightAnswer"]
 const teachersScale = "green"
+
 const buildDataset = (myData) =>
   {
     const students = Object.keys(myData)
@@ -101,14 +89,23 @@ const colorsMap = {
 }
 
 const TransactionsAnalyzer = (props) => {
+  const { t, i18n } = useTranslation('frontend', { useSuspense: false });
+  const [dataset, setDataset] = useState(null);
 
-  const dataset = buildDataset(props.data) //this.transformData(myDataset);
-  return(
+  useEffect(()=>{
+      setDataset(buildDataset(props.data))
+  }, [])
+
+ 
+  return( dataset &&
       <Container>
         <Card className="mb-4" style={{ borderColor: "#007bff" }}>
-          <CardHeader style={{borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
-            <CardTitle tag="h6" className="text-center">Istogramma</CardTitle>
-          </CardHeader>
+          { props.title &&
+            <CardHeader style={{borderColor: "#007bff", paddingBottom: 0, color: 'white' }}>
+            <CardTitle tag="h6" className="text-center">{props.title}</CardTitle>
+            </CardHeader>
+          }
+         
           <CardBody>
 
             <VictoryChart
@@ -125,14 +122,14 @@ const TransactionsAnalyzer = (props) => {
                   
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>} data={data[0]} key={i} />;
+                    return <VictoryBar labelComponent={<VictoryTooltip/>} data={t(data[0])} key={i} />;
                   })}
                 </VictoryStack>
                 <VictoryStack
                   colorScale={teachersScale}
                 >
                   {dataset.map((data, i) => {
-                    return <VictoryBar labelComponent={<VictoryTooltip/>}  data={data[1]} key={i}/>;
+                    return <VictoryBar labelComponent={<VictoryTooltip/>}  data={t(data[1])} key={i}/>;
                   })}
                 </VictoryStack>
               </VictoryGroup>
@@ -157,7 +154,7 @@ const TransactionsAnalyzer = (props) => {
           <CardFooter>
           <div style={{margin:"10px",display:"flex" , justifyContent:"space-between"}}>
               <VictoryLegend
-                title="  Feedback dei docenti"
+                title={`  ${"teacherFeedback"}`}
                 centerTitle
                 gutter={5}
                 rowGutter={5}
@@ -167,11 +164,11 @@ const TransactionsAnalyzer = (props) => {
                 style={{labels:{fontSize: 18},   title: { fontSize: 20 } }}
                 colorScale={teachersScale}
                 data={
-                  teacherFeedbacks.filter((data) => {return data!=null && data.length>0}).map((data) => {return { name: data } })
+                  teacherFeedbacks.filter((data) => {return data!=null && data.length>0}).map((data) => {return { name: t(data) } })
               }
               />
                 <VictoryLegend
-                title="  Risposte degli studenti"
+                title={`  t("students_answers")`}
                 centerTitle
                 gutter={5}
                 rowGutter={5}
