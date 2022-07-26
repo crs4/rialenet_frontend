@@ -52,11 +52,15 @@ export const TaskTransactionsSummary = (props: any) => {
         record["interactions"] = 0;
         record["feedbacks"] = 0;
         record["completed"] = false
+        record["interactionsDetails"] = {"cannotAnswer" :0,"notSure":0,"needClarification":0,"myAnswer":0} 
+        record["feedbacksDetails"] = {"freeAnnotation":0,"goToAttachment":0,"goToTimelinePosition":0,"goToTag":0,"rightAnswer":0}
       }
       else {
         record["interactions"] = studentSummary["interactions"];
         record["feedbacks"] = studentSummary["feedbacks"];
         record["completed"] = studentSummary["completed"];
+        record["interactionsDetails"] = studentSummary["interationsDetails"]
+        record["feedbacksDetails"] = studentSummary["feedbacksDetails"]
       }
 
       data.push(record);
