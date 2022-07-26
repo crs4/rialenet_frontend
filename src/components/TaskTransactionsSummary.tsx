@@ -59,7 +59,7 @@ export const TaskTransactionsSummary = (props: any) => {
         record["interactions"] = studentSummary["interactions"];
         record["feedbacks"] = studentSummary["feedbacks"];
         record["completed"] = studentSummary["completed"];
-        record["interactionsDetails"] = studentSummary["interationsDetails"]
+        record["interactionsDetails"] = studentSummary["interactionsDetails"]
         record["feedbacksDetails"] = studentSummary["feedbacksDetails"]
       }
 
