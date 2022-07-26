@@ -492,8 +492,14 @@ export const TeacherTaskViewer = (props) => {
         for (let i = 0; i < filteredTransactions.length; i++) {
             const studentWenetId = filteredTransactions[i]["actioneerId"]
             console.log("DS: transaction StudentWenet ID:", studentWenetId);
-            if (summary[studentWenetId] == null) summary[studentWenetId] = { "interactions": 1, "feedbacks": 0, "completed": false };
-            else summary[studentWenetId]["interactions"] += 1
+            if (summary[studentWenetId] == null) summary[studentWenetId] = { 
+                "interactionsDetails": {"cannotAnswer" :0,"notSure":0,"needClarification":0,"myAnswer":0}, 
+                "feedbacksDetails": {"freeAnnotation":0,"goToAttachment":0,"goToTimelinePosition":0,"goToTag":0,"rightAnswer":0}, 
+            "interactions": 0, "feedbacks": 0, "completed": false };
+          
+                summary[studentWenetId]["interactions"] += 1;
+                summary[studentWenetId]["interactionsDetails"][filteredTransactions[i]["label"]]+=1;
+            
 
             // verifico se esiste un feedback associato alla transazione corrente
             const teacherFeedback = feedbackTeacherTransactions[filteredTransactions[i]["id"]]
@@ -501,6 +507,7 @@ export const TeacherTaskViewer = (props) => {
             if (teacherFeedback != null) {
                 const completed = (teacherFeedback["label"] == "rightAnswer");
                 summary[studentWenetId]["feedbacks"] += 1;
+                summary[studentWenetId]["feedbacksDetails"][teacherFeedback["label"]]+=1;
                 summary[studentWenetId]["completed"] = summary[studentWenetId]["completed"] || completed;
             }
             if (summary[studentWenetId]["completed"]) totalCompleted += 1
@@ -537,17 +544,17 @@ export const TeacherTaskViewer = (props) => {
 
                     <CardTitle>
                         <div style={{ display: "flex", justifyContent: "space-between", alignContent: "space-between" }}>
-                            <div style={{ display: "flex", marginRight:"10px", "justifyContent": "flex-start" }}>
+                            <div style={{ display: "flex", marginRight: "10px", "justifyContent": "flex-start" }}>
                                 {renderTotalCompletedBadge()}
-                                { (amountOfFeedbackToSend > 0) &&
-                                        <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
-                                            {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
-                                        </Badge>
+                                {(amountOfFeedbackToSend > 0) &&
+                                    <Badge style={{ margin: '5px', padding: '5px', color: 'white', backgroundColor: "#FF0000" }}>
+                                        {`${amountOfFeedbackToSend} `}{t("new_messages_from_students")}
+                                    </Badge>
                                 }
-                                </div>
+                            </div>
 
                             {`(${taskCreationDate})  ${taskTitle}`}
-                           
+
                             {isOpen ?
                                 <AiOutlineCaretUp size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretUp> :
                                 <AiOutlineCaretDown size={"1.6em"} cursor="pointer" color='white' onClick={() => { toggle() }}></AiOutlineCaretDown>

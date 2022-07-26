@@ -4,7 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import { selectors as StudentsProfileSelector } from '../store/slices/userTasks'
 import { useTranslation } from 'react-i18next';
 import { Badge } from 'reactstrap'
-
+import TransactionsAnalyzer from './TransactionsAnalyxer';
 
 
 const fakeProfiles = [
@@ -30,6 +30,16 @@ export const TaskTransactionsSummary = (props: any) => {
 
   const [summaryData, setSummaryData] = useState([] as any)
 
+  const convertData = (data:any) =>
+ {
+   let tdata = {} as any;
+   for (let i=0;i<data.length;i++)
+   {tdata[data[i]["wenet_id"]] = data[i]}
+ 
+   console.log("Fake data:", tdata);
+   return tdata
+ }
+
   useEffect(() => {
     let data = []
     const { summary } = props;
@@ -53,6 +63,7 @@ export const TaskTransactionsSummary = (props: any) => {
     }
 
     setSummaryData(data);
+    console.log("SUMMARY DATA:", JSON.stringify(data));
 
   }, [props.summary])
 
@@ -130,5 +141,9 @@ export const TaskTransactionsSummary = (props: any) => {
         summaryData
       }
         columns={columns} />
+
+     {summaryData && summaryData.length>0 && <TransactionsAnalyzer data={convertData(summaryData)}/>}
+
+
     </>
   }
