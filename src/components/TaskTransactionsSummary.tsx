@@ -29,10 +29,13 @@ export const TaskTransactionsSummary = (props: any) => {
   //const studentsProfile = fakeProfiles;
 
   const [summaryData, setSummaryData] = useState([] as any)
+  const [convertedSummaryData, setConvertedSummaryData] = useState(null as any)
 
   const convertData = (data:any) =>
  {
+   if (data==null || data.length<1) return null;
    let tdata = {} as any;
+   
    for (let i=0;i<data.length;i++)
    {tdata[data[i]["wenet_id"]] = data[i]}
  
@@ -67,6 +70,8 @@ export const TaskTransactionsSummary = (props: any) => {
     }
 
     setSummaryData(data);
+    setConvertedSummaryData(convertData(data))
+
     console.log("SUMMARY DATA:", JSON.stringify(data));
 
   }, [props.summary])
@@ -151,7 +156,7 @@ export const TaskTransactionsSummary = (props: any) => {
       </Row>
       <Row>
         <Col>
-        {summaryData && summaryData.length>0 && <TransactionsAnalyzer data={convertData(summaryData)}/>}
+        {convertedSummaryData && <TransactionsAnalyzer data={convertedSummaryData}/>}
         </Col>
       </Row>
     </Container>
