@@ -7,7 +7,7 @@ import {
 import { Border, VictoryChart, VictoryBar, VictoryLegend, VictoryGroup, VictoryTooltip, VictoryVoronoiContainer, VictoryAxis, VictoryLabel, VictoryStack, VictoryContainer } from 'victory'
 import { useTranslation } from 'react-i18next';
 
-const studentInteractions = ["cannotAnswer", "notSure", "needClarification", "myAnswer", ""]
+const studentInteractions = ["cannotAnswer",  "needClarification", "myAnswer"]
 const studentsScale = "red"
 const teacherFeedbacks = ["freeAnnotation", "goToAttachment", "goToTimelinePosition", "goToTag", "rightAnswer"]
 const teachersScale = "green"
@@ -67,7 +67,7 @@ const TransactionsAnalyzer = (props) => {
 
   const buildDataset = (myData) => {
     const students = Object.keys(myData)
-    const totInteractions = studentInteractions.length; // reso uguale ai possibili feedback del docente
+    const totInteractions = teacherFeedbacks.length; 
     const totStudents = students.length;
     let data = []
     for (let i = 0; i < totInteractions; i++) {
@@ -124,7 +124,7 @@ const TransactionsAnalyzer = (props) => {
                   return <VictoryBar labelComponent={<VictoryTooltip
                     style={{ fontSize: '8px' }}
                     dy={0}
-                    centerOffset={{ x: 25 }} />} data={data[0]} key={i} />;
+                    centerOffset={{ x: -25 }} />} data={data[0]} key={i} />;
                 })}
               </VictoryStack>
               <VictoryStack
@@ -134,7 +134,7 @@ const TransactionsAnalyzer = (props) => {
                   return <VictoryBar labelComponent={<VictoryTooltip
                     style={{ fontSize: '8px' }}
                     dy={0}
-                    centerOffset={{ x: -25 }}
+                    centerOffset={{y:-20, x: 25 }}
 
                   />} data={data[1]} key={i} />;
                 })}
