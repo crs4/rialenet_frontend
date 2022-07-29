@@ -116,7 +116,7 @@ const TransactionsAnalyzer = (props) => {
           >
 
 
-            <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
+            <VictoryGroup offset={10}>
               <VictoryStack colorScale={studentsScale}
 
               >
@@ -144,7 +144,7 @@ const TransactionsAnalyzer = (props) => {
               style={{ tickLabels: { fontSize: '10px' } }}
               tickFormat={(tick) => `${tick}`}
             />
-            <VictoryAxis style={{ tickLabels: { fontSize: '10px' } }} tickFormat={(studentId) => `${props.data[studentId]["name"]}\n${props.data[studentId]["surname"]}`} />
+            <VictoryAxis style={{ tickLabels: { fontSize: '6px' } }} tickFormat={(studentId) => `${props.data[studentId]["name"]}\n${props.data[studentId]["surname"]}`} />
             {/*
                 Object.keys(fakeData).map((d, i) => {
                   return (
