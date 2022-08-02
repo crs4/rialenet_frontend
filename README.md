@@ -5,7 +5,7 @@ This project includes the source code of the frontend of the  [Rialenet Platform
 
 ![Transactions Summary](assets/graph.png)
 
-<p style="text-align: center;"><b>Student Answers</b></p>
+<p style="text-align: center;"><b>Student Answers</b></p><br>
 
 ![Student Answers](assets/studentAnswers.png)
 
